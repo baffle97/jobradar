@@ -24,7 +24,7 @@
 - [x] Initialize pnpm monorepo at `/jobradar`
   - [x] Root `package.json`, `pnpm-workspace.yaml`, `tsconfig.base.json`
   - [x] Biome config (double quotes, 2-space indent, trailing commas, semicolons)
-  - [x] `.gitignore` (node_modules, .env*, dist, .trigger)
+  - [x] `.gitignore` (node_modules, .env*, dist)
 - [x] `apps/web` — React Router 7 SSR app
   - [x] Vite + React Router 7 + React 19 setup
   - [x] HeroUI + Tailwind CSS 4 integration
@@ -51,7 +51,7 @@
   - [ ] Vercel auto-deploy from `main`
 - [x] Environment & config
   - [x] `.env.example` with all required keys documented
-  - [x] Config for API keys, Telegram bot token, Trigger.dev, session secret
+  - [x] Config for API keys, Telegram bot token, session secret
 
 ---
 
@@ -63,40 +63,40 @@
   - [ ] Indexes: dedup_hash unique, embedding ivfflat, match_score descending
   - [ ] `saved_searches` table
   - [ ] `watchlist` table (company watchlist)
-- [ ] Adzuna scraper (Trigger.dev task)
+- [ ] Adzuna scraper (scheduled task)
   - [ ] API client with key auth
   - [ ] Fetch jobs by category (software, engineering, IT)
   - [ ] Normalize response into `jobs` table schema
   - [ ] Dedup hash: md5(lower(title) + lower(company) + lower(location))
   - [ ] Upsert into DB (skip existing dedup_hash)
   - [ ] Cron schedule: every 4 hours
-- [ ] Remotive scraper (Trigger.dev task)
+- [ ] Remotive scraper (scheduled task)
   - [ ] Fetch from `https://remotive.com/api/remote-jobs?category=software-dev`
   - [ ] Normalize fields (map `candidate_required_location` to `location`, parse `salary`, strip HTML from `description`)
   - [ ] Dedup + upsert
   - [ ] Cron schedule: every 6 hours (respect 2 req/min limit)
-- [ ] JSearch scraper (Trigger.dev task)
+- [ ] JSearch scraper (scheduled task)
   - [ ] RapidAPI client setup
   - [ ] Fetch software engineering jobs (budget 200 req/month wisely — 6-7 req/day)
   - [ ] Normalize + dedup + upsert
   - [ ] Cron schedule: twice daily
-- [ ] HN Who's Hiring parser (Trigger.dev task)
+- [ ] HN Who's Hiring parser (scheduled task)
   - [ ] Detect current month's "Who's Hiring" thread via HN API
   - [ ] Fetch all top-level comments
   - [ ] LLM extraction (Gemini Flash): parse each comment into structured job (company, role, location, salary, url, description)
   - [ ] Dedup + upsert
   - [ ] Cron schedule: 1st and 15th of each month
-- [ ] Stale job cleanup (Trigger.dev task)
+- [ ] Stale job cleanup (scheduled task)
   - [ ] Mark jobs older than 30 days as `is_active = false`
   - [ ] Cron schedule: daily at 3am UTC
-- [ ] Job processing pipeline (Trigger.dev task, triggered on new job insert)
+- [ ] Job processing pipeline (triggered on new job insert)
   - [ ] Embed job (title + company + description snippet) using Gemini text-embedding-004
   - [ ] Store embedding in `jobs.embedding` column
   - [ ] Cosine similarity dedup check: if embedding similarity > 0.95 with existing job, mark as duplicate
 - [ ] Verification
   - [ ] Manually trigger each scraper, confirm jobs land in DB
   - [ ] Confirm dedup works (no exact or near-duplicates)
-  - [ ] Confirm cron schedules fire on Trigger.dev cloud
+  - [ ] Confirm cron schedules fire correctly
 
 ---
 
@@ -166,7 +166,7 @@
 ## Sprint 4 — AI Skill Extraction & Match Scoring
 **Goal:** Every job gets a structured skill profile and a personal match score.
 
-- [ ] AI skill extraction (Trigger.dev task)
+- [ ] AI skill extraction (scheduled task)
   - [ ] Input: job description text
   - [ ] Model: Gemini 2.5 Flash with structured output (Zod schema)
   - [ ] Extract: skills (name + category + must/nice-to-have), experience_level (junior/mid/senior/lead/staff), work_mode if not already set
@@ -177,7 +177,7 @@
   - [ ] Merge duplicates (e.g., "React.js" = "React" = "ReactJS")
   - [ ] Parent-child relationships (React -> JavaScript, Kubernetes -> DevOps)
   - [ ] Update `demand_count` on each extraction run
-  - [ ] Trigger.dev task: `update_skill_taxonomy` (daily)
+  - [ ] Scheduled task: `update_skill_taxonomy` (daily)
 - [ ] Match scoring algorithm
   - [ ] Supabase RPC function: `compute_match_score(job_id, profile_id)`
   - [ ] Weighted formula:
@@ -187,7 +187,7 @@
     - 15% — salary fit (job salary range overlaps user target range)
     - 10% — embedding similarity (cosine between profile and job embeddings)
   - [ ] Store score in `jobs.match_score` and breakdown in `jobs.score_breakdown`
-- [ ] Batch scoring (Trigger.dev task)
+- [ ] Batch scoring (scheduled task)
   - [ ] `score_all_jobs`: re-score all active jobs against profile
   - [ ] Triggered on: profile update, new jobs ingested
   - [ ] Chunked processing (50 jobs per batch to stay in free tier)
@@ -203,7 +203,7 @@
 ## Sprint 5 — Market Intelligence Dashboard
 **Goal:** Trend charts, salary data, skill gap analysis. Your career radar.
 
-- [ ] Market data aggregation (Trigger.dev task)
+- [ ] Market data aggregation (scheduled task)
   - [ ] `compute_market_stats`: daily cron
   - [ ] Count jobs per skill per day -> insert into `market_snapshots`
   - [ ] Compute average salary per skill per day
@@ -236,7 +236,7 @@
 ## Sprint 6 — AI Resume Tailoring
 **Goal:** One-click resume adaptation per job. Cover letter generation. PDF export.
 
-- [ ] Resume tailoring (Trigger.dev task)
+- [ ] Resume tailoring (scheduled task)
   - [ ] Input: base_resume (from profile) + job description + extracted skills
   - [ ] Model: Gemini 2.5 Pro (highest quality for writing)
   - [ ] Process:
@@ -245,7 +245,7 @@
     3. Rewrite: adapt bullet points to lead with relevant impact, mirror JD language
     4. Output: structured JSONB (same schema as base_resume, but tailored)
   - [ ] Store in `applications.tailored_resume`
-- [ ] Cover letter generation (Trigger.dev task)
+- [ ] Cover letter generation (scheduled task)
   - [ ] Input: tailored_resume + job description + company info
   - [ ] Model: Gemini 2.5 Flash (fast, good enough for covers)
   - [ ] Output: markdown text, references specific role and company details
@@ -296,7 +296,7 @@
 ## Sprint 8 — Alerts & Telegram Notifications
 **Goal:** Proactive notifications. Don't check the dashboard — let it come to you.
 
-- [ ] Alert engine (Trigger.dev tasks)
+- [ ] Alert engine (scheduled tasks)
   - [ ] `check_high_match_alerts`: runs after job scoring
     - If any new job scores above `profile.alert_threshold` (default 80)
     - Send Telegram message with job summary + match score
@@ -363,7 +363,7 @@
   - [ ] Optimistic UI updates on pipeline drag-and-drop
 - [ ] Error handling
   - [ ] Toast notifications for actions (saved, tailored, applied, errors)
-  - [ ] Retry failed Trigger.dev tasks with backoff
+  - [ ] Retry failed tasks with backoff
   - [ ] Graceful handling when Gemini rate-limited (queue and retry)
 
 ---
@@ -391,7 +391,6 @@ These are ideas worth tracking but not committed to any sprint.
 |---------|-----------|----------------|------|
 | Vercel (web hosting) | 100GB bandwidth | ~1GB | $0 |
 | Supabase (DB + auth) | 500MB DB, 1GB storage | ~50MB | $0 |
-| Trigger.dev (jobs) | 50,000 runs/month | ~2,000 runs | $0 |
 | Gemini API (AI) | 15 RPM Flash / 5 RPM Pro | ~1,500 extractions + ~30 tailors | $2-5 |
 | Gemini Embeddings | 1,500 RPM free | ~1,500/month | $0 |
 | Resend (email) | 100 emails/day | ~10/week | $0 |
