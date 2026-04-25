@@ -21,38 +21,37 @@
 ## Sprint 0 — Project Scaffolding
 **Goal:** Empty but runnable monorepo. Everything compiles, deploys to free tiers, auth works.
 
-- [ ] Initialize pnpm monorepo at `/jobradar`
-  - [ ] Root `package.json`, `pnpm-workspace.yaml`, `tsconfig.base.json`
-  - [ ] Biome config (double quotes, 2-space indent, trailing commas, semicolons)
-  - [ ] `.gitignore` (node_modules, .env*, dist, .trigger)
-- [ ] `apps/web` — React Router 7 SSR app
-  - [ ] Vite + React Router 7 + React 19 setup
-  - [ ] HeroUI + Tailwind CSS 4 integration
-  - [ ] Zustand installed, empty root store
-  - [ ] Basic layout shell (sidebar nav + content area)
-  - [ ] Auth gate — redirect to login if not authenticated
-  - [ ] Login page with Supabase email magic link
+- [x] Initialize pnpm monorepo at `/jobradar`
+  - [x] Root `package.json`, `pnpm-workspace.yaml`, `tsconfig.base.json`
+  - [x] Biome config (double quotes, 2-space indent, trailing commas, semicolons)
+  - [x] `.gitignore` (node_modules, .env*, dist, .trigger)
+- [x] `apps/web` — React Router 7 SSR app
+  - [x] Vite + React Router 7 + React 19 setup
+  - [x] HeroUI + Tailwind CSS 4 integration
+  - [x] Zustand installed, empty root store
+  - [x] Basic layout shell (sidebar nav + content area)
+  - [x] Auth gate — redirect to login if not authenticated
+  - [x] Login page with Supabase email magic link
   - [ ] Deploy to Vercel free tier (confirm it runs)
-- [ ] `apps/backend` — Supabase project
-  - [ ] Create Supabase project (free tier)
-  - [ ] Enable pgvector extension
-  - [ ] Supabase Auth configured for email magic link (no phone OTP)
-  - [ ] Initial migration: `profile` table
-  - [ ] Type generation pipeline (`pnpm types`)
-- [ ] `apps/trigger` — Trigger.dev project
-  - [ ] Trigger.dev project setup (free tier)
-  - [ ] One hello-world task that runs successfully
-  - [ ] Deploy to Trigger.dev cloud
-- [ ] `packages/shared` — Shared types and utilities
-  - [ ] Auto-generated Supabase DB types
-  - [ ] Shared Zod schemas (job, profile, filters)
-- [ ] CI/CD
-  - [ ] GitHub repo created
-  - [ ] GitHub Action: lint + typecheck on PR
+- [x] `apps/web/app/db` — SQLite + Drizzle ORM (replaced Supabase)
+  - [x] SQLite database with better-sqlite3 + Drizzle ORM
+  - [x] Schema: users, sessions, profile, jobs, saved_searches, watchlist tables
+  - [x] Server-side cookie auth (scrypt password hashing, session tokens)
+  - [x] Initial migration generated and applied
+  - [x] Drizzle Kit config for migrations (`pnpm db:generate`, `pnpm db:migrate`)
+- [x] In-process task scheduler (replaced Trigger.dev)
+  - [x] `croner` for cron scheduling (zero external deps)
+  - [x] SQLite-backed `task_runs` table for run history/tracking
+  - [x] `defineTask` / `runTask` / `scheduleCron` API
+- [x] `packages/shared` — Shared types and utilities
+  - [x] Shared Zod schemas (job, profile, filters, applicationStatus, extractedSkill)
+- [x] CI/CD
+  - [x] GitHub repo created
+  - [x] GitHub Action: lint + typecheck on PR
   - [ ] Vercel auto-deploy from `main`
-- [ ] Environment & config
-  - [ ] `.env.example` with all required keys documented
-  - [ ] Config file for API keys, Supabase URL, Telegram bot token
+- [x] Environment & config
+  - [x] `.env.example` with all required keys documented
+  - [x] Config for API keys, Telegram bot token, Trigger.dev, session secret
 
 ---
 

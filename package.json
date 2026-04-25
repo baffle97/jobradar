@@ -1,0 +1,20 @@
+{
+  "name": "jobradar",
+  "private": true,
+  "packageManager": "pnpm@10.30.3",
+  "scripts": {
+    "dev": "pnpm --filter @jobradar/web dev",
+    "build": "pnpm --filter @jobradar/web build",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "typecheck": "pnpm -r typecheck",
+    "types": "pnpm --filter @jobradar/shared generate-types"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.13",
+    "typescript": "^6.0.3"
+  }
+}

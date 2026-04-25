@@ -1,0 +1,1 @@
+import{w as t,j as e}from"./chunk-EVOBXE3Y-zs2oTvzF.js";const r=t(function(){return e.jsxs("div",{children:[e.jsx("h2",{className:"mb-6 text-2xl font-bold",children:"Settings"}),e.jsx("p",{className:"text-default-500",children:"Profile and preferences will be configurable here."})]})});export{r as default};

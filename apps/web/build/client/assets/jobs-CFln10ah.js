@@ -1,0 +1,1 @@
+import{w as s,j as e}from"./chunk-EVOBXE3Y-zs2oTvzF.js";const o=s(function(){return e.jsxs("div",{children:[e.jsx("h2",{className:"mb-6 text-2xl font-bold",children:"Job Feed"}),e.jsx("p",{className:"text-default-500",children:"Job listings will appear here once the scraping pipeline is active."})]})});export{o as default};
