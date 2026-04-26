@@ -1,4 +1,3 @@
-import { HeroUIProvider } from "@heroui/react";
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 import "./app.css";
 
@@ -21,9 +20,5 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return (
-    <HeroUIProvider>
-      <Outlet />
-    </HeroUIProvider>
-  );
+  return <Outlet />;
 }

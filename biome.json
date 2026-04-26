@@ -39,7 +39,7 @@
       "!**/.react-router",
       "!**/drizzle",
       "!**/.vercel",
-      "!**/.trigger"
+      "!**/data"
     ]
   }
 }

@@ -1,5 +1,6 @@
-import { Button, Card, CardBody, CardHeader, Input } from "@heroui/react";
+import { Button, Card, InputGroup, Label } from "@heroui/react";
 import { eq } from "drizzle-orm";
+import { Radar } from "lucide-react";
 import { Form, redirect, useActionData, useNavigation } from "react-router";
 import { db, schema } from "~/db";
 import {
@@ -62,36 +63,45 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
-        <CardHeader className="flex flex-col items-center gap-2 pb-0">
-          <h1 className="text-3xl font-bold text-primary">JobRadar</h1>
-          <p className="text-sm text-default-500">AI-Powered Career Intelligence</p>
-        </CardHeader>
-        <CardBody className="gap-4">
+        <Card.Header className="flex flex-col items-center gap-2 pb-0">
+          <Radar className="size-10 text-primary" />
+          <Card.Title className="text-3xl font-bold text-primary">JobRadar</Card.Title>
+          <Card.Description>AI-Powered Career Intelligence</Card.Description>
+        </Card.Header>
+        <Card.Content className="gap-4">
           <Form method="post" className="flex flex-col gap-4">
-            <Input
-              type="email"
-              label="Email"
-              name="email"
-              placeholder="you@example.com"
-              isRequired
-              autoFocus
-            />
-            <Input
-              type="password"
-              label="Password"
-              name="password"
-              placeholder="Enter password"
-              isRequired
-            />
+            <div className="flex flex-col gap-1.5">
+              <Label>Email</Label>
+              <InputGroup>
+                <InputGroup.Input
+                  type="email"
+                  name="email"
+                  placeholder="you@example.com"
+                  required
+                  autoFocus
+                />
+              </InputGroup>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label>Password</Label>
+              <InputGroup>
+                <InputGroup.Input
+                  type="password"
+                  name="password"
+                  placeholder="Enter password"
+                  required
+                />
+              </InputGroup>
+            </div>
             {actionData?.error && <p className="text-sm text-danger">{actionData.error}</p>}
-            <Button type="submit" color="primary" isLoading={isSubmitting} fullWidth>
-              Sign In
+            <Button type="submit" variant="primary" isDisabled={isSubmitting} fullWidth>
+              {isSubmitting ? "Signing in..." : "Sign In"}
             </Button>
-            <p className="text-center text-xs text-default-400">
+            <p className="text-center text-xs text-muted-foreground">
               First time? Your account will be created automatically.
             </p>
           </Form>
-        </CardBody>
+        </Card.Content>
       </Card>
     </div>
   );
