@@ -157,6 +157,71 @@ describe("applyRules: description signals", () => {
   });
 });
 
+describe("applyRules: elig-v0.2 fixes", () => {
+  it.each([
+    [["Canada Locations"]],
+    [["US-PERM"]],
+    [["Seattle", "US"]],
+    [["NYC, Chicago, Seattle, San Francisco", "US"]],
+    [["Toronto, Canada", "Canada Locations"]],
+    [["Shanghai, China"]],
+    [["Hanoi, Vietnam"]],
+    [["NAMER and LatAm"]],
+    [["Remote - North America"]],
+    [["Remote Americas + Europe"]],
+  ])("%j -> not_eligible", (locations) => {
+    expectDecided(posting({ locations }), "not_eligible");
+  });
+
+  it.each([
+    // A plain city alone has no anchor.
+    [["Seattle"]],
+    // An office code is not a city.
+    [["BCC", "US"]],
+    [["na", "US"]],
+    // A city list with a bare Remote option is not "City, State".
+    [["London, Paris, Berlin, Tokyo, New York, Remote"]],
+    [["Americas/APAC"]],
+  ])("%j -> undecided", (locations) => {
+    expect(applyRules(posting({ locations }))).toBeNull();
+  });
+
+  it.each([
+    "Stripe powers businesses all over the world and helps entrepreneurs start a business from anywhere in the world.",
+    "Our products help founders start and run a company, from anywhere in the world.",
+    "We help our users start, run, and scale an online business from anywhere in the world.",
+  ])("product marketing %j is not the worldwide signal", (description) => {
+    expect(applyRules(posting({ description }))).toBeNull();
+    expectDecided(posting({ locations: ["Seattle", "US"], description }), "not_eligible");
+  });
+
+  it("genuine hiring phrasing next to a product word stays eligible", () => {
+    expectDecided(
+      posting({
+        description: "We build tools for businesses, and we hire from anywhere in the world.",
+      }),
+      "eligible",
+    );
+  });
+
+  it("an Indian city beyond the big metros counts as India", () => {
+    expectDecided(posting({ locations: ["Kochi", "US"] }), "eligible");
+    expect(applyRules(posting({ locations: ["Kochi", "US"], workMode: null }))).toBeNull();
+  });
+
+  it("an Indian option in a body 'Location:' line blocks not_eligible", () => {
+    expect(
+      applyRules(
+        posting({
+          locations: ["Singapore"],
+          description:
+            "- Location: Seoul, Korea OR Singapore OR New Delhi, India\n- Department: Data",
+        }),
+      ),
+    ).toBeNull();
+  });
+});
+
 describe("applyRules: undecided -> null", () => {
   it.each([
     [["Remote"], "We build things."],

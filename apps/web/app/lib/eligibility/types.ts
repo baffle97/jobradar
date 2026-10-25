@@ -3,7 +3,7 @@
 
 // Bump whenever the rules or the LLM prompt change; stored with every result so
 // the check task re-runs postings judged by an older version.
-export const PROMPT_VERSION = "elig-v0.1";
+export const PROMPT_VERSION = "elig-v0.2";
 
 export type Verdict = "eligible" | "not_eligible" | "unclear";
 

@@ -3,8 +3,10 @@
 import type { EligibilityResult, Posting } from "./types";
 import { PROMPT_VERSION } from "./types";
 
+// Cities and states beyond the big metros matter too: a location list is read as
+// "all outside India" once India appears nowhere in it (see plainPlaceName).
 const INDIA_RE =
-  /\b(?:india|bangalore|bengaluru|mumbai|bombay|new delhi|delhi|gurgaon|gurugram|noida|hyderabad|pune|chennai|kolkata|ahmedabad)\b/i;
+  /\b(?:india|bangalore|bengaluru|mumbai|bombay|new delhi|delhi|gurgaon|gurugram|noida|hyderabad|pune|chennai|kolkata|ahmedabad|kochi|cochin|thiruvananthapuram|trivandrum|coimbatore|mysore|mysuru|jaipur|chandigarh|mohali|indore|nagpur|lucknow|bhubaneswar|visakhapatnam|vizag|vadodara|surat|goa|karnataka|maharashtra|kerala|tamil nadu|telangana|haryana|uttar pradesh|gujarat|west bengal)\b/i;
 
 const COUNTRIES = [
   "united states of america",
@@ -68,19 +70,67 @@ const COUNTRIES = [
   "new zealand",
   "japan",
   "south korea",
+  "korea",
   "singapore",
   "philippines",
+  "china",
+  "hong kong",
+  "taiwan",
+  "vietnam",
+  "indonesia",
+  "malaysia",
+  "thailand",
+  "pakistan",
+  "bangladesh",
+  "sri lanka",
+  "nepal",
   "south africa",
   "nigeria",
   "kenya",
+  "ghana",
   "egypt",
+  "morocco",
   "uae",
   "united arab emirates",
+  "saudi arabia",
+  "qatar",
+  "bahrain",
+  "kuwait",
+  "jordan",
+  "ecuador",
+  "venezuela",
+  "bolivia",
+  "paraguay",
+  "guatemala",
+  "panama",
+  "dominican republic",
+  "puerto rico",
+  "armenia",
+  "moldova",
+  "albania",
+  "north macedonia",
+  "bosnia and herzegovina",
 ];
 
-// Regions that exclude India. Deliberately NOT here: Americas/LATAM/APAC/Asia/
-// global, which the rules leave to the LLM.
-const REGIONS = ["eu", "european union", "europe", "emea", "eea", "dach", "nordics", "benelux"];
+// Regions that exclude India. Deliberately NOT here: APAC/APJ/Asia/global, which
+// the rules leave to the LLM ("Americas/APAC" stays undecided for that reason).
+const REGIONS = [
+  "eu",
+  "european union",
+  "europe",
+  "emea",
+  "eea",
+  "dach",
+  "nordics",
+  "benelux",
+  "americas",
+  "amer",
+  "namer",
+  "north america",
+  "latam",
+  "latin america",
+  "south america",
+];
 
 const US_STATES = [
   "alabama",
@@ -161,7 +211,13 @@ const NON_INDIA_PLACES = new Set(
 
 // Anything that makes a location string fuzzy: the rules don't classify it.
 const AMBIGUOUS_LOCATION_RE =
-  /\b(?:worldwide|global|globally|anywhere|international|apac|asia|asian|pacific|americas|amer|latam|latin america|north america|south america|time ?zones?|tz|gmt|utc|est|edt|pst|pdt|cet|cst|ist|hours|overlap)\b/i;
+  /\b(?:worldwide|global|globally|anywhere|international|apac|apj|asia|asian|pacific|time ?zones?|tz|gmt|utc|est|edt|pst|pdt|cet|cst|ist|hours|overlap)\b/i;
+
+// A location that is only a place name ("Seattle", "Toronto, Canada", "NYC,
+// Chicago"): letters, no remote/hybrid/region/placeholder words, short parts.
+const PLAIN_PLACE_RE = /^[a-z .'-]+(?:,[a-z .'-]+)*$/i;
+const NOT_A_PLACE_RE =
+  /\b(?:remote|hybrid|on-?site|office|home|virtual|distributed|flexible|any|anywhere|other|multiple|various|tbd|tba|location|locations|field|travel|region|regions|na|emea|apj|apac)\b/i;
 
 const WORLDWIDE_LOCATION_RES = [
   /^(?:remote\W*)?(?:worldwide|anywhere in the world)(?:\W*remote)?\W*$/i,
@@ -221,14 +277,38 @@ const TIMEZONE_AFTER_RE = /^\W*(?:time\s*zones?|timezones?|hours|business hours|
 const EXCEPTION_AFTER_RE =
   /\b(?:except|excluding|other than|but not|time\s*zones?|timezones?|overlap|hours)\b/i;
 
+const KNOWN_CITY_CODES = new Set(["NYC", "SF", "LA", "DC"]);
+
+// "Location: Seoul, Korea OR Singapore OR New Delhi, India" in the body: the
+// location fields may list only some of the options.
+const DESC_INDIA_LOCATION_RE = new RegExp(
+  String.raw`\blocations?\s*:[^.\n]{0,150}?${INDIA_RE.source}`,
+  "i",
+);
+
+// "help entrepreneurs start a business from anywhere in the world" is about the
+// product, not about hiring.
+const PRODUCT_SUBJECT_RE =
+  /\b(?:business|businesses|customers?|users?|companies|company|merchants?|entrepreneurs?|founders?|sellers?|creators?|clients?)\b/i;
+const HIRING_SUBJECT_RE =
+  /\b(?:hire|hiring|candidates?|applicants?|employees?|teammates?|team members?|you can work|you can live|work remotely)\b/i;
+
 type LocationClass = "india" | "worldwide" | "non_india" | "unknown";
 
 function collapse(s: string): string {
   return s.replace(/\s+/g, " ").trim();
 }
 
+// "Canada Locations" -> "canada", "US-PERM" -> "us".
+function normalizeLocation(raw: string): string {
+  return collapse(raw)
+    .toLowerCase()
+    .replace(/\s+locations$/, "")
+    .replace(/\bus-perm\b/, "us");
+}
+
 function classifyLocation(raw: string): LocationClass {
-  const s = collapse(raw).toLowerCase();
+  const s = normalizeLocation(raw);
   if (!s) return "unknown";
   if (INDIA_RE.test(s)) return "india";
   if (WORLDWIDE_LOCATION_RES.some((re) => re.test(s))) return "worldwide";
@@ -247,24 +327,50 @@ function classifyLocation(raw: string): LocationClass {
   if (segments.length === 0) return "unknown"; // bare "Remote"
   if (segments.every((seg) => NON_INDIA_PLACES.has(seg))) return "non_india";
 
-  // "City, Country" / "City, State": the last comma part names the place.
-  const commaParts = s.split(",").map(clean).filter(Boolean);
-  if (commaParts.length >= 2 && NON_INDIA_PLACES.has(commaParts[commaParts.length - 1])) {
+  // "City, Country" / "City, State": the last comma part names the place. Not
+  // for a city list with a bare "Remote" option ("London, New York, Remote").
+  const rawCommaParts = s.split(",").map((p) => p.trim());
+  const commaParts = rawCommaParts.map(clean).filter(Boolean);
+  if (
+    commaParts.length >= 2 &&
+    !rawCommaParts.includes("remote") &&
+    NON_INDIA_PLACES.has(commaParts[commaParts.length - 1])
+  ) {
     return "non_india";
   }
   return "unknown";
 }
 
+// Only plain place names: no acronyms beyond the known ones (an office code like
+// "BCC" is not a city), at most three words per comma part.
+function plainPlaceName(raw: string): boolean {
+  const s = collapse(raw);
+  if (!PLAIN_PLACE_RE.test(s) || NOT_A_PLACE_RE.test(s) || AMBIGUOUS_LOCATION_RE.test(s)) {
+    return false;
+  }
+  return s.split(",").every((part) => {
+    const words = part.trim().split(" ");
+    const acronym = /^[A-Z.]{2,5}$/.test(part.trim()) && !KNOWN_CITY_CODES.has(part.trim());
+    return words.length <= 3 && !acronym;
+  });
+}
+
 interface Match {
   text: string;
+  before: string;
   after: string;
 }
 
 function* matchesOf(re: RegExp, text: string): Generator<Match> {
   const global = new RegExp(re.source, re.flags.includes("g") ? re.flags : `${re.flags}g`);
   for (const m of text.matchAll(global)) {
-    const end = (m.index ?? 0) + m[0].length;
-    yield { text: m[0], after: text.slice(end, end + 80) };
+    const start = m.index ?? 0;
+    const end = start + m[0].length;
+    yield {
+      text: m[0],
+      before: text.slice(Math.max(0, start - 120), start),
+      after: text.slice(end, end + 80),
+    };
   }
 }
 
@@ -286,6 +392,8 @@ function firstWorldwide(description: string): string | null {
     for (const m of matchesOf(re, description)) {
       const sentenceTail = m.after.split(/[.!?;](?:\s|$)/)[0];
       if (EXCEPTION_AFTER_RE.test(sentenceTail)) continue;
+      const sentence = `${m.before.split(/[.!?;](?:\s|$)/).pop() ?? ""}${m.text}`;
+      if (PRODUCT_SUBJECT_RE.test(sentence) && !HIRING_SUBJECT_RE.test(sentence)) continue;
       return m.text;
     }
   }
@@ -320,8 +428,20 @@ export function applyRules(posting: Posting): EligibilityResult | null {
   // 2. Collect explicit signals on each side; a conflict goes to the LLM.
   const worldwideLoc = classes.find(({ cls }) => cls === "worldwide")?.loc ?? null;
   const worldwideDesc = firstWorldwide(description);
+  // Every location outside India. Plain city names ("Seattle") count too once one
+  // location is a known non-India place and India appears in neither title nor
+  // locations: ["Seattle", "US"].
+  const anchor = classes.find(({ cls }) => cls === "non_india")?.loc ?? null;
+  const indiaInFields = INDIA_RE.test([posting.title, ...locations].join("\n"));
   const allNonIndia =
-    classes.length > 0 && classes.every(({ cls }) => cls === "non_india") ? classes[0].loc : null;
+    anchor &&
+    classes.every(
+      ({ loc, cls }) =>
+        cls === "non_india" || (cls === "unknown" && !indiaInFields && plainPlaceName(loc)),
+    )
+      ? anchor
+      : null;
+  const descIndiaLocation = DESC_INDIA_LOCATION_RE.exec(posting.description ?? "")?.[0] ?? null;
   const restriction = firstRestriction(description);
   const fullText = [posting.title, ...locations, description].join("\n");
   const usAuth = !INDIA_OR_WORLDWIDE_RE.test(fullText)
@@ -332,6 +452,8 @@ export function applyRules(posting: Posting): EligibilityResult | null {
   const notEligibleQuote = allNonIndia ?? restriction ?? usAuth;
 
   if (eligibleQuote && notEligibleQuote) return null;
+  // The body names an Indian location the location fields leave out.
+  if (notEligibleQuote && descIndiaLocation) return null;
   if (eligibleQuote) {
     return result("eligible", eligibleQuote, `Open worldwide: "${eligibleQuote}".`);
   }
