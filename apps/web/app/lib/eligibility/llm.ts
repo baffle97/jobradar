@@ -122,8 +122,10 @@ function chooseModel(env: Record<string, string | undefined>): ModelChoice | nul
 }
 
 // null when no LLM credentials are set, so the agent degrades to rules-only.
+// abortSignal: stops calls still running when the caller has to finish.
 export function createEligibilityLlm(
   env: Record<string, string | undefined> = process.env,
+  { abortSignal }: { abortSignal?: AbortSignal } = {},
 ): EligibilityLlmConfig | null {
   const choice = chooseModel(env);
   if (!choice) return null;
@@ -142,6 +144,7 @@ export function createEligibilityLlm(
         // Overloaded providers can hold a request for minutes; give up on this
         // posting (it is retried next run) instead of stalling the task.
         timeout: 120_000,
+        ...(abortSignal ? { abortSignal } : {}),
       });
       const { output } = result;
       return {

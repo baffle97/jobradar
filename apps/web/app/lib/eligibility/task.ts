@@ -17,8 +17,10 @@ const MAX_CONSECUTIVE_RATE_LIMITS = 5;
 // Gemini's free tier allows ~15 requests a minute per model: start LLM calls at
 // least this far apart (payload llmIntervalMs, else ELIGIBILITY_LLM_INTERVAL_MS).
 const DEFAULT_LLM_INTERVAL_MS = 4500;
-// Vercel stops the function at 300s: start no new LLM call after this long.
+// Vercel stops the function at 300s: start no new LLM call after this long, and
+// abort calls still running at the hard stop so the run can save and return.
 const DEFAULT_LLM_BUDGET_MS = 230_000;
+const LLM_HARD_STOP_MS = 280_000;
 
 function intOr(value: unknown, fallback: number): number {
   const n = Number(value);
@@ -101,7 +103,7 @@ export async function runEligibilityCheck(payload?: unknown) {
   };
   const startedAt = Date.now();
   const maxJobs = intOr(opts.maxJobs, 300);
-  const maxLlmCalls = intOr(opts.maxLlmCalls, 150);
+  const requestedLlmCalls = intOr(opts.maxLlmCalls, 150);
   const llmConcurrency = Math.max(
     1,
     intOr(opts.llmConcurrency ?? process.env.ELIGIBILITY_LLM_CONCURRENCY, DEFAULT_LLM_CONCURRENCY),
@@ -110,9 +112,17 @@ export async function runEligibilityCheck(payload?: unknown) {
     opts.llmIntervalMs ?? process.env.ELIGIBILITY_LLM_INTERVAL_MS,
     DEFAULT_LLM_INTERVAL_MS,
   );
-  const llmDeadline = startedAt + intOr(opts.llmBudgetMs, DEFAULT_LLM_BUDGET_MS);
+  const llmBudgetMs = intOr(opts.llmBudgetMs, DEFAULT_LLM_BUDGET_MS);
+  const llmDeadline = startedAt + llmBudgetMs;
+  // Paced calls queue up: no more than the budget has start slots for.
+  const maxLlmCalls =
+    llmIntervalMs > 0
+      ? Math.min(requestedLlmCalls, Math.floor(llmBudgetMs / llmIntervalMs))
+      : requestedLlmCalls;
   const withLlmSlot = limiter(llmConcurrency, llmIntervalMs);
-  const llmConfig = createEligibilityLlm();
+  const llmConfig = createEligibilityLlm(process.env, {
+    abortSignal: AbortSignal.timeout(LLM_HARD_STOP_MS),
+  });
 
   const rows = await db
     .select({
