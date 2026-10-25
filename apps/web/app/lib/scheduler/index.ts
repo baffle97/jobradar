@@ -11,11 +11,15 @@ export function defineTask(name: string, fn: TaskFn) {
   registry.set(name, fn);
 }
 
+export function hasTask(name: string) {
+  return registry.has(name);
+}
+
 export async function runTask(name: string, payload?: unknown) {
   const fn = registry.get(name);
   if (!fn) throw new Error(`Task "${name}" not registered`);
 
-  const [run] = db
+  const [run] = await db
     .insert(schema.taskRuns)
     .values({ taskName: name, status: "running", payload, startedAt: new Date().toISOString() })
     .returning()
@@ -23,7 +27,8 @@ export async function runTask(name: string, payload?: unknown) {
 
   try {
     const result = await fn(payload);
-    db.update(schema.taskRuns)
+    await db
+      .update(schema.taskRuns)
       .set({ status: "completed", result, completedAt: new Date().toISOString() })
       .where(eq(schema.taskRuns.id, run.id))
       .run();
@@ -31,7 +36,8 @@ export async function runTask(name: string, payload?: unknown) {
     return result;
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
-    db.update(schema.taskRuns)
+    await db
+      .update(schema.taskRuns)
       .set({ status: "failed", error: message, completedAt: new Date().toISOString() })
       .where(eq(schema.taskRuns.id, run.id))
       .run();

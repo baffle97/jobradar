@@ -8,6 +8,8 @@ import { candidateTokens, ycBoardIsTrusted } from "./refs";
 import { ATS_LIST, type Ats, type BoardFetchResult, type BoardJob, type BoardRef } from "./types";
 
 const MAX_FAILURES = 5;
+// Keeps each Turso batch request a reasonable size on boards with hundreds of jobs.
+const UPSERT_BATCH = 100;
 
 type Board = typeof schema.companyBoards.$inferSelect;
 
@@ -34,13 +36,13 @@ async function mapLimit<T, R>(items: T[], limit: number, fn: (item: T) => Promis
   return results;
 }
 
-export function registerBoards(
+export async function registerBoards(
   refs: (BoardRef & { companyName?: string })[],
   discoveredFrom: string,
-): number {
+): Promise<number> {
   let added = 0;
   for (const ref of refs) {
-    const result = db
+    const result = await db
       .insert(schema.companyBoards)
       .values({
         ats: ref.ats,
@@ -50,62 +52,68 @@ export function registerBoards(
       })
       .onConflictDoNothing()
       .run();
-    added += result.changes;
+    added += result.rowsAffected;
   }
   return added;
 }
 
-function upsertBoardJobs(board: Board, jobs: BoardJob[], seenAt: string) {
+async function upsertBoardJobs(board: Board, jobs: BoardJob[], seenAt: string) {
   const existing = new Set(
-    db
-      .select({ hash: schema.jobs.dedupHash })
-      .from(schema.jobs)
-      .where(eq(schema.jobs.boardId, board.id))
-      .all()
-      .map((r) => r.hash),
+    (
+      await db
+        .select({ hash: schema.jobs.dedupHash })
+        .from(schema.jobs)
+        .where(eq(schema.jobs.boardId, board.id))
+        .all()
+    ).map((r) => r.hash),
   );
 
   let inserted = 0;
-  db.transaction((tx) => {
-    for (const job of jobs) {
-      const dedupHash = boardJobHash(board.ats as Ats, board.token, job.externalId);
-      if (!existing.has(dedupHash)) inserted++;
+  const upserts = jobs.map((job) => {
+    const dedupHash = boardJobHash(board.ats as Ats, board.token, job.externalId);
+    if (!existing.has(dedupHash)) inserted++;
 
-      const fields = {
-        title: job.title,
-        company: job.company,
-        location: job.locations.join("; ") || null,
-        locations: job.locations,
-        country: job.country ?? null,
-        workMode: job.workMode ?? null,
-        jobType: job.jobType ?? null,
-        description: job.description,
-        sourceUrl: job.sourceUrl,
-        applyUrl: job.applyUrl ?? null,
-        postedAt: job.postedAt ?? null,
-        salaryMin: job.salaryMin ?? null,
-        salaryMax: job.salaryMax ?? null,
-        salaryCurrency: job.salaryCurrency ?? null,
-        salaryText: job.salaryText ?? null,
-        isActive: true,
-        lastSeenAt: seenAt,
-      };
+    const fields = {
+      title: job.title,
+      company: job.company,
+      location: job.locations.join("; ") || null,
+      locations: job.locations,
+      country: job.country ?? null,
+      workMode: job.workMode ?? null,
+      jobType: job.jobType ?? null,
+      description: job.description,
+      sourceUrl: job.sourceUrl,
+      applyUrl: job.applyUrl ?? null,
+      postedAt: job.postedAt ?? null,
+      salaryMin: job.salaryMin ?? null,
+      salaryMax: job.salaryMax ?? null,
+      salaryCurrency: job.salaryCurrency ?? null,
+      salaryText: job.salaryText ?? null,
+      isActive: true,
+      lastSeenAt: seenAt,
+    };
 
-      tx.insert(schema.jobs)
-        .values({
-          ...fields,
-          source: board.ats,
-          boardId: board.id,
-          externalId: job.externalId,
-          dedupHash,
-        })
-        .onConflictDoUpdate({ target: schema.jobs.dedupHash, set: fields })
-        .run();
-    }
+    return db
+      .insert(schema.jobs)
+      .values({
+        ...fields,
+        source: board.ats,
+        boardId: board.id,
+        externalId: job.externalId,
+        dedupHash,
+      })
+      .onConflictDoUpdate({ target: schema.jobs.dedupHash, set: fields });
   });
 
+  // A batch runs as one transaction in a single round trip, which matters
+  // against Turso where an interactive transaction pays latency per statement.
+  for (let i = 0; i < upserts.length; i += UPSERT_BATCH) {
+    const [first, ...rest] = upserts.slice(i, i + UPSERT_BATCH);
+    await db.batch([first, ...rest]);
+  }
+
   // Anything this board no longer lists has been closed or filled.
-  const closed = db
+  const closed = await db
     .update(schema.jobs)
     .set({ isActive: false })
     .where(
@@ -117,7 +125,7 @@ function upsertBoardJobs(board: Board, jobs: BoardJob[], seenAt: string) {
     )
     .run();
 
-  return { inserted, updated: jobs.length - inserted, closed: closed.changes };
+  return { inserted, updated: jobs.length - inserted, closed: closed.rowsAffected };
 }
 
 async function pollBoard(board: Board) {
@@ -128,7 +136,8 @@ async function pollBoard(board: Board) {
     result = await fetchBoard(board.ats as Ats, board.token, board.companyName ?? undefined);
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
-    db.update(schema.companyBoards)
+    await db
+      .update(schema.companyBoards)
       .set({
         status: "error",
         lastError: message,
@@ -141,15 +150,17 @@ async function pollBoard(board: Board) {
   }
 
   if (result.status === "not_found") {
-    db.update(schema.companyBoards)
+    await db
+      .update(schema.companyBoards)
       .set({ status: "not_found", lastPolledAt: polledAt, lastError: null })
       .where(eq(schema.companyBoards.id, board.id))
       .run();
     return { outcome: "not_found" as const };
   }
 
-  const counts = upsertBoardJobs(board, result.jobs, polledAt);
-  db.update(schema.companyBoards)
+  const counts = await upsertBoardJobs(board, result.jobs, polledAt);
+  await db
+    .update(schema.companyBoards)
     .set({
       status: "ok",
       consecutiveFailures: 0,
@@ -166,7 +177,7 @@ async function pollBoard(board: Board) {
 export async function ingestBoards(payload?: unknown) {
   const maxBoards = (payload as { maxBoards?: number } | undefined)?.maxBoards ?? 200;
 
-  const boards = db
+  const boards = await db
     .select()
     .from(schema.companyBoards)
     .where(
@@ -232,11 +243,12 @@ export async function discoverFromYC(payload?: unknown) {
   const companies: YCCompany[] = await res.json();
 
   const known = new Set(
-    db
-      .select({ ats: schema.companyBoards.ats, token: schema.companyBoards.token })
-      .from(schema.companyBoards)
-      .all()
-      .map((b) => `${b.ats}:${b.token.toLowerCase()}`),
+    (
+      await db
+        .select({ ats: schema.companyBoards.ats, token: schema.companyBoards.token })
+        .from(schema.companyBoards)
+        .all()
+    ).map((b) => `${b.ats}:${b.token.toLowerCase()}`),
   );
 
   const probes: { ats: Ats; token: string; companyName: string; website?: string | null }[] = [];
@@ -282,7 +294,8 @@ export async function discoverFromYC(payload?: unknown) {
       lastError = err instanceof Error ? err.message : String(err);
     }
 
-    db.insert(schema.companyBoards)
+    await db
+      .insert(schema.companyBoards)
       .values({
         ats: probe.ats,
         token: probe.token,

@@ -67,11 +67,15 @@ function parseHNComment(text: string): ParsedHNJob | null {
 
 function parseSalaryRange(salary: string): { min?: number; max?: number } {
   if (!salary) return {};
+  // A bare "," parsed to NaN (and a long digit run can overflow), which libSQL rejects.
   const numbers =
-    salary.match(/[\d,]+k?/gi)?.map((n) => {
-      const num = Number.parseInt(n.replace(/[,k]/gi, ""), 10);
-      return n.toLowerCase().includes("k") ? num * 1000 : num;
-    }) ?? [];
+    salary
+      .match(/\d[\d,]*k?/gi)
+      ?.map((n) => {
+        const num = Number.parseInt(n.replace(/[,k]/gi, ""), 10);
+        return n.toLowerCase().includes("k") ? num * 1000 : num;
+      })
+      .filter((n) => Number.isSafeInteger(n)) ?? [];
   if (numbers.length >= 2) return { min: numbers[0], max: numbers[1] };
   if (numbers.length === 1) return { min: numbers[0] };
   return {};
@@ -150,8 +154,8 @@ export async function scrapeHN(): Promise<{
     }
   }
 
-  const result = upsertJobs(allJobs);
-  const boardsDiscovered = registerBoards(boardRefs, "hn");
+  const result = await upsertJobs(allJobs);
+  const boardsDiscovered = await registerBoards(boardRefs, "hn");
   console.log(
     `[hn] inserted ${result.inserted}/${result.total} jobs, ${boardsDiscovered} new ATS boards`,
   );

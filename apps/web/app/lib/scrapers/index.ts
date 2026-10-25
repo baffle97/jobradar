@@ -1,3 +1,4 @@
+import { runEligibilityCheck } from "~/lib/eligibility/task";
 import { defineTask, scheduleCron } from "~/lib/scheduler";
 import { scrapeAdzuna } from "./adzuna";
 import { discoverFromYC, ingestBoards } from "./ats";
@@ -31,6 +32,7 @@ export function registerScraperTasks() {
   defineTask("ingest:ats", ingestBoards);
   defineTask("discover:yc", discoverFromYC);
   defineTask("cleanup:stale-jobs", cleanupStaleJobs);
+  defineTask("eligibility:check", runEligibilityCheck);
 }
 
 export function scheduleScraperCrons() {
@@ -40,4 +42,6 @@ export function scheduleScraperCrons() {
   scheduleCron("discover:yc", "0 4 * * *"); // daily, one batch of companies
   scheduleCron("ingest:ats", "30 */6 * * *"); // every 6 hours
   scheduleCron("cleanup:stale-jobs", "0 3 * * *"); // daily at 3am UTC
+  // twice a day, after ingest; defaults maxJobs 300, maxLlmCalls 150
+  scheduleCron("eligibility:check", "0 8,20 * * *");
 }

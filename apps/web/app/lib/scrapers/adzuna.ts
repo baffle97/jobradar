@@ -59,7 +59,7 @@ export async function scrapeAdzuna(): Promise<{ inserted: number; total: number 
     }
   }
 
-  const result = upsertJobs(allJobs);
+  const result = await upsertJobs(allJobs);
   console.log(`[adzuna] inserted ${result.inserted}/${result.total} jobs`);
   return result;
 }

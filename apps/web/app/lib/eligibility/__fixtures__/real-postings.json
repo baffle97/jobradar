@@ -1,0 +1,959 @@
+[
+  {
+    "id": 823,
+    "source": "ashby",
+    "posting": {
+      "title": "Sr./Staff Backend Engineer - Java (India)",
+      "company": "Oscilar.com",
+      "locations": ["Remote - India"],
+      "workMode": "remote",
+      "description": "Location\n\nRemote (India) \n\n \n\nShape the future of trust in the age of AI\n\nAt Oscilar, we're building the most advanced AI Risk Decisioning™ Platform. Banks, fintechs, and digitally native organizations rely on us to manage their fraud, credit, and compliance risk with the power of AI. If you're passionate about solving complex problems and making the internet safer for everyone, this is your place https://oscilar.com/careers.\n\n \n\nWhy join us:\n\n - Mission-driven teams: Work alongside industry veterans from Meta, Uber, Citi, and Confluent, all united by a shared goal to make the digital world safer.\n\n - Ownership and impact: We believe in extreme ownership. You'll be empowered to take responsibility, move fast, and make decisions that drive our mission forward.\n\n - Innovate at the cutting edge: Your work will shape how modern finance detects fraud and manages risk.\n\n \n\n\nJOB DESCRIPTION\n\nAs a Senior/Staff Backend Engineer, you'll own critical parts of the platform that banks and fintechs use to make real-time fraud, credit, and compliance decisions. You'll join a small, senior team where your technical decisions have direct impact.\n\n \n\n\nWHAT YOU'LL DO\n\n - Own features end to end: turn an idea or customer problem into a design, build it, ship it safely (GitHub Actions, feature flags with LaunchDarkly), and keep it running well in production.\n\n - Build and scale the Java services at the core of our decisioning platform, where latency and reliability directly affect our customers.\n\n - Work on real-time streaming and data systems (Kafka, Flink, ClickHouse, Databricks) handling high event volumes with tight latency requirements.\n\n - Build reliable processes with workflow orchestration (e.g. Temporal).\n\n - Make technical decisions, not just implement them: propose architecture, weigh trade-offs, and write design docs.\n\n - Work directly with product, frontend, and customer-facing teams to understand the problem before writing code.\n\n - Own production: monitoring, performance"
+    },
+    "expectedByRules": "eligible",
+    "expectedQuote": "Remote - India",
+    "why": "India: location string 'Remote - India'.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 5071,
+    "source": "ashby",
+    "posting": {
+      "title": "Senior Customer Success Architect",
+      "company": "Amplitude",
+      "locations": ["Remote-India (PEO)"],
+      "workMode": "remote",
+      "description": "Amplitude is the leading AI analytics platform, helping over 5,200 customers—including Atlassian, Burger King, NBCUniversal, and Square—build better products and digital experiences. With powerful AI Agents embedded across our platform, teams can analyze, test, and optimize user experiences faster than ever. Ranked #1 across multiple categories in G2’s Winter 2026 Report, Amplitude is the best-in-class solution for product, data, and marketing teams. Learn more at amplitude.com http://amplitude.com.\n\n\n\nAs an organization, we deliver for our customers by living our values. We operate from a place of humility, take ownership of problems and successes, approach challenges with a growth mindset, and put our customers at the center of everything we do.\n\nAbout The Role & Team\n\nAmplitude’s mission is to help companies build better products.  By building best-in-class teams, we create best-in-class products that customers love.  We approach challenges with humility, we take ownership over our work, and our growth mindset pushes us to constantly improve ourselves, each other, and the value we bring to customers.\n\nJoin us as we deliver innovative and creative solutions to our customers. We're looking for a Customer Success Architect, based in India and supporting Global Customers, with experience providing guidance on data management and consultative support on customer taxonomy and tech stack. Maintaining and establishing clean product analytics data is critical for our customers to be able to understand and drive their products forward. The ideal candidate is an enthusiastic professional who thrives in a fast-paced environment and possesses a strong curiosity for \"how things work\" and \"how things should work\". You are a solution- and execution-oriented individual with a dedication for getting things done. \n\n As a Customer Success Architect, you will: \n\n - Serve as a trusted technical hand-on operator for our customers\n\n - Possess a mastery of Amplitude products in order to"
+    },
+    "expectedByRules": "eligible",
+    "expectedQuote": "Remote-India (PEO)",
+    "why": "India: location 'Remote-India (PEO)'.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 897,
+    "source": "ashby",
+    "posting": {
+      "title": "Senior Consulting Engineer - India",
+      "company": "ClickHouse",
+      "locations": ["India"],
+      "workMode": "remote",
+      "description": "We are currently expanding our Support Services team at ClickHouse, which delivers exceptional service to our customers worldwide. We are seeking a Senior Consulting Engineer to join our global team, where you'll provide Consultative Support to our ClickHouse enterprise customers. The role uniquely blends hands-on engineering, development assistance, and high-tier support, performing functions across Consultative Support, Engineering, and Support. You will work directly with a set of strategic customers, providing guidance, case answers, and technical oversight. Consulting Engineers will also be assisting with support cases for customers in our Support L1 to L3 tiers, particularly when not assigned to larger projects.\n\nResponsibilities:\n\n - Project Engineering & Consulting (50%): Serve as a team member on customer projects, focusing on design, architecture, integration, implementation, and documentation. This includes research, benchmarking, performance and functional testing, reference architectures, sizing, migration, integration, development, and tooling.\n\n - Consultative Support (50%): Provide case-initiated consultative support to strategic users, customers, and prospects, assisting with implementation, onboarding, production launches, and Proof of Concepts (POCs).\n\n - Provide architectural, technical, and migration assistance, including hands-on tasks.\n\n - Work as a member of the Support Team, handling L1 to L3 cases and communications when not actively assigned to customer projects.\n\n - Partner closely with ClickHouse Product Management, Engineering, and Sales to contribute to the product roadmap and account plans.\n\n - Develop and assist with a wide range of content, including Public and Internal Documentation, Knowledge Base articles, ClickHouse Learning, Reference Architecture, blogs, and benchmark results.\n\n - Assist with hiring and mentoring new team members as we grow and scale.\n\n - Be available for scheduling and on-call needs to deliver high-quality\n[...]\n- You possess a mindset of teamwork, global engagement, empathy, and a drive for solving challenging problems.\n\n - You have a sense of adventure and urgency in building the most scalable, highest performing, largest, and fastest databases in the world.\n\n\nPERKS\n\n - Flexible work environment - ClickHouse is a globally distributed company and remote-friendly. We currently operate in over 25 countries.\n\n - Healthcare - Employer contributions towards your healthcare.\n\n - Equity in the company - Every new team member who joins our company receives stock options.\n\n - Time off - Flexible time off in the US, generous entitlement in other countries.\n\n - A USD$500 Home office setup if you’re a remote"
+    },
+    "expectedByRules": "eligible",
+    "expectedQuote": "India",
+    "why": "India: bare location 'India' on a workMode=remote posting (India + remote via workMode).",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 1022,
+    "source": "ashby",
+    "posting": {
+      "title": "Regional Field Marketing, India",
+      "company": "ClickHouse",
+      "locations": ["India", "Bangalore", "Mumbai", "Delhi"],
+      "workMode": "remote",
+      "description": "ClickHouse is hiring for our Regional Field Marketing, India role to lead our regional field marketing strategy in India. This is a foundational role responsible for building awareness, generating pipeline, and accelerating revenue in the region.\n\nIn this role, your mission will be to define and scale the India regional field marketing engine. You will own the regional field marketing strategy, partner closely with India sales leadership, and adapt global campaigns to the needs of the India market. You will be measured on enterprise pipeline and self-service revenue (MRR), working across both our self-serve product-led motion and our sales-led enterprise motion.\n\nWhat You Will Be Doing\n\n - Own the India regional field marketing strategy, annual plan, and budget, aligning field programs to regional pipeline and revenue targets with sales leadership.\n\n - Act as the marketing counterpart to India sales leadership, joining regional forecasting, QBRs, and account planning so marketing investment maps to sales priorities.\n\n - Partner with demand generation and growth to build programs for strategic verticals and AI-native sales teams, and to convert self-serve usage into commercial pipeline and expansion revenue.\n\n - Build an integrated regional program mix spanning first-party hosted events, third-party conferences, virtual events, ABM plays, digital advertising, and partner marketing.\n\n - Adapt global campaigns, messaging, and content for the India market.\n\n - Establish scalable processes for campaign planning, lead management, and follow-up with marketing operations and global demand generation, so every program has a clear path from engagement to pipeline. Report on pipeline generated and influenced revenue.\n\n - Identify emerging opportunities across India, make the case for new investment in geographies, verticals, or channels, and represent the region in global planning cycles.\n\nWhat You Bring Along\n\n - 10+ years of experience in field, regional, or integrated"
+    },
+    "expectedByRules": "eligible",
+    "expectedQuote": "Bangalore",
+    "why": "India: Indian-city locations on a remote posting.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 106,
+    "source": "hn",
+    "posting": {
+      "title": "Software Engineer, AI Platform",
+      "company": "SingleStore",
+      "locations": ["Full Time, Remote India"],
+      "workMode": "remote",
+      "description": "SingleStore is a distributed SQL database built for high-performance transactional and real-time analytical workloads. As data systems evolve, we’re building the platform for AI applications that operate directly over enterprise data, including retrieval, reasoning, agent workflows, and intelligent automation. Our AI Platform team works at the intersection of distributed systems, cloud infrastructure, and applied AI. Some of the technical problems we’re working on include: - Agent runtimes, orchestration, and MCP-style tool integration - Retrieval/RAG pipelines, embeddings, and vector search - Model integrations, evaluation, and observability - Secure multi-tenant AI infrastructure - Reliability, latency, cost controls, and scaling AI systems in production Our stack includes Go, Python, Kubernetes, cloud infrastructure, distributed systems, APIs, and modern AI/ML tooling. We’re currently hiring a Software Engineer located in India to join the AI Platform team, along with several other roles across SingleStore. Careers page with all open positions: https://grnh.se/ipvpz7d61us | https://www.singlestore.com/careers/jobs/ If you want to learn more about the engineering work we do, check out https://www.singlestore.com/blog/category/engineering/ . Feel free to email me directly via pkhaitan at singlestore dot com."
+    },
+    "expectedByRules": "eligible",
+    "expectedQuote": "Remote India",
+    "why": "HN, India: 'Full Time, Remote India'.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 134,
+    "source": "hn",
+    "posting": {
+      "title": "MTS, Applied ML",
+      "company": "FunnelStory",
+      "locations": ["Remote (India)"],
+      "workMode": "remote",
+      "description": "https://funnelstory.ai FunnelStory is building agents to autonomously protect and grow revenue for post-sales teams. Our agents need evidence-backed signals from large-scale structured and unstructured enterprise datasets. You'd work on cohort analysis, prediction models, experiments, and whatever else it takes to make those signals hold up. Our tech stack is primarily Go. Math/statistics background and 2+ years of experience working with ML in production is required. Please email preetam @ funnelstory.ai with \"HN - Applied ML\" in the subject if you are interested."
+    },
+    "expectedByRules": "eligible",
+    "expectedQuote": "Remote (India)",
+    "why": "HN, India: 'Remote (India)'.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 5297,
+    "source": "greenhouse",
+    "posting": {
+      "title": "AR Analyst",
+      "company": "Stripe",
+      "locations": ["Bangalore", "India Locations"],
+      "workMode": null,
+      "description": "About Stripe\n\nStripe is a financial infrastructure platform for businesses. Millions of companies—from the world’s largest enterprises to the most ambitious startups—use Stripe to accept payments, grow their revenue, and accelerate new business opportunities. Our mission is to increase the GDP of the internet, and we have a staggering amount of work ahead. That means you have an unprecedented opportunity to put the global economy within everyone’s reach while doing the most important work of your career.\n\nAbout the team\n\nThe Finance Operations (FinOps) team provides and enhances core business services that are the backbone for Stripe. FinOps uses data and operational excellence to deliver technology solutions, procurement, billing and payroll services, strategic sourcing, and supplier relationship management to Stripe.\n\nWhat you’ll do\n\nWe're looking for a Monetization Operations Analyst to join our growing team. This individual will help us improve user experience through accurate and timely onboarding of contracts, workflows and deliver improvements in our integrated financial systems with business partners, financial colleagues, and engineers.\n\nResponsibilities\n\n- Be responsible for onboarding sold custom contracts into our billing systems\n\n- Ability to understand the legal languages of the contract and comfortable working on it and have strong attention to detail\n\n- Build scalable and auditable onboarding processes for new and existing users\n\n- Partner with internal systems, deal desk, legal, sales ops, internal audit, go-to-market, engineer and account managers to develop and improve the process.\n\n- Partner with account managers to solve user inquiries related to onboarding implementation, billing, and collections and if needed troubleshoot as well.\n\n- Analyze our processes and instigate changes to help scale our operations and improve user experience\n\n- Work closely with other Stripe teams to assist with system implementations for billings, collections, and"
+    },
+    "expectedByRules": null,
+    "expectedQuote": null,
+    "why": "India city but workMode null and no 'remote' anywhere: rules cannot confirm remote (probably onsite Bengaluru office) -> LLM.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 1551,
+    "source": "ashby",
+    "posting": {
+      "title": "Data Engineer",
+      "company": "Tenki Cloud by Luxor Tech",
+      "locations": [
+        "Worldwide, Remote",
+        "Uruguay, Remote",
+        "Argentina, Remote",
+        "Brazil, Remote",
+        "Mexico, Remote",
+        "Philippines, Remote"
+      ],
+      "workMode": "remote",
+      "description": "ABOUT LUXOR\n\nLuxor is the leading software and services provider for Bitcoin miners and the broader compute industry. Our full-stack platform supports gigawatts of compute infrastructure, giving operators the tools to monetize their compute, optimize and trade hardware, access financial instruments, and manage energy.\n\nWe believe that compute power is becoming the world’s next major commodity and our products are built to support this shift. Our goal is to become the leaders in harnessing, refining, and trading compute, unlocking a new asset class for the world’s most important digital resource.\n\nAs Luxor continues to scale rapidly across software, hardware, financial, energy and cloud infrastructure products, every team member has the opportunity to shape mission-critical systems, influence company-wide strategy, and contribute directly to the future of the compute economy.\n\n\n\n\nROLE DESCRIPTION\n\nWe are looking for a Data Engineer to join our collaborative, and fast-moving team to work on one of the most rewarding projects in the mining and compute industry.\n\n\n\n\nBASIC REQUIREMENTS\n\n - Experience building both streaming & batch data pipelines/ETL and familiarity with design principles.\n\n - Expert in Python, PostgreSQL, and PL/pgSQL development and administration of large databases with focus on performance and production support on native cloud deployments.\n\n - Experience with scalability solutions and multi-region replication and failover solutions.\n\n - Experience with data warehouse technologies (Trino, Clickhouse, Airflow, etc).\n\n - Bachelor’s degree (or its foreign degree equivalent) in Computer Science, Engineering, or a related technical discipline or equivalent experience.\n\n - Deep understanding of programming and experience with at least one programming language.\n\n - English language proficiency.\n   \n   \n\n\nPREFERRED REQUIREMENTS\n\n - Knowledge of Kubernetes and Docker\n\n - 4+ years of working experience in relevant data field.\n\n - Knowledge of blockchain"
+    },
+    "expectedByRules": "eligible",
+    "expectedQuote": "Worldwide, Remote",
+    "why": "Worldwide: location 'Worldwide, Remote'.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 91,
+    "source": "hn",
+    "posting": {
+      "title": "AI Harness Engineer",
+      "company": "Tether",
+      "locations": ["REMOTE (Worldwide)"],
+      "workMode": "remote",
+      "description": "We're looking for an AI Harness Engineer to build local AI systems combining agentic AI with P2P technology. Looking for strong JavaScript/TypeScript experience and hands-on work with AI/LLMs, agent harnesses, local inference, and/or P2P/distributed systems. Open-source experience is a plus. Apply: https://careers.tether.io/o/ai-harness-engineer-100-remote-w..."
+    },
+    "expectedByRules": "eligible",
+    "expectedQuote": "REMOTE (Worldwide)",
+    "why": "HN, worldwide: 'REMOTE (Worldwide)'.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 35,
+    "source": "hn",
+    "posting": {
+      "title": "Backend Software Engineer",
+      "company": "Enveritas (YC S18, non-profit)",
+      "locations": ["Remote (Global)"],
+      "workMode": "remote",
+      "description": "https://enveritas.org/jobs/ Enveritas is a 501(c)(3) nonprofit working on sustainability issues facing smallholder coffee farmers. We collect field data in 30+ countries and build systems for analyzing risks in coffee, cocoa, and tea supply chains (including EUDR-related deforestation checks). * Backend Software Engineer (Python, PostgreSQL/PostGIS, Docker, AWS, Terraform) - $135-$155k - https://enveritas.org/jobs/backend-software-eng/#10d7adef8us (worldwide remote)"
+    },
+    "expectedByRules": "eligible",
+    "expectedQuote": "worldwide remote",
+    "why": "HN, worldwide: location 'Remote (Global)' and description '(worldwide remote)'.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 72,
+    "source": "hn",
+    "posting": {
+      "title": "REMOTE (Worldwide: US / Canada / Europe / UK / LATAM)",
+      "company": "Matcha.fm",
+      "locations": ["REMOTE (Worldwide: US / Canada / Europe / UK / LATAM)"],
+      "workMode": "remote",
+      "description": "https://matcha.fm I'm a Canadian repeat founder working on agents that cut the noise in large dataset search. Looking for a great builder (founding software engineer) and a great marketer both with a track record of virality and driving product distribution. Fully remote anywhere in the world, with some US / EU timezone overlap. The same salary regardless of where you live No micromanagement, no unnecessary calls Calm, low-distraction culture to do your best work Founding Software Engineer : https://matcha.fm/apply/fse Founding Marketer : https://matcha.fm/apply/marketing"
+    },
+    "expectedByRules": null,
+    "expectedQuote": null,
+    "why": "TRAP: says 'Worldwide' and 'anywhere in the world' but enumerates US/Canada/Europe/UK/LATAM only, wants US/EU overlap. Rules must not call it eligible -> LLM.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 163,
+    "source": "hn",
+    "posting": {
+      "title": "REMOTE ALMOST ANYWHERE IN THE WORLD",
+      "company": "ALBERT",
+      "locations": ["REMOTE ALMOST ANYWHERE IN THE WORLD"],
+      "workMode": "remote",
+      "description": "Hiring: exceptional consumer product engineers at Albert. We're a consumer fintech with 20M+ users who trust us to budget, save, invest, and bank in one place. Profitable for 4+ years. And as of today, our average employee tenure is 3.6 years, a number you almost never see in startup tech, and one we're quietly proud of. People stay because the work is good, the people are sharp, and we've built something worth staying for. Now we're building net-new consumer products from zero, and we're looking for people who love to tinker and build stuff to ship them with us. The kind of person we're looking for: • Top fraction of a percentile in craft, the kind of good that's hard to fake • Builds for fun, not just for work. The kind who ships a working prototype over the weekend and can't help themselves • Comfortable owning 0 to 1 consumer products end-to-end • Allergic to politics, theater, and bureaucracy What you get: • Remote, anywhere with reasonable timezone overlap (and for someone truly exceptional, we'll make async work) • Real scale from day one (20M+ users, real money, real consequences) • Compensation that beats the market. We pay well and we mean it. Base, discretionary year-end bonus, meaningful 401(k) match, and meaningful equity in a profitable, growing unicorn (the kind that's actually worth something) • Platinum PPO health benefits with Blue Shield, top of the top of the line, covering your entire family • A mission worth your time: make money simple, so people spend less time managing it and keep more of it • Small senior-heavy teams, direct ownership, no layers • Forthcoming with the business metrics that matter, so you always know how the company is actually doing • The startup perks done right: catered lunches, wellness stipend, team offsites, casual dress. The stuff that compounds when you're showing up engaged for years, not months • Profitable for 4+ years, so you build with conviction, not runway anxiety Stack: python, claude, postgres, react.js /rea"
+    },
+    "expectedByRules": null,
+    "expectedQuote": null,
+    "why": "TRAP: 'REMOTE ALMOST ANYWHERE IN THE WORLD' contains 'anywhere in the world' but 'almost' signals exclusions; description only asks for timezone overlap -> LLM.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 806,
+    "source": "ashby",
+    "posting": {
+      "title": "Sr./Staff JavaScript Developer - Web SDK",
+      "company": "Oscilar.com",
+      "locations": ["Remote"],
+      "workMode": "remote",
+      "description": "Shape the future of trust in the age of AI\nAt Oscilar, we're building the most advanced AI Risk Decisioning™ Platform. Banks, fintechs, and digitally native organizations rely on us to manage their fraud, credit, and compliance risk with the power of AI. If you're passionate about solving complex problems and making the internet safer for everyone, this is your place https://oscilar.com/careers.\n\n\n\n\nWHY JOIN US:\n\n - Mission-driven teams: Work alongside industry veterans from Meta, Uber, Citi, and Confluent, all united by a shared goal to make the digital world safer.\n\n - Ownership and impact: We believe in extreme ownership. You'll be empowered to take responsibility, move fast, and make decisions that drive our mission forward.\n\n - Innovate at the cutting edge: Your work will shape how modern finance detects fraud and manages risk.\n\n\n\n\nJOB DESCRIPTION \n\nWe are seeking a highly skilled Staff JavaScript Developer to design, build, and optimize our Web SDK. This SDK will be at the core of our solutions for device fingerprinting, identity verification, and behavior analytics, enabling our customers to stay ahead in the ever-evolving fraud prevention landscape.  This is not a UI or App development role, this is building SDKs for detecting fraud by analyzing device and behavioral properties. This requires deep understanding of the platform internals.\n\nAs a Staff Developer, you will lead the design, development, and performance optimization of our Web SDK, leveraging your deep expertise in JavaScript, TypeScript, and modern web technologies. You will collaborate across teams to deliver a secure, scalable, and developer-friendly SDK.\n\n\n\n\nRESPONSIBILITIES\n\n - Lead the development and maintenance of a high-performance Web SDK for collecting and analyzing browser and device-related data.\n\n - Design and implement algorithms to create unique device fingerprints and capture behavior-based insights (e.g., gestures, keyboard, and mouse interactions).\n\n - Build and maintain a\n[...]\nAI-driven analytics, risk systems, or fraud prevention technologies.\n\n - Familiarity with JavaScript SDKs, gestures, and interaction data processing.\n\n - Prior experience in a high-scale, distributed environment.\n   \n   \n\n\nBENEFITS\n\n - Compensation: Competitive salary and equity packages, including a 401k\n\n - Flexibility: Remote-first culture — work from anywhere\n\n - Health: Comprehensive health, dental, and vision insurance with a top tier plan for you and your dependents (US)\n\n - Balance: Unlimited PTO policy\n\n - Technical: AI First company; both Co-Founders are engineers at heart; and over 50% of the company is Engineering and Product\n\n - Culture: Family-Friendly environment; Regular team events and"
+    },
+    "expectedByRules": null,
+    "expectedQuote": null,
+    "why": "TRAP: bare 'Remote' location; 'work from anywhere' appears only in benefits boilerplate next to 401k/US health. Treated as not explicit -> LLM.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 243,
+    "source": "greenhouse",
+    "posting": {
+      "title": "Senior Software Engineer (Fundraising) — Remote",
+      "company": "GiveDirectly",
+      "locations": ["Remote", "Global"],
+      "workMode": "remote",
+      "description": "About GiveDirectly\n\nWhat if the most effective way to fight poverty was also the simplest: give people money and trust them to decide what they need?\n\nSince 2011, GiveDirectly has proven that idea at scale. We’ve delivered more than $1B in cash directly to 2+ million people living in poverty and crisis across 15 countries, and rigorous research shows the results: healthier kids, stronger businesses, sturdier homes, and more resilient families and local economies. Cash is now widely recognized as one of the most scalable, cost-effective, and dignified forms of aid.\n\nOur ambition goes beyond our own programs. We want cash to become the benchmark for aid, much as the index fund became the benchmark for investing, so that every aid dollar is held to one question: is this doing more good than giving the money directly to people living in poverty?\n\nWe’re growing fast, and this is a rare and important moment to join.\n\nWe expect to hit $1B in revenue in 2026 with significant growth forecast for 2027. At the same time we are building a new technology stack and operating model designed for a roughly 10x change in scale, and we are actively pursuing partnerships with major funders to move even more money in bigger ways, to people who need it. We are known for our extensive integration of technology into field processes; our quantitative approach to performance measurement; and our\n[...]\nextreme poverty\n\nIf you want a role where you will be part of a bigger engineering team, working in Python or working on more complex tasks, then please take a look at our other engineering roles.\n\nThis role is right for you if:\n\n- You care about our mission\n\n- You agree with our values\n\n- You have the right to work in one of the countries we're able to hire from (you can check the current list here).\n\n- You're happy working remotely, and taking meetings across East Africa Time and US Eastern Time.\n\n- You are happy to travel to meet your colleagues in the US, Europe and Africa a few weeks a year\n\n- You are fluent in English\n\n- You have 4+ years of engineering experience\n\n- You're happy working\n[...]\nBase Salary: $112,350\n\n- Bonus at Target Performance: 15% (~$16,853, with potential for upside. For reference, with the organization's current performance multiplier, this amount would be ~$19,717 in 2025)\n\n- Estimated Total Compensation at Target: $129,203+\n\n- Annual Benefits Stipend: $8,453\n\nThis role is fully remote, so if you are not based in the US, UK or Kenya, we will share an estimated salary benchmark for the country you are based in during the hiring process.\n\nWhy work at GiveDirectly?\n\nAt GiveDirectly, we work to ensure that you have everything you need to excel in your role and on your team, including:\n\n- A positive and supportive team with opportunities for advancement\n\n- A demonstrated"
+    },
+    "expectedByRules": null,
+    "expectedQuote": null,
+    "why": "TRAP: locations 'Remote' + 'Global' but description says must be based in one of the countries on a linked list -> LLM.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 1565,
+    "source": "greenhouse",
+    "posting": {
+      "title": "All Future Mission Assignments - Software",
+      "company": "K2 Space",
+      "locations": [
+        "Anywhere",
+        "Los Angeles",
+        "United States - Remote",
+        "Washington, District of Columbia, United States"
+      ],
+      "workMode": "remote",
+      "description": "K2 is building the largest and highest-power satellites ever flown, unlocking performance levels previously out of reach across every orbit. Backed by over $1 billion in total funding from leading investors including Altimeter Capital, ICONIQ, Kleiner Perkins, Lightspeed Venture Partners, Redpoint Ventures, and T. Rowe Price — and with over $1 billion in signed contracts across commercial and US government customers, we're mass-producing the highest-power satellite platforms ever built for missions from LEO to deep space.\n\nThe rise of heavy-lift launch vehicles is shifting the industry from an era of mass constraint to one of mass abundance, and we believe this new era demands a fundamentally different class of spacecraft. Engineered to survive the harshest radiation environments and to fully capitalize on today's and tomorrow's massive rockets, K2 satellites deliver unmatched capability at constellation scale and across multiple orbits.\n\nWith multiple launches in 2027 and plans to scale to 100 satellites a year, we're Building Bigger — helping develop the solar system and build toward a Kardashev Type II (K2) civilization. If you are a motivated individual who thrives in a fast-paced environment and you're excited about contributing to the success of a high-growth Series D-funded company, we'd love for you to apply.\n\nStay Connected with K2 Space for Future Job Openings Across Engineering\n\nWe’re on a mission to push the boundaries of what’s possible in space systems and large-scale satellite platforms. Even when we don’t have a specific opening listed, we’re always eager to connect with innovators, builders, and problem-solvers who share our passion for making space more accessible.\n\nThis is not a job application—it’s a way for you to raise your hand and say, “Keep me in the loop.” By joining our talent community, you’ll:\n\n-\nReceive occasional updates about K2 Space projects, milestones, and future opportunities.\n\n-\nBe among the first to know when a role opens that\n[...]\nexperience, we encourage you to still apply! Building a spacecraft unlike any other requires a team unlike any other and non-traditional career twists and turns are encouraged!\n\nIf you need a reasonable accommodation as part of your application for employment or interviews with us, please let us know.\n\nExport Compliance\n\nAs defined in the ITAR, “U.S. Persons” include U.S. citizens, lawful permanent residents (i.e., Green Card holders), and certain protected individuals (e.g., refugees/asylees, American Samoans). Please consult with a knowledgeable advisor if you are unsure whether you are a “U.S. Person.”\n\nThe person hired for this role will have access to information and items controlled by U.S."
+    },
+    "expectedByRules": null,
+    "expectedQuote": null,
+    "why": "Location 'Anywhere' mixed with US locations and ITAR US-persons language: 'Anywhere' alone is not a spec eligible phrase -> LLM.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 1487,
+    "source": "ashby",
+    "posting": {
+      "title": "Senior Software Engineer, Platform/Backend",
+      "company": "Sentilink",
+      "locations": ["United States"],
+      "workMode": "remote",
+      "description": "SentiLink https://www.sentilink.com/ helps institutions and protects customers by accurately resolving identities and flagging fraud risk. Each day, we verify more than 3 million identities, flagging 150k+ fraud attempts in the process. The problems we work on are challenging, and solving them takes deep domain expertise, rigorous analysis, and a willingness to dig into the details.\n\nAt SentiLink, you'll work alongside smart, highly collaborative colleagues who respect each other's time and judgment, take ownership, and follow through on their commitments. Together, we do truly meaningful work protecting the identities of innocent consumers and flagging the fraudsters attempting to exploit them.\n\nWe're well capitalized and growing quickly. We already serve 13 of the top 15 U.S. banks, we're expanding into new markets, and we're backed by Craft Ventures, Andreessen Horowitz, NYCA, and Max Levchin. We've been named to the Forbes Fintech 50 https://www.forbes.com/companies/sentilink/?list=fintech50 and as a 2026 FICO Industry Vanguard Decision Award Winner https://www.businesswire.com/news/home/20260330439998/en/SentiLink-Named-a-2026-FICO-Industry-Vanguard-Decision-Award-Winner-for-Leadership-in-Identity-Theft-Detection. We were also the first company to go live https://resources.sentilink.com/blog/sentilink-makes-history-as-first-ecbsv-provider with the electronic Consent Based Social Security Number Verification (eCBSV) service, and we've testified before the U.S. Congress https://resources.sentilink.com/media/dr.-david-maimons-congressional-testimony-on-emerging-fraud-threats-and-the-evolving-fraud-landscape on the future of identity.\n\nWe want SentiLink to be the best place you've ever worked. We offer generous benefits and support a range of working arrangements, from fully remote to in-office. We are a digital-first company with strong collaboration across the U.S. and India, and we meet in person regularly to build relationships. We have offices in Austin, San\n[...]\n- Excellent analytical and problem solving skills, interpersonal skills, and a sense of humor (enjoy the journey)\n\n - Familiarity with: RDBMS (e.g. postgres) and ability to write efficient queries with optimal structures; Docker and AWS technologies; fintech or financial services; scrum / agile development environment\n\n - Candidates must be legally authorized to work in the United States and must live in the United States\n\n\n\n\nCOMPENSATION:\n\n - $170,000/year - $230,000/year + equity + benefits\n\n\n\n\nNOTE: THIS SALARY RANGE MAY BE INCLUSIVE OF MULTIPLE CAREER LEVELS, AND THE ACTUAL BASE SALARY WITHIN THAT RANGE WILL BE DETERMINED BY SEVERAL COMPONENTS INCLUDING BUT NOT LIMITED TO THE INDIVIDUAL'S EXPERIENCE, SKILLS, AND QUALIFICATIONS.\n\n\nPERKS:\n\n - Employer paid group"
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "must live in the United States",
+    "why": "US: 'must live in the United States' (a must-reside variant) decides it. NOTE the description also says 'collaboration across the U.S. and India' (company offices), which blocks only the authorized-to-work rule, not the must-live/reside rule.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 45,
+    "source": "hn",
+    "posting": {
+      "title": "Backend Engineers, Sr. Software Engineer (Marketing)",
+      "company": "Close",
+      "locations": ["REMOTE (US)"],
+      "workMode": "remote",
+      "description": "https://close.com/careers Close is a CRM for small and midsize sales teams (11,000+ paying customers). In 2026 we shipped Chloe, our AI agent that makes sales calls and works inside the CRM. Backend Engineers (Senior / Staff). Python, Flask/FastAPI, MongoDB, PostgreSQL, Elasticsearch. Two teams: - CRM: agentic enrichment, AI search, making the CRM usable by any MCP agent. Elasticsearch experience is a big plus. - Backend Platforms: a new team building paved roads for our engineers (API patterns, observability, Flask to FastAPI) and guardrails for agent-written code You've shipped LLM features to real users and owned production systems. Sr. Software Engineer, Marketing. Our first engineer dedicated to close.com (Astro, Sanity, Vercel). You'd own motion and interactivity, performance, SEO, and conversion tracking, and build tools so Marketing can ship without waiting on engineering. 5+ years building marketing sites, with Segment/Amplitude-style analytics."
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "REMOTE (US)",
+    "why": "HN, US: 'REMOTE (US)'.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 186,
+    "source": "hn",
+    "posting": {
+      "title": "Software Engineering",
+      "company": "Sphinx Defense",
+      "locations": ["Remote (US Only)"],
+      "workMode": "remote",
+      "description": "https://www.sphinxdefense.com Sphinx Defense builds software to solve complex national security problems for America and its allies. Founded by engineers and technologists with deep experience across commercial and defense technology, we're building a vehicle-agnostic communication infrastructure to enable satellite operators to securely utilize antenna networks and maneuver satellites in real-time. We're bootstrapped, profitable, and growing aggressively. To learn more about who we are, our engineering culture, and whether this is the right place for you, https://sphinxdefense.com/ Our current openings are: Sr.. Backend Engineer - Colorado Springs, CO: https://grnh.se/auntb4us8us Sr.. Backend Engineer - Remote: https://grnh.se/kp0xwi9b8us Backend Engineer - Colorado Springs, CO: https://grnh.se/z0jox39h8us Backend Engineer - Remote: https://grnh.se/bd3zrpcg8us Infrastructure Deployment Manager - Colorado Springs, CO: https://grnh.se/fibm1r478us Infrastructure Deployment Manager - Chantilly, VA: https://grnh.se/a70fgkh58us Sr. Network Engineer - Colorado Springs, CO: https://grnh.se/v1c47kta8us Sr. Full Stack Engineer - Colorado Springs, CO: https://grnh.se/dugo9l3i8us Sr. Full Stack Engineer - Chantilly, VA: https://grnh.se/ndhlbbo18us Sr. Full Stack Engineer - El Segundo, CA: https://grnh.se/vj6j0s6j8us Full Stack Engineer - Remote: https://grnh.se/sw2e30pl8us Don’t see a role that aligns with your interests or don’t have the specific Space/ Command & Control experience? Apply to the general interest application and list what type of role you would be interested in : https://grnh.se/4ce199d68us"
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "Remote (US Only)",
+    "why": "HN, US: 'Remote (US Only)'.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 5943,
+    "source": "greenhouse",
+    "posting": {
+      "title": "Account Manager",
+      "company": "Instacart",
+      "locations": ["United States - Remote", "Remote - United States"],
+      "workMode": "remote",
+      "description": "We're transforming the grocery industry\n\nAt Instacart, we invite the world to share love through food because we believe everyone should have access to the food they love and more time to enjoy it together. Where others see a simple need for grocery delivery, we see exciting complexity and endless opportunity to serve the varied needs of our community. We work to deliver an essential service that customers rely on to get their groceries and household goods, while also offering safe and flexible earnings opportunities to Instacart Personal Shoppers.\n\nInstacart has become a lifeline for millions of people, and we’re building the team to help push our shopping cart forward. If you’re ready to do the best work of your life, come join our table.\n\nInstacart is a Flex First team\n\nThere’s no one-size fits all approach to how we do our best work. Our employees have the flexibility to choose where they do their best work—whether it’s from home, an office, or your favorite coffee shop—while staying connected and building community through regular in-person events. Learn more about our flexible approach to where we work.\n\nWhy this role is on the menu\n\nWe're hiring an Account Manager II to make Instacart Ads the place CPG advertisers and agencies trust to grow their business, by improving campaign performance, widening how brands invest across our ad products, and shaping the advertiser experience. This role sits at the intersection of client strategy and campaign performance, and the person who fills it will have a direct line of sight to advertiser growth and retention. Twelve months from now, the advertisers you partner with should see Instacart as a growth partner whose recommendations they act on.\n\nWhat you'll cook up in your first year\n\n- Advertiser Relationships: CPG clients and agency partners treat you as a trusted advisor. Working with Sales, you understand their business objectives and build strategies that support their long-term growth on Instacart.\n\n- Campaign"
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "Remote - United States",
+    "why": "US: 'United States - Remote' / 'Remote - United States'.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 677,
+    "source": "ashby",
+    "posting": {
+      "title": "Program Director - Grid Flexibility",
+      "company": "Kraken Tech",
+      "locations": ["Remote, USA"],
+      "workMode": "remote",
+      "description": "Help us use technology to make a big green dent in the universe!\n\nKraken https://kraken.tech/ powers some of the most innovative global developments in energy.\n\nWe create the technology that redefines utilities and unlocks a new energy system of the future. By optimising renewable generation, building a more intelligent grid, and empowering utilities to deliver an exceptional customer experience, our operating system is transforming the industry worldwide.\n\nIt’s an incredibly exciting time to work in energy. Join us on our mission to improve the lives of ONE BILLION humans within the decade and shape a cleaner, better future for everyone.\n\nWhy This Role is Important\n\nWe are looking for a highly credible Program Director to take end-to-end ownership of a highly complex, marquee US utility flexibility deployment. This is a \"control room heavy\" initiative focused specifically on grid-level needs: consolidating and dispatching supply and demand-side flexible assets, to unlock multiple value streams.\n\nGiven the “first of a kind” nature of this program, we are looking for a dynamic individual, with deep understanding of our industry and the ability to span the full gamut of getting things done “hands on” to managing the exec level relationships. This role is about writing the book with us.\n\nYou will have full delivery and commercial matrix accountability for making this deployment a massive success. You must possess the grid-operational credibility to effectively lead discussions with senior utility stakeholders and the hands-on operational capability to manage the program mechanics yourself.  We need a leader who is comfortable working directly on the execution and building the foundational framework for the program.\n\n\n\nWhat  you'll own\n\n - Program End-to-End: Be the leader driving the program from day one through implementation and into long-term value realisation. You will directly manage the delivery timelines, decision-making, coordination, and execution.\n\n - Bridge"
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "Remote, USA",
+    "why": "US: 'Remote, USA'.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 5053,
+    "source": "ashby",
+    "posting": {
+      "title": "Principal Security GRC Analyst",
+      "company": "Rescale",
+      "locations": ["Remote (United States)"],
+      "workMode": "remote",
+      "description": "About Rescale\n\nRescale is pioneering the future of engineering and scientific discovery. As the leader in digital engineering, we’re transforming how products are developed—through intelligent automation, applied AI, data management, and the integration of the world’s largest network of engineering and R&D applications. Joining Rescale means becoming part of a diverse, collaborative, and mission-driven team that’s unlocking faster innovation across industries like aerospace, energy, life sciences, and manufacturing. We’re solving complex challenges that traditional HPC can’t—and we’re seeking passionate, curious minds to help build the next wave of breakthroughs.\n\nRescale's Compliance team is responsible for automating, maintaining and maturing a multi-framework compliance program spanning FedRAMP Moderate, DoD IL5, CMMC Level 2, SOC 2 Type 2, ISO 27001:2022, TISAX AL2, and Facility Clearance License (FCL) requirements. As a Principal Security GRC Analyst, you will serve as a senior individual contributor driving control implementation, audit readiness, and cross-framework harmonization across Rescale's cloud-based HPC and simulation platform.\n\nThis is a high-autonomy, high-impact role for someone who wants to own complex compliance problems end-to-end from control design through evidence collection to auditor engagement.\n\nAre you a highly-motivated detail-oriented person who loves organizing complex projects? Are you a self-starter who can see a goal and immediately start moving toward it? Are you familiar with FedRAMP, SOC, ISO 27001, TISAX, or other security and compliance frameworks? If so, we need you!\n\nAt Rescale, this means you will work on and impact:\n\n - You will work under the guidance of our Director of Compliance to continue to mature a comprehensive security governance, risk, and compliance program.\n\n - You will work directly with auditors and government officials across various security and compliance frameworks such as the NIST SP 800 series,\n[...]\n800 series with a drive to tackle novel compliance challenges in a fast-scaling tech environment\n\n - In addition to the area of expertise, exposure to other frameworks and regulations including GDPR, ITAR, EAR, NISPOM, CMMC, etc. is a plus. Certifications such as CISM, GSLC, Security +CE, CISSP etc. are pluses.\n\n - Due to the nature of the work, US Citizenship is a requirement.\n\nRescale is an equal opportunities employer and welcomes applications from all qualified persons regardless of their race, sex, disability, religion/belief, sexual orientation or age. As part of our standard hiring process for new employees, employment with Rescale will be contingent upon successful completion of a comprehensive"
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "Remote (United States)",
+    "why": "US: 'Remote (United States)' (+ US citizenship required).",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 375,
+    "source": "ashby",
+    "posting": {
+      "title": "Technical Lead (Engineering)",
+      "company": "Solace Health",
+      "locations": ["United States"],
+      "workMode": "remote",
+      "description": "ABOUT SOLACE\n\nHealthcare in the U.S. is fundamentally broken. The system is so complex that 88% of U.S. adults do not have the health literacy necessary to navigate it without help. Solace cuts through the red tape of healthcare by pairing patients with expert advocates and giving them the tools to make better decisions—and get better outcomes.\n\nWe're a Series C startup, founded in 2022 and backed by Inspired Capital, Craft Ventures, Torch Capital, Menlo Ventures, Signalfire, and IVP. Our U.S. based team is lean, mission-driven, and growing quickly.\n\nSolace isn't a place to coast. We're here to redefine healthcare—and that demands urgency, precision, and heart. If you're looking to stretch yourself, sharpen your edge, and do the best work of your life alongside a team that cares deeply, you're in the right place. We’re intense, and we like it that way.\n\nRead more in our Bloomberg funding announcement here https://www.bloomberg.com/news/articles/2026-02-10/vcs-give-solace-health-1-billion-valuation-for-patient-advocacy-tech?accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzb3VyY2UiOiJTdWJzY3JpYmVyR2lmdGVkQXJ0aWNsZSIsImlhdCI6MTc3MDczMDg4MywiZXhwIjoxNzcxMzM1NjgzLCJhcnRpY2xlSWQiOiJUQThVUzhLR0NURzEwMCIsImJjb25uZWN0SWQiOiJBRDYxODI0MTc0ODM0MTk0QTRENUZFNzkwMzNGMDJGNSJ9.TE2pFUAOQAPMUXFlzoQ7zeJvctq7cSibbZqtIwhW-2U&leadSource=uverify+wall.\n\n\n\n\nABOUT THE ROLE\n\nAs a Technical Lead, you'll join a spectacularly talented team of engineers and you'll help shape them into an even stronger force. You'll split your time between writing production code yourself and elevating the engineers around you through mentorship, technical guidance, and direct management. You will be expected to move aggressively, commit code regularly, and see your work in the wild with live users—while simultaneously unblocking your team, reviewing their code, and helping them grow.\n\nYou are a seasoned engineer who can identify problems, architect the highest-quality solutions, and teach others to do the\n[...]\nhands-on technical work with people management—you thrive in both modes.\n\n - Comfort with ambiguity and the ability to create structure where none exists.\n   \n   \n\nOur Tech Stack\n\n - Typescript across all our applications\n\n - NestJS API with TypeORM\n\n - Postgres\n\n - Redis\n\n - React\n\n - Custom UI library built on shadcn\n\n - Tailwind\n\n - GCP\n\nApplicants must be based in the United States.\n\n\n\nUp for the Challenge? \n\nWe look forward to meeting you.\n\n\n\nFraudulent Recruitment Advisory: Solace Health will NEVER request bank details or offer employment without an interview. All legitimate communications come from official solace.health emails only or ashbyhq.com http://ashbyhq.com. Report suspicious activity to recruiting@solace.health"
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "Applicants must be based in the United States",
+    "why": "US: 'Applicants must be based in the United States.' (must-be-based variant of must-be-located).",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 201,
+    "source": "ashby",
+    "posting": {
+      "title": "Video Host & Producer - Remote US",
+      "company": "River",
+      "locations": ["Remote - US"],
+      "workMode": "remote",
+      "description": "At River, we are building the world's most trusted financial institution to empower people to take ownership of their financial lives through Bitcoin, the world's only incorruptible digital money. We believe in a future where every person will have bitcoin savings, and every business will have bitcoin on the balance sheet. We obsessively design and build delightful products that help our clients buy, sell, secure, and use Bitcoin.\n\nWe are looking for a Host & Producer to be the main face of River's video content and to bring our videos to life across various channels. You'll present our videos on camera with the warmth and authority of a trusted guide explaining money. You’ll shoot many of these videos yourself, occasionally working with contractors for bigger projects. Our audience is people who are navigating the reality that our money is slowly losing its value; your job is to make them trust us enough to hear the answers. The main goal of the channel is not to promote River’s products, it is to create valuable content you would enjoy watching.\n\nYou'll report to River's Director of Marketing and work closely with our Video Content Strategist, who writes the scripts you'll present.\n\nRiver is growing quickly and has raised more than $50 million from leading investors, including Goldcrest, Kingsway, Polychain, M13, DG, and Valor. We have also released our company's financials https://river.com/financials publicly, so that all of our clients and employees can verify the robustness and growth of the business themselves.\n\n\n\n\nWHAT YOU WILL BE DOING:\n\n - Be the recognizable face of our videos. Present medium length scripted videos with the clarity, warmth, and authority that make viewers trust you and keep watching.\n\n - Shoot your own footage, anywhere the journey takes us. Own the production quality in any location you shoot from, as video content won’t be studio-based.\n\n - Produce shoots end to end. Plan, scout, and run the logistics that get us high-quality footage\n[...]\nor journalism.\n\n - Interviewing experience.\n\n\nSALARY AND BENEFITS:\n\n - Annual salary range of $110-160k depending on experience\n\n - Competitive compensation and equity\n\n - Unlimited Paid Time Off\n\n - Parental leave, separate from PTO policy\n\n - Medical, dental, and vision insurance + 401k for US based employees\n\n - Remote option: You can work from anywhere in the U.S, but your base should be in New York City to be close to leadership and several team members for a variety of productions.\n\n\nINTERVIEW PROCESS:\n\n - Screening interview with River's Director of Marketing (20 mins)\n\n - Interview with River's Chief Operating Officer (30 mins)\n\n - Portfolio review with several team members (30 mins)\n\n - Take-home"
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "Remote - US",
+    "why": "TRAP: 'work from anywhere in the U.S' must not trigger the worldwide rule; location 'Remote - US' decides.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 1879,
+    "source": "greenhouse",
+    "posting": {
+      "title": "Front-End Developer – Angular",
+      "company": "Black Canyon Consulting",
+      "locations": ["Bethesda, Maryland", "Bethesda, Maryland, United States"],
+      "workMode": null,
+      "description": "Overview\n\nBlack Canyon Consulting (BCC) is searching for a Front-End Developer to build and support dynamic applications with complex data flows for our public sector clients. BCC is a company of technologists, scientists, analysts, engineers, and consultants. Our clients trust us to maintain the infrastructure and visualization of these data to help drive innovation in health, science, and public policy. In this role, you will build extensible and sustainable search interfaces and data visualizations powered by complex dynamic state-management infrastructure. You will work closely with Subject Matter Experts (SMEs), Designers, and User Experience (UX) Researchers in an Agile environment.\n\nWe are looking for a highly motivated Engineer with a passion for user experience and delivering impactful web-based applications.\n\nDuties & Responsibilities:\n\nJob Responsibilities\n\n- Develop code using Angular\n\n- Create mobile-friendly, responsive, applications\n\n- Fully-engage in the Agile process as a cross-functional team member\n\n- Participate in code reviews\n\n- Write meaningful and targeted tests using Cypress and other frameworks\n\n- Be an active steward of a clean, extensible code base\n\n- Engage with clients throughout the entire development process\n\n- Research and recommend technologies to solve clients’ problems and improve their processes\n\n- Learn and build a vast repertoire of technology stacks and dive deep into the specific technologies of the project\n\nPreferred Qualifications\n\n- Experience with federal government or large enterprise systems\n\n- Experience in healthcare, life sciences, or systems handling sensitive data\n\n- Experience working on data-heavy or workflow-driven applications\n\n- Familiarity with cloud platforms (Google Cloud Platform (GCP), Amazon Web Services (AWS))\n\n- Experience working in multi-vendor, multi-team environments\n\n- Strong interest in user experience and accessibility\n\nRequired skills and experience\n\n- Bachelor's degree, preferably in Computer\n[...]\nPlotly, or others\n\n- Familiarity with .NET, Python, Ruby on Rails, or Java\n\n- Proficient at testing as part of the development process\n\n- Experience with the entire Software Development Life Cycle\n\n- Strong understanding of Git versioning\n\n-\n\n-\nClearance and Location Requirements\n\n- Must be able to obtain and maintain a Public Trust clearance\n\n- Must reside in and be authorized to work in the United States; candidates in the DMV area preferred\n\n- All work must be performed within the United States\n\nTools and Technologies\n\n- Angular, TypeScript, HTML, CSS\n\n- Experience with Representational State Transfer APIs (REST APIs)\n\n- Git, GitLab, Gradle\n\n- Test automation using Cypress or Selenium\n\n- Continuous Integration/Continuous Delivery/Deployment"
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "Must reside in and be authorized to work in the United States",
+    "why": "US, workMode null: 'Must reside in and be authorized to work in the United States'.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 5147,
+    "source": "ashby",
+    "posting": {
+      "title": "Commercial Account Executive",
+      "company": "InfluxData",
+      "locations": ["Remote Canada"],
+      "workMode": "remote",
+      "description": "InfluxData is the creator of InfluxDB, the leading time series platform used to collect, store, and analyze all time series data at any scale. Developers can query and analyze their time-stamped data in real-time to discover, interpret, and share new insights to gain a competitive edge. InfluxData is a remote-first company with a globally distributed workforce. For more information, visit www.influxdata.com http://www.influxdata.com.\n\nInfluxData's North America Commercial sales team is growing, and we're looking for a Commercial Account Executive to own a territory end to end.\n\nThis is a hybrid new business and account management role. You'll hunt new logos across organizations of 1–500 employees in North America, and you'll carry a book of roughly 40 existing accounts that you are responsible for renewing and growing. The best people in this seat are as comfortable running a cold outbound motion as they are sitting with an existing customer six months before renewal, understanding where their usage is headed and what it will take to expand.\n\nYou are a hunter and a builder. You enjoy creating new relationships and deepening existing ones. You're all about working hard, supporting one another, ideating nonstop, and having a lot of fun while doing it.\n\nInfluxDB is a purpose-built time series database used by engineering, platform, DevOps, SRE, and IoT teams to handle high-volume telemetry data. You'll be selling to technical buyers, which means the strongest AEs on this team are curious, consultative, and willing to get into the substance of a customer's architecture and problem.\n\nWhat you’ll be doing:\n\nNew Business\n\n - Owning the full sales cycle for new logos in North America Commercial — prospecting, discovery, scoping, POC, negotiation, and close\n\n - Building and sustaining your own pipeline through cold calling, outbound email, LinkedIn, account research, inbound follow-up, and partner activity\n\n - Running strong discovery: understanding the technical use case,"
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "Remote Canada",
+    "why": "Canada: 'Remote Canada'.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 5963,
+    "source": "greenhouse",
+    "posting": {
+      "title": "Director of Product, Logistics",
+      "company": "Instacart",
+      "locations": ["Canada - Remote (ON, AB, BC, or NS Only)", "Remote - Canada"],
+      "workMode": "remote",
+      "description": "We're transforming the grocery industry\n\nAt Instacart, we invite the world to share love through food because we believe everyone should have access to the food they love and more time to enjoy it together. Where others see a simple need for grocery delivery, we see exciting complexity and endless opportunity to serve the varied needs of our community. We work to deliver an essential service that customers rely on to get their groceries and household goods, while also offering safe and flexible earnings opportunities to Instacart Personal Shoppers.\n\nInstacart has become a lifeline for millions of people, and we’re building the team to help push our shopping cart forward. If you’re ready to do the best work of your life, come join our table.\n\nInstacart is a Flex First team\n\nThere’s no one-size fits all approach to how we do our best work. Our employees have the flexibility to choose where they do their best work—whether it’s from home, an office, or your favorite coffee shop—while staying connected and building community through regular in-person events. Learn more about our flexible approach to where we work.\n\nOverview\n\nAbout the Team\n\nInstacart’s Logistics Product team owns the multi-sided fulfillment engine that powers every order on the platform. We deliver fast and affordable delivery and pickup for customers; flexible, reliable, and competitive earnings for shoppers; and continuously improving efficiency and quality for the marketplace as a whole. Logistics runs on ML and optimization at its core — how we batch orders, match them to shoppers, position and pay shoppers for their work, and route them physically — making this one of the most technically deep and commercially consequential product areas at Instacart.\n\nAbout the Role\n\nWe’re looking for a Director of Product to lead the Logistics product organization and take it to its next phase of growth. This is a highly visible leadership role with executive sponsorship, owning a pillar with company-wide impact\n[...]\ne-commerce or grocery technology.\n\n#LI-Remote\nInstacart provides highly market-competitive compensation and benefits in each location where our employees work. This role is remote and the base pay range for a successful candidate is dependent on their permanent work location. Please review our Flex First remote work policy here. Currently, we are only hiring in the following provinces: Ontario, Alberta, British Columbia, and Nova Scotia.\n\nOffers may vary based on many factors, such as candidate experience and skills required for the role. Additionally, this role is eligible for a new hire equity grant as well as annual refresh grants. Please read more about our benefits offerings here.\n\nFor Canadian based candidates, the base"
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "Remote - Canada",
+    "why": "Canada: both locations Canada-only.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 195,
+    "source": "hn",
+    "posting": {
+      "title": "Canada",
+      "company": "Qualcomm",
+      "locations": ["Remote(Canada)"],
+      "workMode": "remote",
+      "description": "My team is looking to hire a ~entry-level software developer to help us design and extend QEMU support [1] for the Hexagon DSP [2]. We're looking for candidates who have experience coding in C, C++ or Rust* and who aren't afraid of rolling up their sleeves and poring over disassembled code. This particular architecture is a bit more challenging than most, because it's a bit unique. It's a VLIW [3], so it's a great opportunity to learn about an interesting architecture. Millions of Hexagon DSPs are out there, most are found in DragonWing/Snapdragon/DragonFly SoCs for Laptops, Android phones, cars and more! We collaborate a lot with Open Source communities like QEMU, LLVM [4], the Linux kernel [5], and more.  I love being able to work on Open Source software at my day job. You can contact me directly (email addr is in my HN user link). If you don't have experience with QEMU - don't worry!  Most of us didn't have any experience with it until recently, too. The rest of the team you'd work with lives mostly in Canada, EU, US. * Rust experience may serve the role well but we don’t (yet) have any product software in Rust. [1] https://github.com/qemu/qemu/tree/master/target/hexagon [2] https://en.wikipedia.org/wiki/Qualcomm_Hexagon [3] https://en.wikipedia.org/wiki/Very_long_instruction_word [4] https://foundation.llvm.org/sponsors/ [5] https://www.linuxfoundation.org/our-members-are-our-superpow..."
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "Remote(Canada)",
+    "why": "HN, Canada: 'Remote(Canada)'.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 1524,
+    "source": "ashby",
+    "posting": {
+      "title": "Security Engineer, Infrastructure Security",
+      "company": "Livekit",
+      "locations": ["United States (Remote)", "Canada (Remote)"],
+      "workMode": "remote",
+      "description": "ABOUT LIVEKIT\n\nLiveKit is building the infrastructure layer for the voice-driven era of computing. Our platform gives developers everything they need to build, test, deploy, scale, and observe agents in production. Founded in 2021, LiveKit powers voice AI applications for OpenAI, xAI, Salesforce, Coursera, Spotify, and thousands of others, collectively facilitating billions of calls each year.\n\n\n\n\nABOUT THIS ROLE\n\nOur customers trust us with audio, video and data belonging to their own end users, so a security failure on our side puts their data and their business at risk. We are hiring an Infrastructure Security Engineer to improve the security posture of the production platform that carries that data. You will join a small Trust team that covers security, IT and compliance, and you will own real parts of the program from your first week. You will build our understanding of infrastructure security posture, then prioritize and drive remediation by business impact. Where the same class of problem keeps coming back, you will build the guardrails and security building blocks that let our security scale with the business.\n\n\n\n\nYOU'LL THRIVE AT LIVEKIT IF YOU\n\n - think like both a builder and a breaker, and understand security from first principles\n\n - take an automation-first and pragmatic approach to risk mitigation\n\n - translate security concerns into engineering action\n\n - can clearly explain complex technical concepts to others\n\n - are a fast learner and thrive in ambiguity\n\n\n\n\nWHAT YOU’LL DO\n\n - Map the security posture of our cloud and production infrastructure and turn it into a documented baseline.\n\n - Find the gaps that could lead to customer data loss or infrastructure compromise, agree a prioritized security debt backlog with engineering, and close the highest-risk items first.\n\n - Harden identity, secrets and network boundaries, including cloud IAM, environment separation and credential hygiene.\n\n - Secure the infrastructure that runs customer-deployed voice"
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "United States (Remote)",
+    "why": "US + Canada only: every location is non-India.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 146,
+    "source": "hn",
+    "posting": {
+      "title": "Staff Product Engineer, Enterprise AI",
+      "company": "Mozilla / Thunderbird / Thunderbolt",
+      "locations": ["REMOTE (US or Canada)"],
+      "workMode": "remote",
+      "description": "https://grnh.se/viz7vum71us We're building Thunderbolt ( https://github.com/thunderbird/thunderbolt ). We're an 8-person and growing team within the ~60-person company behind Thunderbird, the open-source email client used by 20M+ people. Thunderbolt is an open-source, cross-platform AI product built on the principle that people and organizations should be in control of their data, infrastructure, and model choices. It's moving from early development into enterprise use cases, and we need someone to own features end to end — concept through launch, adoption, and iteration — not just close tickets. You'd work full-stack on AI-powered chat, search, research, workflow automation, admin, and integrations. We're looking for 10+ years of engineering experience at Staff scope, hands-on AI product work (LLMs, RAG, agents, retrieval, model/provider abstraction), and comfort in ambiguity — architecture and enterprise requirements are still being defined. Bonus: self-hosted or regulated deployments, EU AI Act / GDPR / SOC 2 familiarity. Must reside in and have work authorization for the US or Canada. No sponsorship. We read every cover letter - please make it authentic."
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "Must reside in and have work authorization for the US or Canada",
+    "why": "HN, US/Canada: 'REMOTE (US or Canada)' + must reside.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 9,
+    "source": "hn",
+    "posting": {
+      "title": "Senior Product Engineer",
+      "company": "Modash.io",
+      "locations": ["Remote (Europe)"],
+      "workMode": "remote",
+      "description": "https://modash.io Modash helps brands find, manage, and pay creators - and helps creators earn a living. The product looks simple on the surface. Underneath, we index 380M+ public creator profiles across Instagram, TikTok, and YouTube so that 1,700+ brands search, evaluate, manage, and pay creators without drowning in spreadsheets and tabs. We're looking for Senior Product Engineers who like owning ambiguous problems end-to-end. No perfectly shaped tickets. You talk to customers, understand messy workflows, make product decisions, ship, and own whether it actually works. The problems we care about: - How do you make a 380M-profile dataset feel fast, trustworthy, and easy to explore? - How do you turn chaotic influencer marketing workflows into product that feels obvious? - How do you build tools that work for both small teams and brands like Stanley, Sennheiser, Birkenstock, and NordVPN?? We're 85 people, raised an €11M Series A, and ARR is doubling every year. HQ is in Tallinn, engineering is fully remote across Europe. No ticket factory. No seven layers of approval. Small teams, real ownership, hard product problems. Engineering blog: https://modash.io/engineering Apply: https://apply.workable.com/modash/j/C1507B65C3"
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "Remote (Europe)",
+    "why": "HN, EU: 'Remote (Europe)'.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 16,
+    "source": "hn",
+    "posting": {
+      "title": "IT Operations Lead, Software and Platform engineers",
+      "company": "EggAI",
+      "locations": ["REMOTE (EU)"],
+      "workMode": "remote",
+      "description": "We are a small boutique consultancy and are quite experienced. A lot of us have extensive consultant experience. You will join a small, highly skilled remote team of engineers and transformation practitioners working at the forefront of enterprise AI. We use AI for both development and in our solutions. We are looking for engineers that are critical thinkers, understand the limitations of AI but also where it can have a positive impact. Apply at: https://grnh.se/wr97lgu2teu Our website: https://egg-ai.com/"
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "REMOTE (EU)",
+    "why": "HN, EU: 'REMOTE (EU)'.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 85,
+    "source": "hn",
+    "posting": {
+      "title": "AI Engineer (£30/hr) and Senior AI Engineer (£50/hr)",
+      "company": "AssumeAI",
+      "locations": ["REMOTE (UK)"],
+      "workMode": "remote",
+      "description": "https://assume-ai.com We are a fast-growing AI startup. We help SMEs find where AI will produce a measurable return, then build the systems that deliver it: AI agents, Claude skills and production-grade business software, up to full business and enterprise systems. Stack: Claude Code, Vercel, Supabase. A good fit for software engineers moving into AI engineering: - Two weeks of paid AI training in our framework and methods before your first project. - Projects typically run over several months, and each one is substantial. - Large token limits for every contractor. You need to: read code in Python, JS/TS, SQL, HTML/CSS and Bash; design and build databases; use Git and GitHub confidently; and be professional and clear on client calls. The senior role also needs complete products or systems you have designed and shipped. Nice to have: Claude Code or similar AI tools, building Claude skills, embeddings and vector databases, Vercel/Supabase, project or account management. Process: introductory interview, short practical exercise, final interview. Starting as soon as possible. To apply email hugh@assume-ai.com with your CV"
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "REMOTE (UK)",
+    "why": "HN, UK: 'REMOTE (UK)'.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 1529,
+    "source": "ashby",
+    "posting": {
+      "title": "Developer Success Engineer",
+      "company": "Livekit",
+      "locations": ["United Kingdom (Remote)"],
+      "workMode": "remote",
+      "description": "ABOUT LIVEKIT\n\nLiveKit is building the infrastructure layer for the agentic era of computing. Our platform gives developers everything they need to build, test, deploy, scale, and observe AI agents in production. Founded in 2021, LiveKit powers voice and agentic AI applications for OpenAI, Salesforce, Spotify, Meta, and tens of thousands of other developers, collectively facilitating billions of calls each year.\n\n\n\n\nABOUT THIS ROLE\n\nThis isn't one of those situations where we tack \"engineer\" onto the back of every role at LiveKit. No. We're actually looking for an engineer*. A rare type of engineer that cares about talking to and advocating for customers, helping unblock them by fixing bugs or writing up sample code, and providing customers with guidance, pointers and support.\n\nWe say rare because in our experience, most engineers aspire to architect large-scale systems or tackle deeply technical problems. Said differently, most engineers want to have influence over the technology they work on or with. There's nothing wrong with that — we love hardcore engineers, and there are many at LiveKit. But this time, we're looking for a new teammate that wants to have influence over our product and business.\n\nIf you'd be energized by seeing a developer or team flip a LiveKit integration from staging to production — secretly satisfied in knowing you helped make it possible — you are perfect for this.\n\n\n\n\nYOU'LL THRIVE HERE IF YOU:\n\n - are an engineer at heart, and don't mind reading more code than you write\n\n - are a natural teacher who finds joy in helping others learn and succeed\n\n - can break down complex technical concepts in a way that's easily understood by others\n\n - enjoy learning new programming languages quickly and prototyping\n\n - care deeply about the developer experience and the success of the people building on our platform\n\n - have excellent spoken and written English\n   \n   \n\n\nWHAT YOU'LL DO\n\n - Support and work directly with developers, teams, and companies"
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "United Kingdom (Remote)",
+    "why": "UK: 'United Kingdom (Remote)'.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 716,
+    "source": "ashby",
+    "posting": {
+      "title": "Client Delivery Lead - GenerationFlex",
+      "company": "Kraken Tech",
+      "locations": [
+        "London, UK",
+        "Remote, UK",
+        "Remote, Germany",
+        "Remote, Netherlands",
+        "Remote, Spain"
+      ],
+      "workMode": "remote",
+      "description": "Help us use technology to make a big green dent in the universe!\n\nKraken https://kraken.tech/ powers some of the most innovative global developments in energy.\n\nWe create the technology that redefines utilities and unlocks a new energy system of the future. By optimising renewable generation, building a more intelligent grid, and empowering utilities to deliver an exceptional customer experience, our operating system is transforming the industry worldwide.\n\nIt’s an incredibly exciting time to work in energy. Join us on our mission to improve the lives of ONE BILLION humans within the decade and shape a cleaner, better future for everyone.\n\nThe energy industry is undergoing the largest transformation since industrialisation, at an unprecedented rate of change and we are positioning ourselves at the heart of it. In Germany, home to the largest electricity market in Europe and a roadmap toward Net Zero by 2045, we are scaling rapidly to integrate Distributed Energy Resources (DERs) into the grid.\n\nKraken is recognised as a thought leader and innovator. We are building a SaaS business that digitally connects hundreds of thousands of DERs with energy markets. As we expand our footprint in Germany and the wider European market, we are looking for a Senior Client Delivery Lead to support our German GenerationFlex clients on their Kraken onboarding journey and wider business transformation.\n\n\n\n\n🐙 ABOUT GENERATIONFLEX\n\nThe energy system is changing fast. Renewables are growing, demand is becoming more peaky, and grid constraints are showing up in more places, more often. Kraken GenerationFlex is how utilities and asset owners navigate that complexity at scale.\n\nWe help organisations run portfolios of grid-scale assets - BESS, renewables, and co-located sites - in a way that's commercially aligned, operationally safe, and practical to manage day to day.\n\nFrom trading enablement and control & dispatch, to alerts, data services, and settlements, our platform gives teams the"
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "Remote, UK",
+    "why": "Europe: every location is UK/Germany/Netherlands/Spain.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 141,
+    "source": "hn",
+    "posting": {
+      "title": "Cloud Engineer, AWS Serverless (TypeScript/Node.js)",
+      "company": "PAGNOS",
+      "locations": ["REMOTE (Germany)"],
+      "workMode": "remote",
+      "description": "We build serverless applications on AWS for clients and for our own SaaS products. On client projects, we work directly with their developers and help them understand and maintain what we build. You’ll write backend code in TypeScript/Node.js, build APIs with Lambda and API Gateway, model data in DynamoDB, and design event-driven workflows and integrations. Infrastructure lives in code using AWS CDK, with CI/CD pipelines for builds and deployments. You’ll help decide how systems are designed and take testing, observability and security into account as you build. There’s some React/Next.js work too. We’re looking for practical experience building AWS serverless applications with TypeScript/Node.js, including infrastructure as code, CI/CD and event-driven design. The role includes working through requirements and technical decisions with clients, so you should be comfortable with that. We use coding agents daily and expect you to use them too, and to share useful approaches with other developers. AWS serverless development is the main focus of the role. We’re remote-first, use Scrum, and work with code reviews, pair programming, and unit and integration tests. We meet in person regularly, sometimes in Cologne, sometimes in Austria or Mallorca. We plan travel around family commitments. You must be based in Germany and speak business-fluent German and good English. We don’t offer visa sponsorship. €75k–80k, 32 days of vacation, hardware of your choice, and company-paid AI tool subscriptions. Send your CV to recruiting@pagnos.com – no cover letter needed. Questions before applying are welcome. Full job ad (German): https://germantechjobs.de/jobs/PAGNOS-GmbH-Cloud-AI-Engineer..."
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "You must be based in Germany",
+    "why": "HN, Germany: 'REMOTE (Germany)' + 'You must be based in Germany'.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 15,
+    "source": "hn",
+    "posting": {
+      "title": "Remote",
+      "company": "KSC Trading",
+      "locations": ["Remote"],
+      "workMode": "remote",
+      "description": "KSC Trading is a proprietary algorithmic trading firm founded in 2020. The company creates software to engage in automated trading in sports and prediction markets. The focus has been on statistical arbitrage and liquidity provision. We are currently a team of two, expecting to grow to a team of six over the next year. The role would include maintaining and expanding the trading infrastructure. Example projects would be to integrate new exchanges and data sources, normalize market data feeds, optimize backtest performance, and build systems to monitor and analyze live trading. The current tech stack is based on Java, Google Cloud Platform, and Postgres. Location: Remote with at least 4 hours overlap with US east coast working hours. The company donates 20% of its profits. To apply reach out at hiring@ksctrading.com with your resume."
+    },
+    "expectedByRules": null,
+    "expectedQuote": null,
+    "why": "HN, bare 'Remote' + only a timezone requirement (4h overlap with US east coast) -> LLM.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 630,
+    "source": "lever",
+    "posting": {
+      "title": "Senior Software Engineer, Agentic AI",
+      "company": "Curai",
+      "locations": ["Remote"],
+      "workMode": "remote",
+      "description": "At Curai, we believe that access to high-quality healthcare is a fundamental human right, not a privilege. Our mission is to radically transform healthcare delivery by harnessing the power of artificial intelligence and clinical expertise to make care more affordable, accessible, and effective for everyone.  Patients interact with advanced AI systems at every step of their care and follow-up. Licensed physicians review each case with the patient for the clinical decision in our integrated virtual clinic.\n \nWe ground our approach in rigorous research, continuous learning, and a deep commitment to clinical integrity. We focus on making a real impact: improving health outcomes, expanding access to care, and setting new standards for what trustworthy, patient-centered healthcare is. Read some of our latest publications.\n\nAbout the Senior Software Engineer, Agentic AI role\nWe are hiring a Full-Stack Senior Software Engineer across a range of seniority levels to push the frontier of agentic / applied AI in healthcare. As a member of the technical staff on the artificial intelligence engineering team, you will design, build, and ship ML and LLM systems (agentic AI workflows) that directly shape how clinicians and patients interact with our platform. You will work end-to-end: framing the problem, exploring data, training and evaluating models, productionizing inference, and measuring real-world clinical and product impact. The bar is high and the surface area is large; we are looking for engineers who want significant ownership and are excited to operate where research meets production.\n\nWhat You'll Do\n- Lead the technical execution of complex AI initiatives, owning the design and delivery of solutions within a product or technical domain while partnering with senior engineers on broader architectural direction.\n\n- Design, build, train, evaluate and improve advanced machine learning and LLM-based systems for patient and provider-facing products (e.g., conversational AI,\n[...]\nor publishing influential work.\n\nWhat We Offer\n- High ownership work on problems that matter, with a tight feedback loop from real clinicians and patients.\n\n- A small, senior team where your work shows up in the product quickly.\n\n- Competitive compensation, meaningful equity, and comprehensive benefits.\n\n- Remote-first, flexible work environment across the U.S.\n\nCompensation: $175,000 - $210,000/year \n \nThe pay range listed for this position reflects what Curai Health reasonably and in good faith expects to pay at the time of posting. Actual base salary will depend on a variety of factors, including your qualifications and years of relevant experience.\n \nCulture: A mission-driven team of talented"
+    },
+    "expectedByRules": null,
+    "expectedQuote": null,
+    "why": "Bare 'Remote' (lever); only hint is 'flexible work environment across the U.S.' which is not a spec rule phrase -> LLM.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 247,
+    "source": "ashby",
+    "posting": {
+      "title": "Senior Web Security Engineer, Browser Platform",
+      "company": "Duck Duck Go",
+      "locations": ["Remote"],
+      "workMode": "remote",
+      "description": "WHO WE ARE \n\nHi, we're DuckDuckGo, the online protection company and remote-first team of 400+ on a mission to raise the standard of trust online. Founded in 2008 and profitable since 2014, our annual revenue is in the hundreds of millions USD and millions use our browser on Mac https://spreadprivacy.com/introducing-duckduckgo-for-mac/, Windows https://spreadprivacy.com/windows-browser-open-beta/, iOS https://spreadprivacy.com/duckduckgo-privacy-browser-ios14/, and Android https://spreadprivacy.com/introducing-app-tracking-protection/, our search engine https://duckduckgo.com/, and the DuckDuckGo subscription https://duckduckgo.com/pro. We also offer private, useful, and optional AI, including Duck.ai https://duck.ai/, which lets you chat privately with ChatGPT, Claude, and other AIs, all in one place. \n\n \n\nOur culture https://duckduckgo.com/how-we-work of trust, inclusivity, and empowered project management underpins everything we do, where each team member takes full ownership of their projects, from scoping and execution to postmortem. If you're seeking end-to-end ownership of your work, you've come to the right place!\n\n\n\n\nYOUR TEAM AND ROLE\n\nWorking on the Security Functional Team, you'll play a pivotal role in ensuring our security capabilities keep pace with our rapid product development, including our expanding AI offerings like Duck.ai and agentic browsing, directly protecting our users across all our products. You'll also maintain incident detection and response capabilities for the company, and work on related projects. Recent projects include:\n\n - SERP security mitigations\n\n - Agentic browsing security mitigations\n\n - Agentic browser hardening\n\n - Browser and sync security audits\n\n\n\nAs a Senior Security Engineer, App Sec, you'll execute on SERP security mitigations (XSS prevention, tooling development to help engineers write safer code), manage application security scanning infrastructure setup, build and maintain harnesses that get security fixes out\n[...]\ntools and frameworks\n\n - Experience partnering and collaborating with Product Engineers, advising on security matters and helping teams ship secure code faster\n\n - Experience shaping how an organisation thinks about security - driving best practices, improving processes, and raising the bar across teams\n\n\n\n\nCOMPENSATION\n\nThis role is paid on a regional pay scale, in local currency, and stock options:\n\n - United States: $190,500 USD annually\n\n - United Kingdom: £134,600 GBP annually\n\n - Canada: C$253,500 CAD annually\n\n - Europe/Rest of World: €157,350 EUR annually\n\nIn Spain, pay is expected to transition to the EUR scale on January 1, 2027, and in other Europe/Rest of World countries on February 1,"
+    },
+    "expectedByRules": null,
+    "expectedQuote": null,
+    "why": "Bare 'Remote'; pay scale lists US/UK/Canada/Europe only, nothing explicit -> LLM.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 824,
+    "source": "ashby",
+    "posting": {
+      "title": "Enterprise Account Executive (Southeast + Mexico)",
+      "company": "Oscilar.com",
+      "locations": ["Remote"],
+      "workMode": "remote",
+      "description": "At Oscilar, we're building the most advanced AI Risk Decisioning™ Platform. Banks, fintechs, and digitally native organizations rely on us to manage their fraud, credit, and compliance risk with the power of AI. If you're passionate about solving complex problems and making the internet safer for everyone, this is your place.\n\n\n\nWhy Join Us?\n\nMission-driven teams: Work alongside industry veterans from Meta, Uber, Citi, and Confluent, all united by a shared goal to make the digital world safer.\n\nOwnership and impact: We believe in extreme ownership. You'll be empowered to take responsibility, move fast, and make decisions that drive our mission forward.\n\nInnovate at the cutting edge: Your work will shape how modern finance detects fraud and manages risk.\n\n\n\nRole Overview:\n\nAs an Enterprise Account Executive, you will play a pivotal role in driving the growth and success of Oscilar. You will be responsible for identifying and pursuing new business opportunities within an existing customer base, cultivating relationships with key stakeholders, and ensuring the successful adoption of our solutions.\n\nWhat You’ll Do:\n\n - Develop and execute a territory and account plan for net new + existing enterprise customers. Covering accounts in the Southeast, Mexico, Peru, and Columbia. \n\n - Become an expert on Oscilar’s product to effectively conduct discovery calls and presentations to prospective customers.\n\n - Prospect and collaborate with internal resources to maintain existing relationships while building and growing new opportunities.\n\n - Sell the value proposition of Oscilar to key stakeholders within the account while navigating a complex sales cycle across various lines of business.\n\n - Exceed quarterly and annual targets.\n\nWhat You’ll Bring:\n\n - Minimum (6) years of closing experience within Enterprise accounts in a related vertical.\n\n - The ability to use context and acumen to tell a compelling story.\n\n - You have experience building, leading, and growing new business within Enterprise accounts.\n\n - You have experience with account and territory planning.\n\n - You’ve maintained a successful track record of being a top performer.\n\n - You have a hunter mentality, but can also thrive in a team centric environment.\n\n - Must be located in Miami\n\n - Bilingual (English/Spanish) required \n\n\n\nBenefits and Other Perks:\n\n - Compensation: Competitive salary and equity packages, including a 401k plan.\n\n - Flexibility: Remote first culture.\n\n - Health: 100% Employer covered comprehensive health, dental, and vision insurance with a top tier plan for you and your dependents. (US)\n\n - Balance: Unlimited PTO policy.\n\n - Culture: Family-Friendly environment; Regular team events and offsites.\n\n - Development: Unparalleled learning and professional development opportunities.\n\n - Impact: Making the internet safer by protecting online transactions."
+    },
+    "expectedByRules": null,
+    "expectedQuote": null,
+    "why": "Bare 'Remote' + 'Must be located in Miami' (a city, not a listed country) -> LLM.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 42,
+    "source": "hn",
+    "posting": {
+      "title": "AI Engineer",
+      "company": "Mastra",
+      "locations": ["REMOTE (AMER or EMEA time zones)"],
+      "workMode": "remote",
+      "description": "Mastra is the open-source TypeScript framework for building AI agents (agents, workflows, memory, evals, tracing). From the team behind Gatsby, YC-backed, https://github.com/mastra-ai/mastra Why: We’re starting to build more and more agentic features into Mastra: Trace intelligence, and we’re working on various Agent Learning features to automatically self-improve agents (Autoevals + Suggestions, Rollouts). In addition, we’ve been increasingly running Mastra primitives like memory on industry-standard benchmarks and using the results to fine-tune configuration. You have: Shipped agents and agentic applications into production Tuned and tweaked them to improve accuracy You need to be able to benchmark your results against existing datasets, or intelligently creating Apply: { https://jobs.ashbyhq.com/mastra/531a3fe8-556f-4b83-bee7-2037... } We get back to everyone."
+    },
+    "expectedByRules": null,
+    "expectedQuote": null,
+    "why": "HN, timezone-only: 'REMOTE (AMER or EMEA time zones)'.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 11,
+    "source": "hn",
+    "posting": {
+      "title": "GMT-2 <--> GMT+2",
+      "company": "Audio/Video Collaboration company, worldwide",
+      "locations": ["Remote"],
+      "workMode": "remote",
+      "description": "We have a new opening! We're a dynamic truly-global team developing high-end audio and video collaboration tools. A long-term opportunity exist to be the architect and team lead for a new version of a widely-used multimedia product based on existing proven patterns, but expanded to new platforms and capabilities. You must have a strong background in audio DSP, networked audio and cross-platform architecture. European timezone only. We bring beautiful, complex systems to life. Our customers LOVE us. We have small teams: you work closely with the product owners and your input and expertise is meaningful and has an impact. We're a 100% remote company in business for many years supporting the film, media and broadcast industry. Celebrated for our attention to technical detail and for solving hard problems, we're working on vital technology. There's something interesting going on every day and you'd have the opportunity to be part of driving how the industry moves forward in a post-pandemic world. You'll be part of a team of experts working 100% remotely. You must have a strong background in audio DSP, networked audio and cross-platform architecture. Please send resume to  hello@loopcontrol.io that shows experience in the above-mentioned required areas and you are in timezone GMT-2 <--> GMT+2. We respond to all valid candidates. We strive for diversity and welcome all persons to apply. 4DWW possible. Family friendly / flexi-time."
+    },
+    "expectedByRules": null,
+    "expectedQuote": null,
+    "why": "HN, timezone-only: 'GMT-2 <--> GMT+2'.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 190,
+    "source": "hn",
+    "posting": {
+      "title": "Product Engineer (Product Manager role, not a Full-stack role)",
+      "company": "Search Atlas",
+      "locations": ["REMOTE (anywhere, EST hours)"],
+      "workMode": "remote",
+      "description": "https://careers.searchatlas.com/jobs/599248-product-engineer... We're ~160 people, fully remote, building an AI marketing platform. Our main product is OTTO, which runs a site's SEO on its own - it reads live search data and pushes the technical and on-page fixes itself, nobody queues them up. Around that we've got ad automation for Google and Meta, GBP management for multi-location brands, content gen, and LLM visibility tracking (whether ChatGPT and co are citing you). Autotrader, Hyundai, P&G, Vendasta are some of our customers. Work happens in pods, 1 PM and 2-4 engineers. You own your pod's roadmap and ship it with them, no veteran PM signing off on your specs first. That's the part most PM roles won't hand you. Looking for 3+ years PM in B2B SaaS with an actual technical background - eng or QA before PM, or a PM who's been getting into the codebase themselves. You should be able to read Python and TS, write your own SQL, find your way around an API, and not need an engineer to tell you what a stack trace says. We're Django on the back, React/Next on the front. QA is yours end to end including release sign-off, people tend to underestimate that bit. And you're already using Claude Code or similar daily, not \"open to it\". A few notes before you apply: - Experience: we're looking for people with a few years of hands-on product or engineering work behind them. The role is autonomous from the first week, so we need you ready to take the wheel. - Recruiting agencies: we hire in-house and manage every application ourselves, so there's no need to send candidates or reach out about partnerships. Thank you for understanding! - If your stack matches, please do reach out. Django/DRF/Celery/Postgres with React/Next, Python automation work around SEO: if that's your day-to-day and you're using AI coding tools (Claude Code, Codex, Cursor, whatever you like) in your real workflow, I want to hear from you. Don't talk yourself out of it because the title isn't an exact fit; tel"
+    },
+    "expectedByRules": null,
+    "expectedQuote": null,
+    "why": "HN, 'REMOTE (anywhere, EST hours)': 'anywhere' qualified by a timezone -> LLM.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 5115,
+    "source": "ashby",
+    "posting": {
+      "title": "Sales Assist Representative",
+      "company": "Zapier",
+      "locations": ["APAC"],
+      "workMode": "remote",
+      "description": "AI AT ZAPIER\n\nAt Zapier https://zapier.com/about, we build and use automation every day to make work more efficient, creative, and human. So if you’re using AI tools while applying here - that’s great! We just ask that you use them responsibly and transparently.\n\nCheck out our guidance on How to Collaborate with AI During Zapier’s Hiring Process https://zapier.com/l/jobs/ai-at-zapier, including how to use AI tools like ChatGPT, Claude, Gemini, or others during our hiring process - and when not to.\n\n \n\nAI Fluency Assessment https://ai-fluency-hub.vercel.app\nTake our 10 minute AI Fluency Assessment by clicking the link above. See how your skills stack up against our sales bar, get a personalized tier, and walk away with actionable next steps to level up your AI skills.\n\n\n\nJob Posted: June 2026\n\nLocation: India\n\n\n\nHi there!\n\nWe’re looking for a new Sales-Assist Representative to join the Sales-Assist Motion at Zapier.\n\nZapier’s on a mission to make everyone more productive at work. We are in search of individuals who are not just looking for a job, but are committed to building a rewarding career in sales. Ideal candidates will possess a genuine passion for sales, a desire to continually learn and improve, and the drive to achieve excellence within the industry. \n\nZapier has helped millions of people build businesses through the power of automation. The Sales Assist group serves customers as they evaluate and buy Zapier’s offers, through a high-velocity sales motion. We help customers primarily through live chat conversations through Zendesk, and some inbound demos over Zoom. We inspire deep automation use-cases pertaining to their role, and address any questions through their procurement and buying process. Ultimately, success here looks like removing friction from the purchase and adoption process through qualifying or converting leads.\n\nIf you want to advance your career at a fast-growing, profitable, impact-driven company, read on…\n\n - Our Commitment to Applicants\n[...]\nand Values at Zapier https://zapier.com/jobs/culture-and-values-at-zapier/\n\n - Zapier Guide to Remote Work https://zapier.com/learn/remote-work/\n\n - Zapier Code of Conduct https://zapier.com/jobs/zapier-code-of-conduct/\n\n - Diversity and Inclusivity at Zapier https://zapier.com/jobs/working-on-diversity-and-inclusivity/\n   \n   \n\n\nABOUT YOU\n\n - You are located in India and able to work within the hours of ~9:00 pm - 7:00 am IST. \n\n - 4+ years of experience, with a track record as a solutions engineer, technical account manager moving to sales, or a very technical quota-carrying salesperson with experience in a SaaS environment, especially across technical product-led companies with both self-serve and sales"
+    },
+    "expectedByRules": null,
+    "expectedQuote": null,
+    "why": "Location 'APAC' only; description says 'Location: India' / 'You are located in India' but description-India is not a spec rule -> LLM (should end eligible).",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 83,
+    "source": "hn",
+    "posting": {
+      "title": "REMOTE (EMEA/APAC)",
+      "company": "Senior Python Backend Engineer",
+      "locations": ["REMOTE (EMEA/APAC)"],
+      "workMode": "remote",
+      "description": "We're looking for Python backend engineers to work on a trustless supercluster of performance-proofed GPU-enabled sandboxed docker container runners controlled by truly decentralized algorithms (not just PAXOS or RAFT). Wow, that was a mouthful... If you found it interesting, join Reef Technologies and tackle complex technical challenges like this on your own terms: - Contribute from wherever you like; we are fully remote - Set your own time commitment, as long as it's at least 30h per week - See how we work in our handbook: github.com/reef-technologies/handbook - Influence the way we operate through our Sociocracy 3.0 decision-making process Salary on a B2B contract: - 45-70 USD or 180-280 PLN per hour - Flexible work schedule (as measured with a time tracker) - We automatically adjust rates based on inflation twice a year We're looking for someone with 5+ years of programming experience, including at least a year with Python (including open-source and significant personal projects). So, what do you think? You don't even need a CV; just go to https://careers.reef.pl/?utm_source=hackernews and shoot a few quick commands to apply. Edit: If you applied and haven't heard back, please check the spam folder of the email associated with the GitHub account you used to apply — our replies sometimes end up there."
+    },
+    "expectedByRules": null,
+    "expectedQuote": null,
+    "why": "HN, 'REMOTE (EMEA/APAC)' -> APAC is undecided by rules.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 1552,
+    "source": "ashby",
+    "posting": {
+      "title": "Golang Engineer: Cloud Platform",
+      "company": "Tenki Cloud by Luxor Tech",
+      "locations": ["Philippines, Remote", "Argentina, Remote", "LATAM, Remote", "APAC, Remote"],
+      "workMode": "remote",
+      "description": "ABOUT TENKI\n\nWe started Tenki on the belief that compute is the new digital oil. As global demand for compute power accelerates, scalable and tradable compute is set to become one of the most valuable markets of our lifetime. Our goal is to become the leaders in harnessing, refining, and trading compute-unlocking a new asset class for the world’s most important digital resource.\n\nTenki connects producers of compute with a growing universe of consumers. Producers get transparent pricing, predictable settlement, and access to global demand. Consumers get simple, developer-friendly access to high-quality compute at competitive prices.\n\nWe’re currently building the consumer side, starting with GitHub Actions, enabling developers to offload workflows directly through Tenki. Soon, we’ll expand to a broad suite of cloud services like Virtual Machines, Databases, AI Agents, and more.\n\nAs we expand, our focus will broaden beyond consumers to include the supply side, enabling producers to offer compute through Tenki and later the development of financial instruments that support a more efficient and tradable compute market.\n\n\n\n\nABOUT THE ROLE\n\nWe are looking for a Golang Engineer to join a small but talent dense team building the future of compute markets. Although the role is remote, we need team members who can reliably work within our core time zones in LATAM (GMT-3) or the Philippines (GMT+8), and you should be fully comfortable communicating in English across our globally distributed team. This Position will report to the Tenki Engineer Manager.\n\nIn this role, you’ll help build the core infrastructure that powers Tenki’s. You will:\n\n - Architect, maintain, and evolve our core gRPC API services, based on ConnectRPC\n\n - Design and operate a private, programmable microservices fabric that securely connects our microservices across the platform\n\n - Manage identity services on top of the Ory stack: Kratos, Keto, and Hydra\n\n - Develop DDoS mitigation strategies - anticipating"
+    },
+    "expectedByRules": null,
+    "expectedQuote": null,
+    "why": "Mixed regions incl. 'APAC, Remote': not every location is non-India -> LLM.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 200,
+    "source": "ashby",
+    "posting": {
+      "title": "Video Content Strategist",
+      "company": "River",
+      "locations": ["Remote Americas + Europe"],
+      "workMode": "remote",
+      "description": "At River, we are building the world's most trusted financial institution to empower people to take ownership of their financial lives through Bitcoin, the world's only incorruptible digital money. We believe in a future where every person will have bitcoin savings, and every business will have bitcoin on the balance sheet. We obsessively design and build delightful products that help our clients buy, sell, secure, and use Bitcoin.\n\nWe are looking for a Video Content Strategist to build River's YouTube channel and video output. You will own what we make and how we package it: sourcing and selecting ideas, writing host-led scripts, and crafting the titles and thumbnails that decide whether our work gets watched. Our audience is people who are navigating the reality that our money is slowly losing its value; your job is to make them trust us enough to hear the answers. The main goal of the channel is not to promote River’s products, it is to create valuable content you would enjoy watching.\n\nYou'll report to River's Director of Marketing and work closely with our Host-Producer, the marketing team, and company leadership.\n\nRiver is growing quickly and has raised more than $50 million from leading investors, including Goldcrest, Kingsway, Polychain, M13, DG, and Valor. We have also released our company's financials https://river.com/financials publicly, so that all of our clients and employees can verify the robustness and growth of the business themselves.\n\n\n\n\nWHAT YOU WILL BE DOING:\n\n - Own the video content pipeline. Generate and filter video ideas, sourcing input from across the marketing team and our extensive research.\n\n - Own packaging of the titles and thumbnails. You'll craft them and test them.\n\n - Write scripts for medium to long form videos that make money and Bitcoin topics clear, engaging, and impossible to click away from. Some videos will be host-led, others animated.\n\n - Develop hooks and introductions to retain the audience and provide structure.\n\n -\n[...]\n- A background in finance, economics, or journalism.\n\n\nSALARY AND BENEFITS:\n\n - Annual salary range of $110-165k depending on experience\n\n - Competitive compensation and equity\n\n - Unlimited Paid Time Off\n\n - Parental leave, separate from PTO policy\n\n - Medical, dental, and vision insurance + 401k for US based employees\n\n - Remote option: You can work from anywhere in the Americas or Europe.\n\n\nINTERVIEW PROCESS:\n\n - Screening interview with River's Director of Marketing (20 mins)\n\n - First round of interviews (1-hour block with River's Chief Product Officer and a Marketing teammate)\n\n - Take-home challenge (a paid packaging and scripting exercise)\n\n - Final round of executive interviews (1-hour block with River's COO and"
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "Remote Americas + Europe",
+    "why": "TRAP: 'Remote Americas + Europe' and 'work from anywhere in the Americas or Europe' must not be eligible. Relabelled (elig-v0.2): Americas and Europe both exclude India, so the rules now decide not_eligible instead of deferring the region combo to the LLM.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 803,
+    "source": "ashby",
+    "posting": {
+      "title": "Sr./Staff JavaScript Developer - Web SDK (Brazil/Canada/UK/Poland/India)",
+      "company": "Oscilar.com",
+      "locations": [
+        "Brazil - Remote",
+        "Remote - India",
+        "Remote - UK",
+        "Remote - Poland",
+        "Remote - Canada"
+      ],
+      "workMode": "remote",
+      "description": "Shape the future of trust in the age of AI\nAt Oscilar, we're building the most advanced AI Risk Decisioning™ Platform. Banks, fintechs, and digitally native organizations rely on us to manage their fraud, credit, and compliance risk with the power of AI. If you're passionate about solving complex problems and making the internet safer for everyone, this is your place https://oscilar.com/careers.\n\n\n\n\nWHY JOIN US:\n\n - Mission-driven teams: Work alongside industry veterans from Meta, Uber, Citi, and Confluent, all united by a shared goal to make the digital world safer.\n\n - Ownership and impact: We believe in extreme ownership. You'll be empowered to take responsibility, move fast, and make decisions that drive our mission forward.\n\n - Innovate at the cutting edge: Your work will shape how modern finance detects fraud and manages risk.\n\n\n\n\nJOB DESCRIPTION \n\nWe are seeking a highly skilled Staff JavaScript Developer to design, build, and optimize our Web SDK. This SDK will be at the core of our solutions for device fingerprinting, identity verification, and behavior analytics, enabling our customers to stay ahead in the ever-evolving fraud prevention landscape.  This is not a UI or App development role, this is building SDKs for detecting fraud by analyzing device and behavioral properties. This requires deep understanding of the platform internals.\n\nAs a Staff Developer, you will lead the design, development, and performance optimization of our Web SDK, leveraging your deep expertise in JavaScript, TypeScript, and modern web technologies. You will collaborate across teams to deliver a secure, scalable, and developer-friendly SDK.\n\n\n\n\nRESPONSIBILITIES\n\n - Lead the development and maintenance of a high-performance Web SDK for collecting and analyzing browser and device-related data.\n\n - Design and implement algorithms to create unique device fingerprints and capture behavior-based insights (e.g., gestures, keyboard, and mouse interactions).\n\n - Build and maintain a"
+    },
+    "expectedByRules": "eligible",
+    "expectedQuote": "Remote - India",
+    "why": "Mixed: Brazil/UK/Poland/Canada + 'Remote - India' -> one India option is enough.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 250,
+    "source": "ashby",
+    "posting": {
+      "title": "Senior Privacy Engineer",
+      "company": "Duck Duck Go",
+      "locations": [
+        "Remote",
+        "Japan (Remote)",
+        "Slovakia (Remote)",
+        "Spain (Remote)",
+        "Czechia (Remote)",
+        "Switzerland (Remote)",
+        "Estonia (Remote)",
+        "Singapore (Remote)",
+        "Mexico (Remote)",
+        "USA (Remote)",
+        "Israel (Remote)",
+        "Kyrgyzstan (Remote)",
+        "Bulgaria (Remote)",
+        "Austria (Remote)",
+        "India (Remote)",
+        "Iceland (Remote)",
+        "Hungary (Remote)",
+        "Ireland (Remote)",
+        "Canada (Remote)",
+        "South Africa (Remote)",
+        "Brazil (Remote)",
+        "Finland (Remote)",
+        "UK (Remote)",
+        "Romania (Remote)",
+        "Cyprus (Remote)",
+        "Malta (Remote)",
+        "Latvia (Remote)",
+        "Argentina (Remote)",
+        "Poland (Remote)",
+        "Uruguay (Remote)"
+      ],
+      "workMode": "remote",
+      "description": "WHO WE ARE\n\nHi, we're DuckDuckGo, the online protection company and remote-first team of 400+ on a mission to raise the standard of trust online. Founded in 2008 and profitable since 2014, our annual revenue is in the hundreds of millions USD and millions use our browser on Mac https://spreadprivacy.com/introducing-duckduckgo-for-mac/, Windows https://spreadprivacy.com/windows-browser-open-beta/, iOS https://spreadprivacy.com/duckduckgo-privacy-browser-ios14/, and Android https://spreadprivacy.com/introducing-app-tracking-protection/, our search engine https://duckduckgo.com/, and the DuckDuckGo subscription https://duckduckgo.com/pro. We also offer private, useful, and optional AI, including Duck.ai https://duck.ai/, which lets you chat privately with ChatGPT, Claude, and other AIs, all in one place. \n\n \n\nOur culture https://duckduckgo.com/how-we-work of trust, inclusivity, and empowered project management underpins everything we do, where each team member takes full ownership of their projects, from scoping and execution to postmortem. If you're seeking end-to-end ownership of your work, you've come to the right place!\n\n\n\n\nYOUR TEAM AND ROLE\n\nWorking on the Privacy Functional Team, you'll lead complex projects across key company-wide objectives. You'll protect the privacy of our users using Go, Node.js, Python, and (sometimes) Perl to write pragmatic, performant, testable code, and work on related projects. Potential projects include:\n\n - Designing systems for improving our search indexes and AI features without compromising user privacy\n\n - Building new features on top of our Tracker Radar https://spreadprivacy.com/duckduckgo-tracker-radar/ crawler to detect emerging privacy threats\n\n - Implementing new privacy features and maintaining existing ones, such as our Web Tracking https://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections and Email https://duckduckgo.com/duckduckgo-help-pages/email-protection/privacy Protections\n\n \n\nAs a Senior"
+    },
+    "expectedByRules": "eligible",
+    "expectedQuote": "India (Remote)",
+    "why": "Mixed: long country list incl. 'India (Remote)'.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 253,
+    "source": "ashby",
+    "posting": {
+      "title": "Senior Web Compatibility Engineer",
+      "company": "Duck Duck Go",
+      "locations": [
+        "Remote",
+        "Japan (Remote)",
+        "Slovakia (Remote)",
+        "Spain (Remote)",
+        "Czechia (Remote)",
+        "Switzerland (Remote)",
+        "Estonia (Remote)",
+        "Singapore (Remote)",
+        "Mexico (Remote)",
+        "Portugal (Remote)",
+        "USA (Remote)",
+        "Israel (Remote)",
+        "Kyrgyzstan (Remote)",
+        "Bulgaria (Remote)",
+        "Austria (Remote)",
+        "Iceland (Remote)",
+        "Hungary (Remote)",
+        "Ireland (Remote)",
+        "Canada (Remote)",
+        "South Africa (Remote)",
+        "Brazil (Remote)",
+        "Mauritius (Remote)",
+        "UK (Remote)",
+        "Romania (Remote)",
+        "Cyprus (Remote)",
+        "Malta (Remote)",
+        "Latvia (Remote)",
+        "Argentina (Remote)",
+        "Bosnia and Herzegovina (Remote)",
+        "Poland (Remote)",
+        "Uruguay (Remote)"
+      ],
+      "workMode": "remote",
+      "description": "WHO WE ARE\n\nHi, we're DuckDuckGo, the online protection company and remote-first team of 400+ on a mission to raise the standard of trust online. Founded in 2008 and profitable since 2014, our annual revenue is in the hundreds of millions USD and millions use our browser on Mac https://spreadprivacy.com/introducing-duckduckgo-for-mac/, Windows https://spreadprivacy.com/windows-browser-open-beta/, iOS https://spreadprivacy.com/duckduckgo-privacy-browser-ios14/, and Android https://spreadprivacy.com/introducing-app-tracking-protection/, our search engine https://duckduckgo.com/, and the DuckDuckGo subscription https://duckduckgo.com/pro. We also offer private, useful, and optional AI, including Duck.ai https://duck.ai/, which lets you chat privately with ChatGPT, Claude, and other AIs, all in one place. \n\n \n\nOur culture https://duckduckgo.com/how-we-work of trust, inclusivity, and empowered project management underpins everything we do, where each team member takes full ownership of their projects, from scoping and execution to postmortem. If you're seeking end-to-end ownership of your work, you've come to the right place!\n\n\n\n\nYOUR TEAM AND ROLE\n\nWorking on the Web Dependability Engineering team, you'll make sure websites just work in DuckDuckGo's browsers across Mac, Windows, iOS, and Android, helping ensure our users have the best-possible experience browsing with DuckDuckGo. Recent projects include:\n\n - Reverse-engineering how sites detect our privacy protections and building countermeasures that keep pages working\n\n - Shimming browser APIs so sites work seamlessly across different browser engines and system webviews\n\n - Building LLM agent pipelines that automatically reproduce and triage reported site breakage\n\n \n\nAs a Senior Web Compatibility Engineer, you'll be our resident expert on why websites break and how to fix them: owning the webcompat side of our triage process, debugging gnarly issues in code you don't control, distinguishing site bugs from browser"
+    },
+    "expectedByRules": null,
+    "expectedQuote": null,
+    "why": "Mixed: same DuckDuckGo list WITHOUT India but with a bare 'Remote' entry -> not every location is non-India -> LLM.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 105,
+    "source": "hn",
+    "posting": {
+      "title": "Sr/Staff Software Engineers, Data Scientist, FDE, PM",
+      "company": "Oscilar.com",
+      "locations": ["REMOTE (US/Canada/Brazil/Poland/UK/India)"],
+      "workMode": "remote",
+      "description": "Full-time AI Risk Decisioning™ platform that helps organizations manage onboarding, fraud, credit, and compliance risks Open roles: - Sr./Staff Analytics & Data Architecture Engineer (US/Canada) - Sr./Staff Java Backend Engineer (Brazil/Poland/India) - Staff Web SDK Engineer (US/Brazil/India/Canada/Poland/UK) - Data Scientist (US/Canada) - Machine Learning Engineer (US/Canada) - Forward Deployment Engineer (Brazil/US) - Product Manager AML (US/Canada) - Product Manager Device and Behavior (US/Canada) apply at: https://jobs.ashbyhq.com/oscilar?utm_source=HackerNews"
+    },
+    "expectedByRules": "eligible",
+    "expectedQuote": "REMOTE (US/Canada/Brazil/Poland/UK/India)",
+    "why": "HN mixed: remote list includes India.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 40,
+    "source": "hn",
+    "posting": {
+      "title": "Multiple roles - Software - AI - FDE - Cloud",
+      "company": "Wipro.com",
+      "locations": ["Global (US/CAN/EU/India)"],
+      "workMode": "remote",
+      "description": "My company is hiring for multiple roles, and I'd like to offer internal referrals to qualified candidates from this community. I'm doing this purely because we need great talent—I don't benefit personally from referrals. If you're interested, feel free to send a brief introduction to contact info in my profile. I'll follow up with my company email to discuss the opportunity further. Check out the open roles here: https://careers.wipro.com/"
+    },
+    "expectedByRules": "eligible",
+    "expectedQuote": "Global (US/CAN/EU/India)",
+    "why": "HN mixed: 'Global (US/CAN/EU/India)' on a remote post.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 5319,
+    "source": "greenhouse",
+    "posting": {
+      "title": "Cloud Security Engineer",
+      "company": "Stripe",
+      "locations": ["Seattle", "US"],
+      "workMode": null,
+      "description": "Who we are\n\nAbout Stripe\n\nStripe is a financial infrastructure platform for businesses. Millions of companies—from the world's largest enterprises to the most ambitious startups—use Stripe to accept payments, grow their revenue, and accelerate new business opportunities. Our mission is to increase the GDP of the internet, and we have a staggering amount of work ahead. That means you have an unprecedented opportunity to put the global economy within everyone's reach while doing the most important work of your career.\n\nAbout the team\n\nStripe powers businesses all over the world. We process payments, run marketplaces, detect fraud, help entrepreneurs start a business from anywhere in the world, build world-class developer-friendly APIs, and more. Nearly every system we operate interacts with sensitive financial or personal data—making security a top priority for Stripe.\n\nStripe will succeed at our mission of increasing the GDP of the internet only if we prove ourselves worthy of our users' trust. As an engineer on the Security team, you'll design and develop frameworks, systems, and solutions to ensure the security of Stripe's engineering infrastructure and, most importantly, privacy of our users' data.\n\nThe Cloud Security team accelerates Stripe's business priorities by building core security controls and services that empower teams to build quickly and securely on top of a well-governed cloud platform and partnering with infrastructure teams to advance select critical business priorities using novel infrastructure or integrations as that platform expands.\n\nWhat you'll do\n\nResponsibilities\n\n- Design, build, and operate the core security infrastructure used by all of Stripe's engineering teams in close collaboration with other stakeholders and our users\n\n- Uphold our high engineering standards and bring consistency to the many codebases and processes you'll encounter\n\n- Contribute to team learning by improving engineering standards, tooling, and processes\n\n- Design and build durable solutions that will advance Stripe's security beyond the state of the art\n\n- Help expand Stripe's cloud footprint on top of secure, paved roads and guardrails\n\n- Optimize for security controls that have delightful user experiences\n\n- Partner closely with infrastructure and engineering teams building integrations with our cloud infrastructure or adopting new cloud managed services\n\n- Make impactful decisions about systems and security—their edge cases, failure modes, and life cycles\n\n- Use data to determine appropriate baselines against which to measure security\n\n- Define infrastructure that reliably feeds signals to threat teams\n\n- Evaluate and prototype new security tools and practices\n\nYou may work on\n\n- Designing and implementing controls that support security invariants and enforce our security principles while providing a surprisingly great user experience\n\n- Providing a migration path for newly acquired companies onto the Stripe Secure Platform, embedding with their engineers and biasing for action\n\n- CI tooling for platform-related configuration, including IAM roles, SCPs, and associated components\n\n- Guardrails and security controls for both commonly used and"
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "US",
+    "why": "Stripe marketing line 'help entrepreneurs start a business from anywhere in the world' is about the product, not hiring; locations 'Seattle' + 'US' are all US (plain city name next to a US anchor).",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 5397,
+    "source": "greenhouse",
+    "posting": {
+      "title": "Engineering Manager, Terminal",
+      "company": "Stripe",
+      "locations": ["Toronto, Canada", "Canada Locations"],
+      "workMode": null,
+      "description": "Who we are\n\nAbout Stripe\n\nStripe is a financial infrastructure platform for businesses. Millions of companies—from the world's largest enterprises to the most ambitious startups—use Stripe to accept payments, grow their revenue, and accelerate new business opportunities. Our mission is to increase the GDP of the internet, and we have a staggering amount of work ahead. That means you have an unprecedented opportunity to put the global economy within everyone's reach while doing the most important work of your career.\n\nAbout the team\n\nAs a platform company powering businesses all over the world, Stripe processes payments, runs marketplaces, detects fraud, helps entrepreneurs start internet businesses from anywhere in the world, builds world-class developer-friendly APIs, and more. The engineering teams at Stripe work on the business logic for all of that. As a software engineering manager at Stripe, you'll lead teams that build and expand APIs, services, and experiences. You'll also work with partners to launch new markets and vertical capabilities.\n\nStripe Terminal helps our users extend their online presence to the physical world. The mission of the Terminal team is to make it as easy for businesses to accept in-person payments as the Stripe API has done for online payments—building for Unified Commerce. With Terminal, businesses can unify their in-person and online experiences, unlocking payments use cases that are right for their business model—whether it's creating a modern retail experience, extending their website to a pop-up store, or enabling a mobile point-of-sale at their next event.\n\nWithin Terminal, the Commerce team focuses on the following to help make Unified Commerce a reality for businesses across the globe.\n\n- Enterprise features—on-reader forms, tipping, gift cards\n\n- Payment features—DCC, surcharge, multi-capture\n\n- Point-of-sale integrations—enterprise-focused integrations\n\n- Low-code and no-code—solutions that will enable our users to onboard quickly\n\nWhat you'll do\n\nAs an Engineering Manager on the Terminal Commerce Experience team, you'll launch and scale Unified Commerce experiences within Stripe Terminal, drive new end-customer and merchant features, and build POS integrations from the ground up to support large-scale enterprise.\n\nResponsibilities\n\n- Work with leaders across Stripe to create and drive toward the vision of Unified Commerce, bringing in-person and online payments together\n\n- Drive the roadmap and priorities for your team, and work with dependencies across the company\n\n- Support the engineering team in achieving a high level of technical excellence and stability\n\n- Manage processes to help the team do its best work and interface effectively with the rest of Stripe\n\n- Recruit excellent engineers in collaboration with the Stripe recruiting team and develop engineers on the team, helping them advance in their careers\n\n- Understand core Stripe APIs, influence design to interplay with card-present payments, and build a platform for Unified Commerce with your team\n\n- Empower and guide your team to build and scale integrations and core abstractions across payment methods, gift cards, and point-of-sale connector"
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "Toronto, Canada",
+    "why": "'helps entrepreneurs start internet businesses from anywhere in the world' is product marketing; 'Canada Locations' is Canada once the ' Locations' suffix is stripped.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 5622,
+    "source": "greenhouse",
+    "posting": {
+      "title": "Product Manager,  Startup Products",
+      "company": "Stripe",
+      "locations": ["NYC, Chicago, Seattle, San Francisco", "US"],
+      "workMode": null,
+      "description": "Who we are\n\nAbout Stripe\n\nStripe is a financial infrastructure platform for businesses. Millions of companies—from the world’s largest enterprises to the most ambitious startups—use Stripe to accept payments, grow their revenue, and accelerate new business opportunities. Our mission is to increase the GDP of the internet, and we have a staggering amount of work ahead. That means you have an unprecedented opportunity to put the global economy within everyone’s reach while doing the most important work of your career.\n\nAbout the team\n\nThe Startup Products team builds Stripe Atlas and other products that help founders start and run a company, from anywhere in the world. We believe that startups are one of the most effective ways to solve the world's problems, and we want to give founders a running start — and keep them running. We help founders form their company, raise capital, execute critical legal agreements, access the internet's best tools, and automate operations while feeling ambitious, smart, and assured. Our goal is to create more startups that get to product-market fit, fast.\n\nOur team is composed of high-agency, high-ownership product thinkers, who genuinely care about helping founders and making it easier to start and run a startup. Every person on the team is responsible for making our product the best it can be, and for ensuring our roadmap contains the highest impact ships for founders.\n\nWhat you’ll do\n\nAs a product manager on the Startup Products team, you’ll gain a deep understanding of what early stage founders need to get their company off the ground, identify the most important pain points to solve, help set the product strategy, scope product features and technical infrastructure, collaborate with design, drive execution with engineering, craft product marketing, and plan for go-to-market.\n\nResponsibilities\n\n- Deeply understand the needs of startup founders and learn how they use Atlas and other startup products.\n\n- Stay at the front of the ever changing technology landscape, ensuring we are building where founders are and with tools they want to use.\n\n- Drive product development in collaboration with engineering counterparts by setting the pace, prioritizing ruthlessly, and unblocking execution.\n\n- Craft product experiences that are both simple and powerful, with surprisingly great details.\n\n- Contribute to our product strategy and own delivery of product and business metrics.\n\n- Work collaboratively with internal stakeholders and deliver clear communication on statuses, priorities, and landed impact.\n\n- Represent Atlas externally with founders, venture capitalists, accelerators, and partners. Establish new external partnerships as needed to drive product development.\n\n- Develop and maintain metrics to help us understand product performance.\n\n- Ensure that every user has a great experience with Atlas, using any means at your disposal. Review feedback, unblock stuck users, collaborate with our support teams, and recommend and deliver product solutions to common user problems.\n\nWho you are\n\nWe’re looking for someone who meets the minimum requirements to be considered for the role. If you meet these requirements, you are enco"
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "US",
+    "why": "'help founders start and run a company, from anywhere in the world' describes Stripe Atlas, not hiring; 'NYC, Chicago, Seattle, San Francisco' + 'US' are all US.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 5892,
+    "source": "greenhouse",
+    "posting": {
+      "title": "UX Research Manager, Payments",
+      "company": "Stripe",
+      "locations": ["Canada", "Canada Locations"],
+      "workMode": null,
+      "description": "Who we are\n\nAbout Stripe\n\nStripe is a financial infrastructure platform for businesses. Millions of companies - from the world’s largest enterprises to the most ambitious startups - use Stripe to accept payments, grow their revenue, and accelerate new business opportunities. Our mission is to increase the GDP of the internet, and we have a staggering amount of work ahead. That means you have an unprecedented opportunity to put the global economy within everyone's reach while doing the most important work of your career.\n\nResearch at Stripe\n\nStripe’s mission is to increase the GDP of the internet and expand economic access globally. We design tools and infrastructure to help our users start, run, and scale an online business from anywhere in the world. We believe there are too many barriers to doing business on the internet and that opportunities are not equally distributed around the world. We also believe that building and growing a business online is a problem rooted in code, language, and design, not finance.\n\nThat’s where you come in. We’re looking for an experienced UX Research Manager to join our growing UX Research team and help build, coach, and mentor a growing and highly skilled group of researchers.\n\nAbout UX research and the role\n\nThe UX Research team is part of Stripe’s Design team. It works across brand and product initiatives to deliver products and experiences that meet user needs. Since Stripe’s main audience is people who build products, we take pride in creating user-friendly, user-focused experiences.\n\nIn addition to conducting primary research, we enable other Stripes, including engineers, product managers, designers, and operations teams, to learn and apply research skills to global problems. You will help shape research as a core competency across Stripe and define how we put users first in our research.\n\nWhat you’ll do\n\nAs a UX Research Manager, you will use your people-management and research expertise to lead a team of researchers that collaborates with product teams on core Payments and Risk products to build insight-driven product experiences. Core Payments includes Stripe’s in-person and online payment capabilities, checkout suite, Radar, and smart solutions that help businesses achieve optimal payment performance while balancing regulatory requirements, conversion, costs, and fraud considerations.\n\nYou will report to the Head of Research.\n\nResponsibilities\n\n- Lead, manage, coach, and mentor a team of researchers conducting mixed-methods research throughout the product-development process for Stripe’s Payments and Risk product pillar.\n\n- Lead initiatives and guide the research team through artificial intelligence (AI) transformation in its internal processes, how it conducts research for Stripe users, and how it supports the changing needs of product partners.\n\n- Share research insights that deepen Stripe’s understanding of user needs and identify opportunities to meet those needs.\n\n- Grow the team to meet Stripe’s needs while developing individual contributors to deliver impactful, actionable research studies.\n\n- Partner with Design and Stripe leadership to determine how to best use user research at Stripe and de"
+    },
+    "expectedByRules": "not_eligible",
+    "expectedQuote": "Canada",
+    "why": "'help our users start, run, and scale an online business from anywhere in the world' is product marketing; 'Canada' + 'Canada Locations' are Canada.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 573,
+    "source": "ashby",
+    "posting": {
+      "title": "Customer Excellence Specialist",
+      "company": "ICEYE",
+      "locations": ["Singapore"],
+      "workMode": null,
+      "description": "CUSTOMER EXCELLENCE SPECIALIST\n\n - Location: Seoul, Korea OR Singapore OR New Delhi, India\n\n - Department: Customer Excellence – Data\n\n - Reports to: Customer Excellence Manager\n\n - Employment type: Permanent\n\n - Work model: Hybrid (shift-based including 1 weekend shift per month, no night shifts)\n\n - Employment is subject to applicable security screening (incl. SUPO, where required).\n\n \n\n\nWHY THIS ROLE MATTERS\n\nDeliver seamless, high-quality customer experiences across APAC region by managing the complete order-to-delivery process for ICEYE’s satellite radar data.\n\n \n\nAs a Customer Excellence Specialist, you will ensure customers receive timely and accurate Synthetic Aperture Radar (SAR) imagery, balancing technical insight, proactive communication, and operational precision. You will work closely with our satellite operations, product, and analytics teams to make sure every delivery meets ICEYE’s world-class standards and customer expectations.\n\n \n\n\nWHO WE ARE\n\n \n\nICEYE is the global leader in synthetic aperture radar (SAR) satellite operations for Earth Observation, persistent monitoring, and natural catastrophe solutions. We own and operate the world’s largest SAR constellation, acquiring images of Earth at any time — even through clouds or darkness — to help commercial and government partners make data-driven decisions.\n\n \n\nOur satellites and analytics support critical sectors, including maritime, disaster management, insurance, and finance. ICEYE’s mission is to improve life on Earth by becoming the global source of truth in Earth Observation.\n\n \n\nHeadquartered in Finland, ICEYE operates from offices in five international locations and employs over 600 people from nearly 60 countries, united by our passion for innovation, teamwork, and impact.\n\n \n\n\nYOUR DAY-TO-DAY RESPONSIBILITIES\n\nRegular Customer Excellence Responsibilities\n\nOrder Management:\n\n - Oversee the entire order process, from submission to the delivery of the final product.\n\n - Prepare comprehensive feasibility studies for satellite imagery, ensuring customer requirements are met.\n\nSatellite Resource Planning:\n\n - Plan satellite resources for capturing Synthetic Aperture Radar (SAR) images.\n\n - Perform SAR image quality control to maintain high standards.\n\nCustomer Interaction:\n\n - Resolve customer inquiries and complaints promptly.\n\n - Collaborate with cross-functional teams (satellite operators, sales, analytics, product software) to address project and customer-related issues.\n\n - Serve as a vital interface between clients and ICEYE, ensuring effective communication and interaction.\n\nProcess Improvement:\n\n - Contribute to the enhancement of existing processes and documentation.\n\n - Report to management on key performance metrics and anomalies.\n\nProduct Knowledge:\n\n - Maintain a thorough understanding of the company’s products, support, and services.\n\nGovernmental and Commercial Contracts:\n\n - Serve as the point of contact for APAC governmental contracts and commercial clients.\n\n - Conduct feasibility studies and effectively communicate results to customers.\n\nRelationship Building:\n\n - Build and maintain trusted relationships with customers, serving as a key contact for ord"
+    },
+    "expectedByRules": null,
+    "expectedQuote": null,
+    "why": "Location field says only 'Singapore', but the body says 'Location: Seoul, Korea OR Singapore OR New Delhi, India'; the India option blocks a not_eligible verdict -> LLM.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 578,
+    "source": "ashby",
+    "posting": {
+      "title": "Customer Excellence Specialist",
+      "company": "ICEYE",
+      "locations": ["South Korea"],
+      "workMode": "remote",
+      "description": "CUSTOMER EXCELLENCE SPECIALIST\n\n - Location: Seoul, Korea OR Singapore OR New Delhi, India\n\n - Department: Customer Excellence – Data\n\n - Reports to: Customer Excellence Manager\n\n - Employment type: Permanent\n\n - Work model: Hybrid (shift-based including 1 weekend shift per month, no night shifts)\n\n - Employment is subject to applicable security screening (incl. SUPO, where required).\n\n\n\n\nWHY THIS ROLE MATTERS\n\nDeliver seamless, high-quality customer experiences across APAC region by managing the complete order-to-delivery process for ICEYE’s satellite radar data.\n\n\n\nAs a Customer Excellence Specialist, you will ensure customers receive timely and accurate Synthetic Aperture Radar (SAR) imagery, balancing technical insight, proactive communication, and operational precision. You will work closely with our satellite operations, product, and analytics teams to make sure every delivery meets ICEYE’s world-class standards and customer expectations.\n\n\n\n\nWHO WE ARE\n\n\n\nICEYE is the global leader in synthetic aperture radar (SAR) satellite operations for Earth Observation, persistent monitoring, and natural catastrophe solutions. We own and operate the world’s largest SAR constellation, acquiring images of Earth at any time — even through clouds or darkness — to help commercial and government partners make data-driven decisions.\n\n\n\nOur satellites and analytics support critical sectors, including maritime, disaster management, insurance, and finance. ICEYE’s mission is to improve life on Earth by becoming the global source of truth in Earth Observation.\n\n\n\nHeadquartered in Finland, ICEYE operates from offices in five international locations and employs over 600 people from nearly 60 countries, united by our passion for innovation, teamwork, and impact.\n\n\n\n\nYOUR DAY-TO-DAY RESPONSIBILITIES\n\nRegular Customer Excellence Responsibilities\n\nOrder Management:\n\n - Oversee the entire order process, from submission to the delivery of the final product.\n\n - Prepare comprehensive feasibility studies for satellite imagery, ensuring customer requirements are met.\n\nSatellite Resource Planning:\n\n - Plan satellite resources for capturing Synthetic Aperture Radar (SAR) images.\n\n - Perform SAR image quality control to maintain high standards.\n\nCustomer Interaction:\n\n - Resolve customer inquiries and complaints promptly.\n\n - Collaborate with cross-functional teams (satellite operators, sales, analytics, product software) to address project and customer-related issues.\n\n - Serve as a vital interface between clients and ICEYE, ensuring effective communication and interaction.\n\nProcess Improvement:\n\n - Contribute to the enhancement of existing processes and documentation.\n\n - Report to management on key performance metrics and anomalies.\n\nProduct Knowledge:\n\n - Maintain a thorough understanding of the company’s products, support, and services.\n\nGovernmental and Commercial Contracts:\n\n - Serve as the point of contact for APAC governmental contracts and commercial clients.\n\n - Conduct feasibility studies and effectively communicate results to customers.\n\nRelationship Building:\n\n - Build and maintain trusted relationships with customers, serving as a key contact for order-rela"
+    },
+    "expectedByRules": null,
+    "expectedQuote": null,
+    "why": "Same ICEYE posting as 573: location field 'South Korea', body 'Location: Seoul, Korea OR Singapore OR New Delhi, India' -> LLM, not not_eligible.",
+    "labelledBy": "tester-agent-draft"
+  },
+  {
+    "id": 82,
+    "source": "hn",
+    "posting": {
+      "title": "Senior Software Engineer - AI Foundations",
+      "company": "Kraken Tech",
+      "locations": ["London, Paris, Berlin, Tokyo, New York, Remote"],
+      "workMode": "remote",
+      "description": "https://kraken.tech Help us use technology to make a big green dent in the universe! Kraken powers some of the most innovative global developments in energy. We’re a technology company focused on creating a smart, sustainable energy system. From optimising renewable generation, creating a more intelligent grid and enabling utilities to provide excellent customer experiences, our operating system for energy is transforming the industry around the world in a way that benefits everyone. You’ll work in the AI Foundations team which exists to enable AI across the entire company. We build the shared platforms, tooling and patterns that enable engineering & product teams to safely, reliably and efficiently use machine learning and generative AI across the business. This is not a research lab. This is a delivery-focused team that sits at the intersection of platform engineering, applied ML and developer enablement. Apply through the link below, or send me an email to omer.korner at our domain name. https://jobs.ashbyhq.com/krakentech/28653f8c-bc4d-4159-a331-..."
+    },
+    "expectedByRules": null,
+    "expectedQuote": null,
+    "why": "HN 'London, Paris, Berlin, Tokyo, New York, Remote': a city list with a bare 'Remote' option, not 'City, State'; unqualified Remote -> LLM.",
+    "labelledBy": "tester-agent-draft"
+  }
+]

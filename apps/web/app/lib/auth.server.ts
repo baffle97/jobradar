@@ -1,5 +1,6 @@
 import { randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
 import { eq } from "drizzle-orm";
+import { redirect } from "react-router";
 import { db, schema } from "~/db";
 
 export function hashPassword(password: string): string {
@@ -15,31 +16,55 @@ export function verifyPassword(password: string, stored: string): boolean {
   return timingSafeEqual(hashBuffer, derivedBuffer);
 }
 
-export function createSession(userId: number): string {
+export async function createSession(userId: number): Promise<string> {
   const sessionId = randomBytes(32).toString("hex");
   const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
 
-  db.insert(schema.sessions).values({ id: sessionId, userId, expiresAt }).run();
+  await db.insert(schema.sessions).values({ id: sessionId, userId, expiresAt }).run();
 
   return sessionId;
 }
 
-export function validateSession(sessionId: string) {
-  const session = db.select().from(schema.sessions).where(eq(schema.sessions.id, sessionId)).get();
+export async function validateSession(sessionId: string) {
+  const session = await db
+    .select()
+    .from(schema.sessions)
+    .where(eq(schema.sessions.id, sessionId))
+    .get();
 
   if (!session) return null;
   if (new Date(session.expiresAt) < new Date()) {
-    db.delete(schema.sessions).where(eq(schema.sessions.id, sessionId)).run();
+    await db.delete(schema.sessions).where(eq(schema.sessions.id, sessionId)).run();
     return null;
   }
 
-  const user = db.select().from(schema.users).where(eq(schema.users.id, session.userId)).get();
+  const user = await db
+    .select()
+    .from(schema.users)
+    .where(eq(schema.users.id, session.userId))
+    .get();
 
   return user ?? null;
 }
 
-export function deleteSession(sessionId: string) {
-  db.delete(schema.sessions).where(eq(schema.sessions.id, sessionId)).run();
+export async function deleteSession(sessionId: string) {
+  await db.delete(schema.sessions).where(eq(schema.sessions.id, sessionId)).run();
+}
+
+// Vercel Cron sends `Authorization: Bearer $CRON_SECRET`; nothing passes when it is unset.
+export function hasCronSecret(request: Request): boolean {
+  const secret = process.env.CRON_SECRET;
+  if (!secret) return false;
+  const expected = Buffer.from(`Bearer ${secret}`);
+  const given = Buffer.from(request.headers.get("Authorization") ?? "");
+  return given.length === expected.length && timingSafeEqual(given, expected);
+}
+
+// Session cookie for the UI, cron secret for schedulers and scripts.
+export async function isAuthorized(request: Request): Promise<boolean> {
+  if (hasCronSecret(request)) return true;
+  const sessionId = getSessionFromCookie(request.headers.get("Cookie"));
+  return sessionId !== null && (await validateSession(sessionId)) !== null;
 }
 
 export function getSessionFromCookie(cookieHeader: string | null): string | null {
@@ -54,4 +79,13 @@ export function sessionCookie(sessionId: string): string {
 
 export function clearSessionCookie(): string {
   return "session=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0";
+}
+
+// For route actions: a POST to a child route does not run the layout's loader,
+// so every action that writes must check the session itself.
+export async function requireUser(request: Request) {
+  const sessionId = getSessionFromCookie(request.headers.get("Cookie"));
+  const user = sessionId ? await validateSession(sessionId) : null;
+  if (!user) throw redirect("/login");
+  return user;
 }

@@ -1,27 +1,30 @@
 # JobRadar
 
-A single-user job intelligence tool. Pulls postings from several sources on a
-schedule, deduplicates them, and puts everything in one feed with a pipeline
-board — instead of checking six job boards by hand.
+A job intelligence tool for one question: **can I do this remote job from
+India?** It pulls postings from several sources on a schedule, deduplicates
+them, and an eligibility agent answers that question for each one, quoting the
+line of the posting the answer rests on.
 
 Built for myself, while job hunting. Which turned out to be the useful part:
 every feature exists because the manual version of it annoyed me first.
 
-**Status:** Sprint 1. Scraping pipeline, dedup and job feed are working.
-The scoring and alerting layers are not built yet.
+**Status:** scraping, dedup, the eligibility agent and the phone-first feed are
+live at <https://jobradar-rust.vercel.app>. Hand-labelling 200 postings for the
+eval is next; scoring and alerts are not built.
 
 ---
 
 ## How it works
 
 ```
-scheduler (croner)
+scheduler (Vercel Cron; croner locally)
   → source adapters       Adzuna · Remotive · Hacker News "Who is hiring?"
                           · company ATS boards (Ashby · Greenhouse · Lever)
   → normalise             one shape, whatever the source
   → dedup                 same job, three boards, one row
-  → SQLite (Drizzle)
-  → feed + pipeline board
+  → libSQL (Drizzle)      Turso in production, a local file in dev
+  → eligibility agent     rules first, Gemini for the rest, quote verified
+  → feed · job page · /label
 ```
 
 **Deduplication is the interesting bit.** The same role appears on Adzuna, a
@@ -46,27 +49,55 @@ its postings mention the company's domain, or if the token is the domain's own
 name, at least six letters long and the company name matches. Short names like
 "tempo" or "hive" often belong to someone else.
 
+**The eligibility agent** (`lib/eligibility/`) decides `eligible`,
+`not_eligible` or `unclear` for every remote posting:
+
+- Deterministic rules go first and decide only on explicit text ("Remote - US",
+  "must be located in Canada", "work from anywhere in the world"). They settle
+  about three quarters of postings without a model call.
+- The rest go to Gemini with the posting inside `<posting>` tags, marked as
+  data, not instructions.
+- No quote, no verdict: a yes/no must carry a phrase that is checked in code to
+  appear verbatim in the posting. If it doesn't, the answer becomes `unclear`.
+- Every check is written to an audit table with the model, prompt version,
+  input hash, tokens and latency. A posting is re-checked only when its text or
+  the prompt version changes.
+- Calls are paced under the free tier's per-minute limit and the run stops
+  before Vercel's 300s function limit; whatever is left waits for the next run.
+- `/label` collects hand labels (the agent's answer stays hidden until you
+  answer), and `pnpm eval:eligibility` scores the agent against them.
+
 ## Stack
 
-React Router 7 (SSR) · TypeScript · Drizzle + SQLite · croner · HeroUI ·
-Zustand · pnpm workspaces
+React Router 7 (SSR) · TypeScript · Drizzle + libSQL (Turso) · AI SDK + Gemini ·
+HeroUI v3 · Tailwind v4 · Vitest · Vercel · pnpm workspaces
 
 ## Running it
 
 ```bash
 pnpm install
-cp .env.example .env      # Adzuna key optional; Remotive and HN need none
+cp .env.example .env.local  # Adzuna key optional; Remotive and HN need none
 pnpm dev
+```
+
+Without `TURSO_DATABASE_URL` the app uses `apps/web/data/jobradar.db`. Without
+`GOOGLE_GENERATIVE_AI_API_KEY` the eligibility agent runs rules only and leaves
+the rest `unclear`.
+
+```bash
+pnpm --filter @jobradar/web test
+pnpm --filter @jobradar/web eval:eligibility   # score against hand labels
 ```
 
 ## Layout
 
 ```
 apps/web/app/
-  lib/scrapers/    source adapters, dedup, upsert, cleanup
-  lib/scheduler/   cron-driven refresh
-  db/              Drizzle schema
-  routes/          dashboard · jobs · pipeline · settings · auth
+  lib/scrapers/     source adapters, dedup, upsert, cleanup
+  lib/eligibility/  rules, prompt, quote check, Gemini client, the cron task
+  lib/scheduler/    croner (local) and the task registry behind /api/cron
+  db/               Drizzle schema
+  routes/           feed · job · label · settings · auth
 packages/shared/   schemas shared across the workspace
 ```
 

@@ -4,7 +4,7 @@ import { clearSessionCookie, deleteSession, getSessionFromCookie } from "~/lib/a
 export async function action({ request }: { request: Request }) {
   const sessionId = getSessionFromCookie(request.headers.get("Cookie"));
   if (sessionId) {
-    deleteSession(sessionId);
+    await deleteSession(sessionId);
   }
   return redirect("/login", {
     headers: { "Set-Cookie": clearSessionCookie() },
