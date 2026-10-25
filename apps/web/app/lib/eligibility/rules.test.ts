@@ -222,6 +222,44 @@ describe("applyRules: elig-v0.2 fixes", () => {
   });
 });
 
+describe("applyRules: elig-v0.3 fixes (UI tester audit)", () => {
+  it("reads 'hiring remote across North America' as a restriction (Runway 1642)", () => {
+    const r = expectDecided(
+      posting({
+        description:
+          "ABOUT THE ROLE *Open to hiring remote across North America — we also have offices in NYC, London, San Francisco, Paris and Seattle",
+      }),
+      "not_eligible",
+    );
+    expect(r.evidence).toBe("hiring remote across North America");
+  });
+
+  it("does not read 'hiring across the US and India' as a restriction", () => {
+    expect(
+      applyRules(posting({ description: "We are hiring across the US and India." })),
+    ).toBeNull();
+  });
+
+  it("skips onsite/office words inside a location (AFPI 1528 'ONSITE (US)')", () => {
+    expectDecided(
+      posting({ title: "ONSITE (US)", locations: ["ONSITE (US)"], workMode: null }),
+      "not_eligible",
+    );
+  });
+
+  it("treats a bare 'Remote' as a header over a long non-India country list (DuckDuckGo 1584)", () => {
+    const countries = ["Japan", "Slovakia", "Kyrgyzstan", "USA", "Mauritius", "Uruguay"];
+    expectDecided(
+      posting({ locations: ["Remote", ...countries.map((c) => `${c} (Remote)`)] }),
+      "not_eligible",
+    );
+  });
+
+  it("keeps a bare 'Remote' as a real option next to one or two countries", () => {
+    expect(applyRules(posting({ locations: ["Remote", "USA (Remote)"] }))).toBeNull();
+  });
+});
+
 describe("applyRules: undecided -> null", () => {
   it.each([
     [["Remote"], "We build things."],

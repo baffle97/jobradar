@@ -110,6 +110,26 @@ const COUNTRIES = [
   "albania",
   "north macedonia",
   "bosnia and herzegovina",
+  "montenegro",
+  "georgia",
+  "azerbaijan",
+  "kazakhstan",
+  "kyrgyzstan",
+  "uzbekistan",
+  "russia",
+  "belarus",
+  "lebanon",
+  "tunisia",
+  "algeria",
+  "ethiopia",
+  "uganda",
+  "rwanda",
+  "tanzania",
+  "mauritius",
+  "jamaica",
+  "honduras",
+  "el salvador",
+  "nicaragua",
 ];
 
 // Regions that exclude India. Deliberately NOT here: APAC/APJ/Asia/global, which
@@ -262,6 +282,12 @@ const ONLY_OPEN_RE = new RegExp(
   "gi",
 );
 
+// "Open to hiring remote across North America".
+const HIRING_IN_RE = new RegExp(
+  String.raw`\bhiring\s+(?:remote(?:ly)?\s+)?(?:only\s+)?(?:across|in|within|throughout)\s+(?:the\s+)?(?:${PLACE_ALT})(?![a-z])`,
+  "gi",
+);
+
 const US_AUTH_RE =
   /\b(?:authorized|authorised|eligible)\s+to\s+work\s+in\s+(?:the\s+)?(?:united states(?: of america)?|u\.s\.a?\.?|usa|us)(?![a-z])/i;
 
@@ -272,6 +298,11 @@ const WORLDWIDE_DESC_RES = [
 ];
 
 const INDIA_OR_WORLDWIDE_RE = /\bindia\b|\bworldwide\b|\banywhere in the world\b|\bany country\b/i;
+// A restriction whose own sentence also names one of these is not a clean "no".
+const RESTRICTION_OUT_RE = new RegExp(
+  String.raw`${INDIA_OR_WORLDWIDE_RE.source}|\b(?:global|globally|apac|apj|asia)\b`,
+  "i",
+);
 const TIMEZONE_AFTER_RE = /^\W*(?:time\s*zones?|timezones?|hours|business hours|working hours)\b/i;
 // "anywhere in the world, with US / EU timezone overlap" is qualified: leave it to the LLM.
 const EXCEPTION_AFTER_RE =
@@ -316,7 +347,10 @@ function classifyLocation(raw: string): LocationClass {
 
   const clean = (seg: string) =>
     stripDots(seg)
-      .replace(/\b(?:remote|only|fully|full[- ]time|part[- ]time|based)\b/g, " ")
+      .replace(
+        /\b(?:remote|only|fully|full[- ]time|part[- ]time|based|on-?site|in[- ]office|hybrid)\b/g,
+        " ",
+      )
       .replace(/\s+/g, " ")
       .trim();
 
@@ -375,12 +409,12 @@ function* matchesOf(re: RegExp, text: string): Generator<Match> {
 }
 
 function firstRestriction(description: string): string | null {
-  for (const re of [RESIDE_RE, ONLY_OPEN_RE]) {
+  for (const re of [RESIDE_RE, ONLY_OPEN_RE, HIRING_IN_RE]) {
     for (const m of matchesOf(re, description)) {
       if (TIMEZONE_AFTER_RE.test(m.after)) continue;
       // "must be located in the US or India" is not a restriction against India.
       const sentenceTail = m.after.split(/[.!?;](?:\s|$)/)[0];
-      if (INDIA_OR_WORLDWIDE_RE.test(m.text) || INDIA_OR_WORLDWIDE_RE.test(sentenceTail)) continue;
+      if (RESTRICTION_OUT_RE.test(m.text) || RESTRICTION_OUT_RE.test(sentenceTail)) continue;
       return m.text;
     }
   }
@@ -412,6 +446,11 @@ export function applyRules(posting: Posting): EligibilityResult | null {
   const locations = posting.locations.map(collapse).filter(Boolean);
   const description = collapse(posting.description ?? "");
   const classes = locations.map((loc) => ({ loc, cls: classifyLocation(loc) }));
+  // A bare "Remote" above three or more country-specific remote options is a
+  // header for that list, not an extra "anywhere" option.
+  const countryOptions = classes.filter(({ cls }) => cls === "non_india").length;
+  const placeClasses =
+    countryOptions >= 3 ? classes.filter(({ loc }) => !/^remote$/i.test(loc)) : classes;
 
   // 1. One India option that is remote is enough.
   const india = classes.find(
@@ -431,11 +470,11 @@ export function applyRules(posting: Posting): EligibilityResult | null {
   // Every location outside India. Plain city names ("Seattle") count too once one
   // location is a known non-India place and India appears in neither title nor
   // locations: ["Seattle", "US"].
-  const anchor = classes.find(({ cls }) => cls === "non_india")?.loc ?? null;
+  const anchor = placeClasses.find(({ cls }) => cls === "non_india")?.loc ?? null;
   const indiaInFields = INDIA_RE.test([posting.title, ...locations].join("\n"));
   const allNonIndia =
     anchor &&
-    classes.every(
+    placeClasses.every(
       ({ loc, cls }) =>
         cls === "non_india" || (cls === "unknown" && !indiaInFields && plainPlaceName(loc)),
     )

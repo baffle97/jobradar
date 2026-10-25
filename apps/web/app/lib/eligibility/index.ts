@@ -40,10 +40,10 @@ export function buildPrompt(posting: Posting): string {
     `<posting>\n${body}\n</posting>`,
     "",
     "Answer with:",
-    '- verdict "eligible" only if the posting explicitly allows working from India: it names India or an Indian city as a place the role can be done from, or says the role is open worldwide / from any country without excluding India, or names a region that clearly includes India (e.g. APAC, Asia) as where candidates can be.',
+    '- verdict "eligible" only if the posting explicitly allows working remotely from India: it names India or an Indian city as a place the remote role can be done from, or says the role is open worldwide / from any country without excluding India, or names a region that clearly includes India (e.g. APAC, Asia) as where remote candidates can be. An office in India with no sign the role is remote is "unclear", not "eligible".',
     '- verdict "not_eligible" only if the posting explicitly limits where the person must live or be legally authorized to work to places that exclude India (e.g. "must be located in the US", "Remote - Europe", "UK only"), or requires working inside a time-zone range that excludes India (IST, UTC+5:30), e.g. "GMT-2 to GMT+2".',
     '- verdict "unclear" otherwise: bare "Remote", a required overlap of some hours with another time zone, company offices, salary ranges in a foreign currency, benefits boilerplate, or anything you would have to guess.',
-    "- evidence: for eligible / not_eligible, copy the single shortest sentence or phrase (under 200 characters) that decides it, character for character, from ONE place in the posting (the title, one location, or the description). Do not paraphrase, shorten words, or join text from two places. For unclear, evidence is null.",
+    "- evidence: for eligible / not_eligible, copy the single shortest sentence or phrase (under 200 characters) that decides it, character for character, from ONE place in the posting (the title, one location, or the description). Copy only the posting's own text, not the field label in front of it (write 'Remote - US', not 'Locations: Remote - US'). Do not paraphrase, shorten words, or join text from two places. For unclear, evidence is null.",
     "- reason: one short plain sentence explaining the verdict.",
   ].join("\n");
 }
@@ -57,6 +57,16 @@ function unclear(reason: string, extra: Partial<EligibilityResult> = {}): Eligib
     promptVersion: PROMPT_VERSION,
     ...extra,
   };
+}
+
+// The prompt labels each field ("Locations: Dallas Warehouse"); models often copy
+// the label into the quote. It is our framing, not posting text, so drop it.
+const FIELD_LABEL_RE = /^(?:title|company|locations?|work mode|description)\s*:\s*/i;
+
+function withoutFieldLabel(evidence: string, posting: Posting): string {
+  if (quoteIsInPosting(evidence, posting)) return evidence;
+  const stripped = evidence.replace(FIELD_LABEL_RE, "");
+  return stripped !== evidence && quoteIsInPosting(stripped, posting) ? stripped : evidence;
 }
 
 // The LLM's answer is never trusted as-is: a decisive verdict needs a quote
@@ -77,7 +87,7 @@ export function verifyLlmAnswer(
   }
   if (answer.verdict === "unclear") return unclear(reason, base);
 
-  const evidence = (answer.evidence ?? "").trim();
+  const evidence = withoutFieldLabel((answer.evidence ?? "").trim(), posting);
   if (!evidence) {
     return unclear(`The model said ${answer.verdict} but gave no quote as evidence.`, base);
   }
@@ -122,9 +132,10 @@ export async function checkEligibility(
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     const fatal = Boolean((err as { fatal?: unknown })?.fatal);
+    const rateLimited = Boolean((err as { rateLimited?: unknown })?.rateLimited);
     return unclear(`LLM call failed: ${message}`, {
       ...(opts.model ? { model: opts.model } : {}),
-      error: { message, fatal },
+      error: { message, fatal, ...(rateLimited ? { rateLimited } : {}) },
     });
   }
   return verifyLlmAnswer(answer, posting, opts.model);

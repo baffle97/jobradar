@@ -3,7 +3,7 @@
 
 // Bump whenever the rules or the LLM prompt change; stored with every result so
 // the check task re-runs postings judged by an older version.
-export const PROMPT_VERSION = "elig-v0.2";
+export const PROMPT_VERSION = "elig-v0.3";
 
 export type Verdict = "eligible" | "not_eligible" | "unclear";
 
@@ -35,7 +35,8 @@ export interface EligibilityResult {
   // Present when the LLM was called.
   usage?: LlmUsage;
   // Present when the LLM call failed; the verdict is then "unclear".
-  error?: { message: string; fatal: boolean };
+  // rateLimited: the provider answered 429 (try this posting again later).
+  error?: { message: string; fatal: boolean; rateLimited?: boolean };
 }
 
 export interface LlmAnswer {

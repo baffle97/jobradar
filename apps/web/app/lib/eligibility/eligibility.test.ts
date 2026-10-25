@@ -87,6 +87,31 @@ describe("checkEligibility: llm answers are verified in code", () => {
     });
   });
 
+  it("drops a copied prompt field label from the quote", async () => {
+    const p = posting({ locations: ["Dallas Warehouse"], description: "Run the site." });
+    const llm = stubLlm({
+      verdict: "not_eligible",
+      evidence: "Locations: Dallas Warehouse",
+      reason: "Onsite in Dallas.",
+    });
+    const r = await checkEligibility(p, { llm, model: "test/model-x" });
+    expect(r).toMatchObject({ verdict: "not_eligible", evidence: "Dallas Warehouse" });
+  });
+
+  it("keeps a label that is really in the posting", async () => {
+    const p = posting({
+      locations: ["Remote"],
+      description: "- Location: Seoul, Korea OR Singapore\n- Department: Data",
+    });
+    const llm = stubLlm({
+      verdict: "not_eligible",
+      evidence: "Location: Seoul, Korea OR Singapore",
+      reason: "Seoul or Singapore only.",
+    });
+    const r = await checkEligibility(p, { llm });
+    expect(r?.evidence).toBe("Location: Seoul, Korea OR Singapore");
+  });
+
   it("tolerates whitespace/case differences in the llm quote", async () => {
     const llm = stubLlm({
       verdict: "not_eligible",

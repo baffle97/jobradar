@@ -17,6 +17,7 @@
     "task": "tsx scripts/run-task.ts"
   },
   "dependencies": {
+    "@ai-sdk/google": "4.0.105",
     "@heroui/react": "^3.0.3",
     "@heroui/styles": "^3.0.3",
     "@libsql/client": "^0.18.0",

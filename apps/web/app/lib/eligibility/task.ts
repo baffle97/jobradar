@@ -9,6 +9,11 @@ import type { EligibilityResult } from "./types";
 import { PROMPT_VERSION } from "./types";
 
 const CONCURRENCY = 4;
+// Free LLM tiers allow few requests per minute: LLM calls get their own, lower
+// limit (payload llmConcurrency, else ELIGIBILITY_LLM_CONCURRENCY, else 2).
+const DEFAULT_LLM_CONCURRENCY = 2;
+// Rate limits that keep coming back mean the quota is gone for now: stop the run.
+const MAX_CONSECUTIVE_RATE_LIMITS = 5;
 
 function intOr(value: unknown, fallback: number): number {
   const n = Number(value);
@@ -25,6 +30,22 @@ async function runPool<T>(items: T[], size: number, fn: (item: T) => Promise<voi
       }
     }),
   );
+}
+
+// At most `size` calls of the returned wrapper run at once.
+function limiter(size: number) {
+  let active = 0;
+  const waiting: (() => void)[] = [];
+  return async <T>(fn: () => Promise<T>): Promise<T> => {
+    if (active >= size) await new Promise<void>((resolve) => waiting.push(resolve));
+    active++;
+    try {
+      return await fn();
+    } finally {
+      active--;
+      waiting.shift()?.();
+    }
+  };
 }
 
 async function saveResult(jobId: number, r: EligibilityResult, inputHash: string) {
@@ -61,9 +82,18 @@ async function saveResult(jobId: number, r: EligibilityResult, inputHash: string
 }
 
 export async function runEligibilityCheck(payload?: unknown) {
-  const opts = (payload ?? {}) as { maxJobs?: unknown; maxLlmCalls?: unknown };
+  const opts = (payload ?? {}) as {
+    maxJobs?: unknown;
+    maxLlmCalls?: unknown;
+    llmConcurrency?: unknown;
+  };
   const maxJobs = intOr(opts.maxJobs, 300);
   const maxLlmCalls = intOr(opts.maxLlmCalls, 150);
+  const llmConcurrency = Math.max(
+    1,
+    intOr(opts.llmConcurrency ?? process.env.ELIGIBILITY_LLM_CONCURRENCY, DEFAULT_LLM_CONCURRENCY),
+  );
+  const withLlmSlot = limiter(llmConcurrency);
   const llmConfig = createEligibilityLlm();
 
   const rows = await db
@@ -117,7 +147,9 @@ export async function runEligibilityCheck(payload?: unknown) {
     byMethod: { rules: 0, llm: 0 } as Record<string, number>,
     llm: llmConfig ? llmConfig.model : null,
     llmCalls: 0,
+    llmConcurrency,
     llmErrors: 0,
+    llmRateLimited: 0,
     llmStopped: null as string | null,
     deferred: 0, // needed the LLM but the budget ran out or the LLM was stopped
     inputTokens: 0,
@@ -125,6 +157,7 @@ export async function runEligibilityCheck(payload?: unknown) {
     failed: 0,
     firstFailure: null as string | null,
   };
+  let consecutiveRateLimits = 0;
 
   await runPool(batch, CONCURRENCY, async ({ row, posting, hash }) => {
     try {
@@ -135,7 +168,24 @@ export async function runEligibilityCheck(payload?: unknown) {
           return;
         }
         stats.llmCalls++;
-        result = await checkEligibility(posting, llmConfig);
+        result = await withLlmSlot(() =>
+          // Re-check: the run may have been stopped while this call waited.
+          stats.llmStopped ? Promise.resolve(null) : checkEligibility(posting, llmConfig),
+        );
+        if (!result) {
+          stats.llmCalls--;
+          stats.deferred++;
+          return;
+        }
+        if (result.error?.rateLimited) {
+          stats.llmRateLimited++;
+          consecutiveRateLimits++;
+          if (consecutiveRateLimits >= MAX_CONSECUTIVE_RATE_LIMITS && !stats.llmStopped) {
+            stats.llmStopped = `${consecutiveRateLimits} rate-limited (429) LLM calls in a row: ${result.error.message}`;
+          }
+        } else if (result.method === "llm") {
+          consecutiveRateLimits = 0;
+        }
       } else {
         result = await checkEligibility(posting);
       }
