@@ -21,8 +21,10 @@ const PAGE_SIZE = 20;
 const SOURCE_COLORS: Record<string, "accent" | "success" | "warning" | "default"> = {
   adzuna: "accent",
   remotive: "success",
-  jsearch: "warning",
   hn: "default",
+  ashby: "warning",
+  greenhouse: "warning",
+  lever: "warning",
 };
 
 export async function loader({ request }: Route.LoaderArgs) {
@@ -103,8 +105,9 @@ export default function JobsPage({ loaderData }: Route.ComponentProps) {
     "scrape:all": "All Sources",
     "scrape:adzuna": "Adzuna",
     "scrape:remotive": "Remotive",
-    "scrape:jsearch": "JSearch",
     "scrape:hn": "HN Who's Hiring",
+    "ingest:ats": "Company boards (ATS)",
+    "discover:yc": "Discover YC boards",
   };
 
   function runScraper(task: string) {
@@ -186,8 +189,10 @@ export default function JobsPage({ loaderData }: Route.ComponentProps) {
             <ListBox>
               <ListBoxItem id="adzuna">Adzuna</ListBoxItem>
               <ListBoxItem id="remotive">Remotive</ListBoxItem>
-              <ListBoxItem id="jsearch">JSearch</ListBoxItem>
               <ListBoxItem id="hn">HN</ListBoxItem>
+              <ListBoxItem id="ashby">Ashby</ListBoxItem>
+              <ListBoxItem id="greenhouse">Greenhouse</ListBoxItem>
+              <ListBoxItem id="lever">Lever</ListBoxItem>
             </ListBox>
           </Select.Popover>
         </Select>

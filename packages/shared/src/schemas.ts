@@ -6,7 +6,7 @@ export type WorkMode = z.infer<typeof workModeSchema>;
 export const jobTypeSchema = z.enum(["full-time", "contract", "part-time"]);
 export type JobType = z.infer<typeof jobTypeSchema>;
 
-export const jobSourceSchema = z.enum(["adzuna", "remotive", "jsearch", "hn"]);
+export const jobSourceSchema = z.enum(["adzuna", "remotive", "hn", "ashby", "greenhouse", "lever"]);
 export type JobSource = z.infer<typeof jobSourceSchema>;
 
 export const jobSchema = z.object({

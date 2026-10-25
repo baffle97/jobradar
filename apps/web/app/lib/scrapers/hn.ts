@@ -1,3 +1,6 @@
+import { decodeEntities } from "~/lib/text";
+import { registerBoards } from "./ats";
+import { extractBoardRefs } from "./ats/refs";
 import { dedupHash } from "./dedup";
 import { upsertJobs } from "./upsert";
 
@@ -26,13 +29,7 @@ interface ParsedHNJob {
 function parseHNComment(text: string): ParsedHNJob | null {
   if (!text) return null;
 
-  const clean = text
-    .replace(/<[^>]*>/g, "\n")
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&#x27;/g, "'")
-    .replace(/&quot;/g, '"');
+  const clean = decodeEntities(text.replace(/<[^>]*>/g, "\n"));
 
   const lines = clean
     .split("\n")
@@ -96,19 +93,24 @@ async function findWhoIsHiringThread(): Promise<number | null> {
   return null;
 }
 
-export async function scrapeHN(): Promise<{ inserted: number; total: number }> {
+export async function scrapeHN(): Promise<{
+  inserted: number;
+  total: number;
+  boardsDiscovered: number;
+}> {
   const threadId = await findWhoIsHiringThread();
   if (!threadId) {
     console.log("[hn] no Who is Hiring thread found");
-    return { inserted: 0, total: 0 };
+    return { inserted: 0, total: 0, boardsDiscovered: 0 };
   }
 
   const threadRes = await fetch(`${HN_API}/item/${threadId}.json`);
   if (!threadRes.ok) throw new Error(`Failed to fetch HN thread: ${threadRes.status}`);
   const thread: HNItem = await threadRes.json();
 
-  const commentIds = thread.kids?.slice(0, 200) ?? [];
+  const commentIds = thread.kids ?? [];
   const allJobs: Parameters<typeof upsertJobs>[0] = [];
+  const boardRefs: Parameters<typeof registerBoards>[0] = [];
 
   // Fetch comments in batches of 20
   for (let i = 0; i < commentIds.length; i += 20) {
@@ -123,6 +125,12 @@ export async function scrapeHN(): Promise<{ inserted: number; total: number }> {
     for (const comment of comments) {
       if (!comment?.text) continue;
       const parsed = parseHNComment(comment.text);
+
+      // A link to an ATS board lets us poll the company's full job list directly.
+      for (const ref of extractBoardRefs(comment.text)) {
+        boardRefs.push({ ...ref, companyName: parsed?.company });
+      }
+
       if (!parsed) continue;
 
       const salary = parseSalaryRange(parsed.salary);
@@ -143,6 +151,9 @@ export async function scrapeHN(): Promise<{ inserted: number; total: number }> {
   }
 
   const result = upsertJobs(allJobs);
-  console.log(`[hn] inserted ${result.inserted}/${result.total} jobs`);
-  return result;
+  const boardsDiscovered = registerBoards(boardRefs, "hn");
+  console.log(
+    `[hn] inserted ${result.inserted}/${result.total} jobs, ${boardsDiscovered} new ATS boards`,
+  );
+  return { ...result, boardsDiscovered };
 }
