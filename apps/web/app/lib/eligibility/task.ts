@@ -14,6 +14,11 @@ const CONCURRENCY = 4;
 const DEFAULT_LLM_CONCURRENCY = 2;
 // Rate limits that keep coming back mean the quota is gone for now: stop the run.
 const MAX_CONSECUTIVE_RATE_LIMITS = 5;
+// Gemini's free tier allows ~15 requests a minute per model: start LLM calls at
+// least this far apart (payload llmIntervalMs, else ELIGIBILITY_LLM_INTERVAL_MS).
+const DEFAULT_LLM_INTERVAL_MS = 4500;
+// Vercel stops the function at 300s: start no new LLM call after this long.
+const DEFAULT_LLM_BUDGET_MS = 230_000;
 
 function intOr(value: unknown, fallback: number): number {
   const n = Number(value);
@@ -32,13 +37,18 @@ async function runPool<T>(items: T[], size: number, fn: (item: T) => Promise<voi
   );
 }
 
-// At most `size` calls of the returned wrapper run at once.
-function limiter(size: number) {
+// At most `size` calls of the returned wrapper run at once, and their starts are
+// at least `intervalMs` apart.
+export function limiter(size: number, intervalMs = 0) {
   let active = 0;
+  let nextStart = 0;
   const waiting: (() => void)[] = [];
   return async <T>(fn: () => Promise<T>): Promise<T> => {
     if (active >= size) await new Promise<void>((resolve) => waiting.push(resolve));
     active++;
+    const wait = nextStart - Date.now();
+    nextStart = Math.max(nextStart, Date.now()) + intervalMs;
+    if (wait > 0) await new Promise((resolve) => setTimeout(resolve, wait));
     try {
       return await fn();
     } finally {
@@ -86,14 +96,22 @@ export async function runEligibilityCheck(payload?: unknown) {
     maxJobs?: unknown;
     maxLlmCalls?: unknown;
     llmConcurrency?: unknown;
+    llmIntervalMs?: unknown;
+    llmBudgetMs?: unknown;
   };
+  const startedAt = Date.now();
   const maxJobs = intOr(opts.maxJobs, 300);
   const maxLlmCalls = intOr(opts.maxLlmCalls, 150);
   const llmConcurrency = Math.max(
     1,
     intOr(opts.llmConcurrency ?? process.env.ELIGIBILITY_LLM_CONCURRENCY, DEFAULT_LLM_CONCURRENCY),
   );
-  const withLlmSlot = limiter(llmConcurrency);
+  const llmIntervalMs = intOr(
+    opts.llmIntervalMs ?? process.env.ELIGIBILITY_LLM_INTERVAL_MS,
+    DEFAULT_LLM_INTERVAL_MS,
+  );
+  const llmDeadline = startedAt + intOr(opts.llmBudgetMs, DEFAULT_LLM_BUDGET_MS);
+  const withLlmSlot = limiter(llmConcurrency, llmIntervalMs);
   const llmConfig = createEligibilityLlm();
 
   const rows = await db
@@ -169,8 +187,10 @@ export async function runEligibilityCheck(payload?: unknown) {
         }
         stats.llmCalls++;
         result = await withLlmSlot(() =>
-          // Re-check: the run may have been stopped while this call waited.
-          stats.llmStopped ? Promise.resolve(null) : checkEligibility(posting, llmConfig),
+          // Re-check: the run may have been stopped, or run out of time, while this call waited.
+          stats.llmStopped || Date.now() > llmDeadline
+            ? Promise.resolve(null)
+            : checkEligibility(posting, llmConfig),
         );
         if (!result) {
           stats.llmCalls--;
