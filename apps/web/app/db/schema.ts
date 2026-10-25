@@ -1,4 +1,5 @@
-import { integer, real, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { sql } from "drizzle-orm";
+import { integer, real, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 
 export const users = sqliteTable("users", {
   id: integer("id").primaryKey({ autoIncrement: true }),
@@ -41,16 +42,47 @@ export const profile = sqliteTable("profile", {
     .$defaultFn(() => new Date().toISOString()),
 });
 
+// One row per company job board on an ATS (Ashby / Greenhouse / Lever).
+// Boards are discovered from HN threads and YC, then polled directly.
+export const companyBoards = sqliteTable(
+  "company_boards",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    ats: text("ats").notNull(),
+    token: text("token").notNull(),
+    companyName: text("company_name"),
+    discoveredFrom: text("discovered_from").notNull(),
+    // pending | ok | not_found | error
+    status: text("status").notNull().default("pending"),
+    consecutiveFailures: integer("consecutive_failures").notNull().default(0),
+    lastError: text("last_error"),
+    lastPolledAt: text("last_polled_at"),
+    jobCount: integer("job_count"),
+    createdAt: text("created_at")
+      .notNull()
+      .$defaultFn(() => new Date().toISOString()),
+  },
+  (t) => [uniqueIndex("company_boards_ats_token").on(t.ats, sql`lower(${t.token})`)],
+);
+
 export const jobs = sqliteTable("jobs", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   title: text("title").notNull(),
   company: text("company").notNull(),
   location: text("location"),
+  locations: text("locations", { mode: "json" }).$type<string[]>(),
+  country: text("country"),
   salaryMin: integer("salary_min"),
   salaryMax: integer("salary_max"),
+  salaryCurrency: text("salary_currency"),
+  salaryText: text("salary_text"),
   description: text("description"),
   source: text("source").notNull(),
   sourceUrl: text("source_url"),
+  applyUrl: text("apply_url"),
+  boardId: integer("board_id").references(() => companyBoards.id),
+  externalId: text("external_id"),
+  lastSeenAt: text("last_seen_at"),
   workMode: text("work_mode"),
   jobType: text("job_type"),
   postedAt: text("posted_at"),

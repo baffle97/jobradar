@@ -8,7 +8,8 @@
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "typecheck": "pnpm -r typecheck",
-    "types": "pnpm --filter @jobradar/shared generate-types"
+    "types": "pnpm --filter @jobradar/shared generate-types",
+    "test": "pnpm --filter @jobradar/web test"
   },
   "engines": {
     "node": ">=20"

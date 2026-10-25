@@ -5,8 +5,9 @@ const VALID_TASKS = [
   "scrape:all",
   "scrape:adzuna",
   "scrape:remotive",
-  "scrape:jsearch",
   "scrape:hn",
+  "ingest:ats",
+  "discover:yc",
   "cleanup:stale-jobs",
 ];
 

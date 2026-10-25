@@ -17,6 +17,7 @@ The scoring and alerting layers are not built yet.
 ```
 scheduler (croner)
   → source adapters       Adzuna · Remotive · Hacker News "Who is hiring?"
+                          · company ATS boards (Ashby · Greenhouse · Lever)
   → normalise             one shape, whatever the source
   → dedup                 same job, three boards, one row
   → SQLite (Drizzle)
@@ -34,6 +35,16 @@ bolted on later.
 
 **The HN scraper** parses top-level comments from the monthly thread through the
 HN API rather than scraping HTML.
+
+**Company boards come straight from the ATS.** Any Ashby, Greenhouse or Lever
+link in an HN post registers that company's board, and `discover:yc` guesses
+boards for hiring YC companies. Each board is then polled through its public
+JSON API (`lib/scrapers/ats/`), which returns the company's full list with
+locations, workplace type and often salary. A posting that disappears from its
+board is marked inactive on the next poll. A guessed YC board is kept only if
+its postings mention the company's domain, or if the token is the domain's own
+name, at least six letters long and the company name matches. Short names like
+"tempo" or "hive" often belong to someone else.
 
 ## Stack
 
