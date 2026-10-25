@@ -1,7 +1,6 @@
-import { Button, Card, InputGroup, Label } from "@heroui/react";
 import { eq } from "drizzle-orm";
-import { Radar } from "lucide-react";
 import { Form, redirect, useActionData, useNavigation } from "react-router";
+import { ThemeToggle } from "~/components/theme-toggle";
 import { db, schema } from "~/db";
 import {
   createSession,
@@ -55,54 +54,78 @@ export async function action({ request }: { request: Request }) {
   });
 }
 
+export function meta() {
+  return [{ title: "Sign in · jobradar" }];
+}
+
 export default function LoginPage() {
   const actionData = useActionData<typeof action>();
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-md">
-        <Card.Header className="flex flex-col items-center gap-2 pb-0">
-          <Radar className="size-10 text-primary" />
-          <Card.Title className="text-3xl font-bold text-primary">JobRadar</Card.Title>
-          <Card.Description>AI-Powered Career Intelligence</Card.Description>
-        </Card.Header>
-        <Card.Content className="gap-4">
-          <Form method="post" className="flex flex-col gap-4">
-            <div className="flex flex-col gap-1.5">
-              <Label>Email</Label>
-              <InputGroup>
-                <InputGroup.Input
-                  type="email"
-                  name="email"
-                  placeholder="you@example.com"
-                  required
-                  autoFocus
-                />
-              </InputGroup>
+    <main className="jr-login">
+      <div className="jr-login__box">
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <span className="jr-logo">
+            <span className="jr-logo__mark" aria-hidden="true" />
+            jobradar
+          </span>
+          <ThemeToggle />
+        </div>
+        <div className="jr-panel" style={{ marginTop: 16 }}>
+          <h1 className="jr-h2">Sign in</h1>
+          <p className="jr-sub">
+            Remote jobs you can actually take from India, each with the line that proves it.
+          </p>
+          <Form method="post" style={{ display: "grid", gap: 16, marginTop: 20 }}>
+            <div>
+              <label className="jr-label" htmlFor="email">
+                Email
+              </label>
+              <input
+                id="email"
+                className="jr-input"
+                type="email"
+                name="email"
+                placeholder="you@example.com"
+                autoComplete="email"
+                inputMode="email"
+                required
+              />
             </div>
-            <div className="flex flex-col gap-1.5">
-              <Label>Password</Label>
-              <InputGroup>
-                <InputGroup.Input
-                  type="password"
-                  name="password"
-                  placeholder="Enter password"
-                  required
-                />
-              </InputGroup>
+            <div>
+              <label className="jr-label" htmlFor="password">
+                Password
+              </label>
+              <input
+                id="password"
+                className="jr-input"
+                type="password"
+                name="password"
+                placeholder="Your password"
+                autoComplete="current-password"
+                required
+              />
             </div>
-            {actionData?.error && <p className="text-sm text-danger">{actionData.error}</p>}
-            <Button type="submit" variant="primary" isDisabled={isSubmitting} fullWidth>
-              {isSubmitting ? "Signing in..." : "Sign In"}
-            </Button>
-            <p className="text-center text-xs text-muted-foreground">
-              First time? Your account will be created automatically.
+            {actionData?.error ? (
+              <p className="jr-status jr-status--err" role="alert" style={{ margin: 0 }}>
+                {actionData.error}
+              </p>
+            ) : null}
+            <button
+              type="submit"
+              className="jr-btn jr-btn--primary jr-btn--block"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Signing in…" : "Sign in"}
+            </button>
+            <p className="jr-sub" style={{ margin: 0, fontSize: 13, textAlign: "center" }}>
+              First time? Your account is created when you sign in.
             </p>
           </Form>
-        </Card.Content>
-      </Card>
-    </div>
+        </div>
+      </div>
+    </main>
   );
 }

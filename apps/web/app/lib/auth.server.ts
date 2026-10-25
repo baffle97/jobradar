@@ -1,5 +1,6 @@
 import { randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
 import { eq } from "drizzle-orm";
+import { redirect } from "react-router";
 import { db, schema } from "~/db";
 
 export function hashPassword(password: string): string {
@@ -78,4 +79,13 @@ export function sessionCookie(sessionId: string): string {
 
 export function clearSessionCookie(): string {
   return "session=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0";
+}
+
+// For route actions: a POST to a child route does not run the layout's loader,
+// so every action that writes must check the session itself.
+export async function requireUser(request: Request) {
+  const sessionId = getSessionFromCookie(request.headers.get("Cookie"));
+  const user = sessionId ? await validateSession(sessionId) : null;
+  if (!user) throw redirect("/login");
+  return user;
 }

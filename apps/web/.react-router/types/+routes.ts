@@ -20,6 +20,12 @@ type Pages = {
   "/logout": {
     params: {};
   };
+  "/theme": {
+    params: {};
+  };
+  "/jobs": {
+    params: {};
+  };
   "/api/scrape": {
     params: {};
   };
@@ -28,7 +34,12 @@ type Pages = {
       "task": string;
     };
   };
-  "/jobs": {
+  "/jobs/:id": {
+    params: {
+      "id": string;
+    };
+  };
+  "/label": {
     params: {};
   };
   "/pipeline": {
@@ -42,7 +53,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/login" | "/logout" | "/api/scrape" | "/api/cron/:task" | "/jobs" | "/pipeline" | "/settings/profile";
+    page: "/" | "/login" | "/logout" | "/theme" | "/jobs" | "/api/scrape" | "/api/cron/:task" | "/jobs/:id" | "/label" | "/pipeline" | "/settings/profile";
   };
   "routes/login.tsx": {
     id: "routes/login";
@@ -51,6 +62,14 @@ type RouteFiles = {
   "routes/logout.tsx": {
     id: "routes/logout";
     page: "/logout";
+  };
+  "routes/theme.ts": {
+    id: "routes/theme";
+    page: "/theme";
+  };
+  "routes/jobs.tsx": {
+    id: "routes/jobs";
+    page: "/jobs";
   };
   "routes/api.scrape.ts": {
     id: "routes/api.scrape";
@@ -62,15 +81,19 @@ type RouteFiles = {
   };
   "components/app-layout.tsx": {
     id: "components/app-layout";
-    page: "/" | "/jobs" | "/pipeline" | "/settings/profile";
+    page: "/" | "/jobs/:id" | "/label" | "/pipeline" | "/settings/profile";
   };
-  "routes/dashboard.tsx": {
-    id: "routes/dashboard";
+  "routes/feed.tsx": {
+    id: "routes/feed";
     page: "/";
   };
-  "routes/jobs.tsx": {
-    id: "routes/jobs";
-    page: "/jobs";
+  "routes/job.tsx": {
+    id: "routes/job";
+    page: "/jobs/:id";
+  };
+  "routes/label.tsx": {
+    id: "routes/label";
+    page: "/label";
   };
   "routes/pipeline.tsx": {
     id: "routes/pipeline";
@@ -86,11 +109,14 @@ type RouteModules = {
   "root": typeof import("./app/root.tsx");
   "routes/login": typeof import("./app/routes/login.tsx");
   "routes/logout": typeof import("./app/routes/logout.tsx");
+  "routes/theme": typeof import("./app/routes/theme.ts");
+  "routes/jobs": typeof import("./app/routes/jobs.tsx");
   "routes/api.scrape": typeof import("./app/routes/api.scrape.ts");
   "routes/api.cron": typeof import("./app/routes/api.cron.ts");
   "components/app-layout": typeof import("./app/components/app-layout.tsx");
-  "routes/dashboard": typeof import("./app/routes/dashboard.tsx");
-  "routes/jobs": typeof import("./app/routes/jobs.tsx");
+  "routes/feed": typeof import("./app/routes/feed.tsx");
+  "routes/job": typeof import("./app/routes/job.tsx");
+  "routes/label": typeof import("./app/routes/label.tsx");
   "routes/pipeline": typeof import("./app/routes/pipeline.tsx");
   "routes/settings": typeof import("./app/routes/settings.tsx");
 };
