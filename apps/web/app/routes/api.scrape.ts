@@ -10,6 +10,7 @@ const VALID_TASKS = [
   "ingest:ats",
   "discover:yc",
   "cleanup:stale-jobs",
+  "eligibility:check",
 ];
 
 // Scrapes can run for minutes; 300s is the Hobby plan ceiling.

@@ -21,7 +21,10 @@ interface RemotiveResponse {
 function parseSalary(salary: string): { min?: number; max?: number } {
   if (!salary) return {};
   const numbers =
-    salary.match(/[\d,]+/g)?.map((n) => Number.parseInt(n.replace(/,/g, ""), 10)) ?? [];
+    salary
+      .match(/\d[\d,]*/g)
+      ?.map((n) => Number.parseInt(n.replace(/,/g, ""), 10))
+      .filter((n) => Number.isSafeInteger(n)) ?? [];
   if (numbers.length >= 2) return { min: numbers[0], max: numbers[1] };
   if (numbers.length === 1) return { min: numbers[0] };
   return {};

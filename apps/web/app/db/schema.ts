@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { integer, real, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
+import { index, integer, real, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 
 export const users = sqliteTable("users", {
   id: integer("id").primaryKey({ autoIncrement: true }),
@@ -92,7 +92,57 @@ export const jobs = sqliteTable("jobs", {
   skills: text("skills", { mode: "json" }),
   matchScore: real("match_score"),
   scoreBreakdown: text("score_breakdown", { mode: "json" }),
+  // Latest eligibility result (can someone in India do this remotely?). The full
+  // history lives in eligibility_checks.
+  eligibility: text("eligibility"), // eligible | not_eligible | unclear
+  eligibilityEvidence: text("eligibility_evidence"),
+  eligibilityReason: text("eligibility_reason"),
+  eligibilityMethod: text("eligibility_method"), // rules | llm
+  // PROMPT_VERSION of the latest result; null means "re-check on the next run".
+  eligibilityVersion: text("eligibility_version"),
+  // Hash of the posting text the latest result was computed from.
+  eligibilityInputHash: text("eligibility_input_hash"),
+  eligibilityCheckedAt: text("eligibility_checked_at"),
   createdAt: text("created_at")
+    .notNull()
+    .$defaultFn(() => new Date().toISOString()),
+});
+
+// Audit trail: one row per eligibility check, never updated.
+export const eligibilityChecks = sqliteTable(
+  "eligibility_checks",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    jobId: integer("job_id")
+      .notNull()
+      .references(() => jobs.id),
+    verdict: text("verdict").notNull(),
+    evidence: text("evidence"),
+    reason: text("reason").notNull(),
+    method: text("method").notNull(),
+    model: text("model"),
+    promptVersion: text("prompt_version").notNull(),
+    inputHash: text("input_hash").notNull(),
+    inputTokens: integer("input_tokens"),
+    outputTokens: integer("output_tokens"),
+    latencyMs: integer("latency_ms"),
+    createdAt: text("created_at")
+      .notNull()
+      .$defaultFn(() => new Date().toISOString()),
+  },
+  (t) => [index("eligibility_checks_job_id").on(t.jobId)],
+);
+
+// The user's hand labels, the ground truth for `pnpm eval:eligibility`.
+export const eligibilityLabels = sqliteTable("eligibility_labels", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  jobId: integer("job_id")
+    .notNull()
+    .unique()
+    .references(() => jobs.id),
+  label: text("label").notNull(), // eligible | not_eligible | unclear
+  note: text("note"),
+  labelledAt: text("labelled_at")
     .notNull()
     .$defaultFn(() => new Date().toISOString()),
 });

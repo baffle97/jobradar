@@ -15,6 +15,13 @@
       "when": 1792933415033,
       "tag": "0001_nebulous_siren",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1792936058858,
+      "tag": "0002_chilly_masked_marvel",
+      "breakpoints": true
     }
   ]
 }

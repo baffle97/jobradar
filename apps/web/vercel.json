@@ -5,8 +5,10 @@
     { "path": "/api/cron/discover:yc", "schedule": "0 4 * * *" },
     { "path": "/api/cron/scrape:hn", "schedule": "0 5 * * *" },
     { "path": "/api/cron/ingest:ats?maxBoards=100", "schedule": "0 7 * * *" },
+    { "path": "/api/cron/eligibility:check?maxJobs=300&maxLlmCalls=150", "schedule": "0 8 * * *" },
     { "path": "/api/cron/scrape:adzuna", "schedule": "0 10 * * *" },
     { "path": "/api/cron/scrape:remotive", "schedule": "0 13 * * *" },
-    { "path": "/api/cron/ingest:ats?maxBoards=100", "schedule": "0 19 * * *" }
+    { "path": "/api/cron/ingest:ats?maxBoards=100", "schedule": "0 19 * * *" },
+    { "path": "/api/cron/eligibility:check?maxJobs=300&maxLlmCalls=150", "schedule": "0 20 * * *" }
   ]
 }
