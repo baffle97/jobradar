@@ -4,6 +4,7 @@ export default [
   route("login", "routes/login.tsx"),
   route("logout", "routes/logout.tsx"),
   route("api/scrape", "routes/api.scrape.ts"),
+  route("api/cron/:task", "routes/api.cron.ts"),
   layout("components/app-layout.tsx", [
     route("/", "routes/dashboard.tsx", { index: true }),
     route("jobs", "routes/jobs.tsx"),

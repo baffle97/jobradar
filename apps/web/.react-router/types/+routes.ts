@@ -23,6 +23,11 @@ type Pages = {
   "/api/scrape": {
     params: {};
   };
+  "/api/cron/:task": {
+    params: {
+      "task": string;
+    };
+  };
   "/jobs": {
     params: {};
   };
@@ -37,7 +42,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/login" | "/logout" | "/api/scrape" | "/jobs" | "/pipeline" | "/settings/profile";
+    page: "/" | "/login" | "/logout" | "/api/scrape" | "/api/cron/:task" | "/jobs" | "/pipeline" | "/settings/profile";
   };
   "routes/login.tsx": {
     id: "routes/login";
@@ -50,6 +55,10 @@ type RouteFiles = {
   "routes/api.scrape.ts": {
     id: "routes/api.scrape";
     page: "/api/scrape";
+  };
+  "routes/api.cron.ts": {
+    id: "routes/api.cron";
+    page: "/api/cron/:task";
   };
   "components/app-layout.tsx": {
     id: "components/app-layout";
@@ -78,6 +87,7 @@ type RouteModules = {
   "routes/login": typeof import("./app/routes/login.tsx");
   "routes/logout": typeof import("./app/routes/logout.tsx");
   "routes/api.scrape": typeof import("./app/routes/api.scrape.ts");
+  "routes/api.cron": typeof import("./app/routes/api.cron.ts");
   "components/app-layout": typeof import("./app/components/app-layout.tsx");
   "routes/dashboard": typeof import("./app/routes/dashboard.tsx");
   "routes/jobs": typeof import("./app/routes/jobs.tsx");

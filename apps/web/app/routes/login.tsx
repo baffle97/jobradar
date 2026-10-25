@@ -14,7 +14,7 @@ import {
 
 export async function loader({ request }: { request: Request }) {
   const sessionId = getSessionFromCookie(request.headers.get("Cookie"));
-  if (sessionId && validateSession(sessionId)) {
+  if (sessionId && (await validateSession(sessionId))) {
     throw redirect("/");
   }
   return null;
@@ -29,27 +29,27 @@ export async function action({ request }: { request: Request }) {
     return { error: "Email and password are required." };
   }
 
-  const existing = db.select().from(schema.users).where(eq(schema.users.email, email)).get();
+  const existing = await db.select().from(schema.users).where(eq(schema.users.email, email)).get();
 
   if (existing) {
     if (!verifyPassword(password, existing.passwordHash)) {
       return { error: "Invalid credentials." };
     }
-    const sessionId = createSession(existing.id);
+    const sessionId = await createSession(existing.id);
     return redirect("/", {
       headers: { "Set-Cookie": sessionCookie(sessionId) },
     });
   }
 
-  const result = db
+  const result = await db
     .insert(schema.users)
     .values({ email, passwordHash: hashPassword(password) })
     .returning()
     .get();
 
-  db.insert(schema.profile).values({ userId: result.id }).run();
+  await db.insert(schema.profile).values({ userId: result.id }).run();
 
-  const sessionId = createSession(result.id);
+  const sessionId = await createSession(result.id);
   return redirect("/", {
     headers: { "Set-Cookie": sessionCookie(sessionId) },
   });

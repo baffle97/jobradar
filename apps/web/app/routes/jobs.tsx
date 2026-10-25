@@ -51,7 +51,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 
   const where = and(...conditions);
 
-  const [{ count }] = db
+  const [{ count }] = await db
     .select({ count: sql<number>`count(*)` })
     .from(schema.jobs)
     .where(where)
@@ -59,7 +59,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 
   const orderBy = sortBy === "salary" ? desc(schema.jobs.salaryMax) : desc(schema.jobs.createdAt);
 
-  const jobs = db
+  const jobs = await db
     .select()
     .from(schema.jobs)
     .where(where)

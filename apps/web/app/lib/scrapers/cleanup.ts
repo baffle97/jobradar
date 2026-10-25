@@ -6,7 +6,7 @@ export async function cleanupStaleJobs(): Promise<{ deactivated: number }> {
 
   // ATS jobs refresh last_seen_at on every poll, so only rows nobody has seen
   // for 30 days are retired here; closed ATS postings are handled at poll time.
-  const result = db
+  const result = await db
     .update(schema.jobs)
     .set({ isActive: false })
     .where(
@@ -17,6 +17,6 @@ export async function cleanupStaleJobs(): Promise<{ deactivated: number }> {
     )
     .run();
 
-  console.log(`[cleanup] deactivated ${result.changes} stale jobs`);
-  return { deactivated: result.changes };
+  console.log(`[cleanup] deactivated ${result.rowsAffected} stale jobs`);
+  return { deactivated: result.rowsAffected };
 }

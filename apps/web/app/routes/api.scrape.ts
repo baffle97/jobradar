@@ -1,3 +1,4 @@
+import { isAuthorized } from "~/lib/auth.server";
 import { runTask } from "~/lib/scheduler";
 import type { Route } from "./+types/api.scrape";
 
@@ -11,7 +12,14 @@ const VALID_TASKS = [
   "cleanup:stale-jobs",
 ];
 
+// Scrapes can run for minutes; 300s is the Hobby plan ceiling.
+export const config = { maxDuration: 300 };
+
 export async function action({ request }: Route.ActionArgs) {
+  if (!(await isAuthorized(request))) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const formData = await request.formData();
   const task = formData.get("task") as string;
 

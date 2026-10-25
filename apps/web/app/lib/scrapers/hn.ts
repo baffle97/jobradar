@@ -150,8 +150,8 @@ export async function scrapeHN(): Promise<{
     }
   }
 
-  const result = upsertJobs(allJobs);
-  const boardsDiscovered = registerBoards(boardRefs, "hn");
+  const result = await upsertJobs(allJobs);
+  const boardsDiscovered = await registerBoards(boardRefs, "hn");
   console.log(
     `[hn] inserted ${result.inserted}/${result.total} jobs, ${boardsDiscovered} new ATS boards`,
   );

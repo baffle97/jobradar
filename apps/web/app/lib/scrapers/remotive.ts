@@ -70,7 +70,7 @@ export async function scrapeRemotive(): Promise<{ inserted: number; total: numbe
     };
   });
 
-  const result = upsertJobs(allJobs);
+  const result = await upsertJobs(allJobs);
   console.log(`[remotive] inserted ${result.inserted}/${result.total} jobs`);
   return result;
 }

@@ -5,7 +5,7 @@ import { Sidebar } from "./sidebar";
 export async function loader({ request }: { request: Request }) {
   const sessionId = getSessionFromCookie(request.headers.get("Cookie"));
   if (!sessionId) throw redirect("/login");
-  const user = validateSession(sessionId);
+  const user = await validateSession(sessionId);
   if (!user) throw redirect("/login");
   return { email: user.email };
 }
