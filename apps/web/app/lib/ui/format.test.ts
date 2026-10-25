@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { formatAge, formatCount, formatDay, isNew, jobDate } from "./format";
 
 const NOW = "2026-10-25T13:00:00.000Z";
@@ -29,6 +29,34 @@ describe("formatAge", () => {
   });
   it("returns empty text for unparseable dates", () => {
     expect(formatAge("", NOW)).toBe("");
+  });
+});
+
+describe("timestamps without a zone", () => {
+  // remotive sends "2026-10-22T18:40:19": no Z, no offset. Date.parse would read
+  // it as local time, so a UTC server and an IST phone disagreed (hydration #418).
+  // Run as the phone does, so this fails even on a UTC machine.
+  const savedTz = process.env.TZ;
+  beforeAll(() => {
+    process.env.TZ = "Asia/Kolkata";
+  });
+  afterAll(() => {
+    if (savedTz === undefined) Reflect.deleteProperty(process.env, "TZ");
+    else process.env.TZ = savedTz;
+  });
+  it("reads them as UTC whatever the machine's time zone", () => {
+    expect(formatAge("2026-10-25T12:20:00", NOW)).toBe("40m ago");
+    expect(formatAge("2026-10-25 10:00:00", NOW)).toBe("3h ago");
+    expect(formatDay("2026-10-22T18:40:19", NOW)).toBe("23 Oct");
+    expect(formatDay("2026-10-22T18:40:19.123456", NOW)).toBe("23 Oct");
+    expect(isNew("2026-10-23T13:30:00", NOW)).toBe(true);
+    expect(jobDate({ postedAt: "2026-10-22T18:40:19", createdAt: NOW })).toBe(
+      "2026-10-22T18:40:19",
+    );
+  });
+  it("leaves zoned and date-only strings alone", () => {
+    expect(formatDay("2026-10-22T18:40:19+05:30", NOW)).toBe("22 Oct");
+    expect(formatDay("2026-10-22", NOW)).toBe("22 Oct");
   });
 });
 

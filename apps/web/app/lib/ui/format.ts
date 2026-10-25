@@ -7,9 +7,15 @@ export const IST_OFFSET_MINUTES = 330;
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
+// A date-time with no "Z" or offset (remotive's "2026-10-22T18:40:19"). Date.parse
+// reads those as the machine's local time, which differs between server and phone.
+const NO_ZONE_RE = /^\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?$/;
+
 function toMs(iso: string | null | undefined): number | null {
   if (!iso) return null;
-  const ms = Date.parse(iso);
+  const s = iso.trim();
+  // Treat a zone-less timestamp as UTC. Date-only strings are UTC already.
+  const ms = Date.parse(NO_ZONE_RE.test(s) ? `${s.replace(" ", "T")}Z` : s);
   return Number.isFinite(ms) ? ms : null;
 }
 

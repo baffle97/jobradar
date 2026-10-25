@@ -51,7 +51,7 @@ export function JobMeta({ job, now }: { job: FeedJob; now: string }) {
 export function JobCard({ job, now }: { job: FeedJob; now: string }) {
   const url = postingUrl(job);
   return (
-    <Card className="jr-card" data-v={verdictTone(job.eligibility)}>
+    <Card id={`job-${job.id}`} className="jr-card" data-v={verdictTone(job.eligibility)}>
       <JobMeta job={job} now={now} />
       <h2 className="jr-card__title">
         <Link to={`/jobs/${job.id}`}>{job.title}</Link>

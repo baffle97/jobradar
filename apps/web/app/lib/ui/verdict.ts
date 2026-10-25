@@ -36,6 +36,21 @@ export function verdictWord(verdict: string | null | undefined): string {
   }
 }
 
+// Stored reasons are sometimes about the pipeline, not the posting ("no LLM is
+// configured", "LLM call failed: AI_APICallError ..."). Those stay in the DB;
+// the UI shows a plain line instead.
+const NOT_READ = "Not decided yet: the posting doesn't say where you can work from.";
+const NOT_FINISHED = "Not decided yet: the check on this posting didn't finish.";
+
+export function reasonForDisplay(reason: string | null): string | null {
+  if (!reason) return reason;
+  if (/no LLM is configured/i.test(reason)) return NOT_READ;
+  if (/^LLM call failed/i.test(reason) || /^The model (said|returned)/i.test(reason)) {
+    return NOT_FINISHED;
+  }
+  return reason;
+}
+
 export function parseVerdict(value: unknown): Verdict | null {
   return typeof value === "string" && (VERDICTS as readonly string[]).includes(value)
     ? (value as Verdict)

@@ -483,6 +483,7 @@
   .jr-card.card {
     gap: 0;
     padding: 14px;
+    scroll-margin-top: calc(var(--top-h) + 12px);
     border: 1px solid var(--line);
     border-radius: var(--r-lg);
     background: var(--surface);
@@ -521,7 +522,7 @@
   }
   .jr-src {
     font-family: var(--f-mono);
-    font-size: 11px;
+    font-size: 12px;
     border: 1px solid var(--line);
     border-radius: var(--r-sm);
     padding: 1px 6px;
@@ -529,7 +530,7 @@
   }
   .jr-new {
     font-family: var(--f-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -579,7 +580,7 @@
   }
   .jr-tag {
     font-family: var(--f-ui);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     color: var(--ink-2);
     border: 1px dashed var(--ink-2);

@@ -9,7 +9,7 @@ import { requireUser } from "~/lib/auth.server";
 import { saveLabel } from "~/lib/labels.server";
 import { type EvidencePlace, locateEvidence } from "~/lib/ui/evidence";
 import { formatAge, formatDay, jobDate } from "~/lib/ui/format";
-import { parseVerdict, verdictTone, verdictWord } from "~/lib/ui/verdict";
+import { parseVerdict, reasonForDisplay, verdictTone, verdictWord } from "~/lib/ui/verdict";
 import type { Route } from "./+types/job";
 
 export function meta({ data }: Route.MetaArgs) {
@@ -57,7 +57,7 @@ export async function loader({ params }: Route.LoaderArgs) {
       salaryText: job.salaryText,
       eligibility: job.eligibility,
       eligibilityEvidence: job.eligibilityEvidence,
-      eligibilityReason: job.eligibilityReason,
+      eligibilityReason: reasonForDisplay(job.eligibilityReason),
       eligibilityMethod: job.eligibilityMethod,
       eligibilityCheckedAt: job.eligibilityCheckedAt,
     },
@@ -147,10 +147,17 @@ const CHOICES = [
   { value: "unclear", label: "Unclear" },
 ] as const;
 
-function VerdictWrong({ current }: { current: { label: string; note: string | null } | null }) {
+function VerdictWrong({
+  current,
+  posted,
+}: {
+  current: { label: string; note: string | null } | null;
+  // The action's answer after a plain (no-JS) form POST re-rendered the page.
+  posted: Route.ComponentProps["actionData"];
+}) {
   const fetcher = useFetcher<typeof action>();
   const busy = fetcher.state !== "idle";
-  const result = fetcher.data;
+  const result = fetcher.data ?? posted;
   const saved = result?.ok ? result.label : (current?.label ?? null);
 
   return (
@@ -209,7 +216,7 @@ function VerdictWrong({ current }: { current: { label: string; note: string | nu
   );
 }
 
-export default function JobPage({ loaderData }: Route.ComponentProps) {
+export default function JobPage({ loaderData, actionData }: Route.ComponentProps) {
   const { job, locations, description, place, label, now } = loaderData;
   const url = postingUrl(job);
   const date = jobDate(job);
@@ -276,7 +283,7 @@ export default function JobPage({ loaderData }: Route.ComponentProps) {
                 </a>
               </div>
             ) : null}
-            <VerdictWrong current={label} />
+            <VerdictWrong current={label} posted={actionData} />
           </section>
         </div>
 

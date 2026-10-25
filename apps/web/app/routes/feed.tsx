@@ -2,10 +2,11 @@ import { and, count, desc, eq, inArray, type SQL, sql } from "drizzle-orm";
 import { Search } from "lucide-react";
 import { Form, Link } from "react-router";
 import { JobCard } from "~/components/job-card";
+import { useHydrated } from "~/components/use-hydrated";
 import { db, schema } from "~/db";
 import { countLabels, inScopeJobs, LABEL_TARGET } from "~/lib/labels.server";
 import { formatCount, formatDay } from "~/lib/ui/format";
-import { type FeedFilter, parseFeedFilter } from "~/lib/ui/verdict";
+import { type FeedFilter, parseFeedFilter, reasonForDisplay } from "~/lib/ui/verdict";
 import type { Route } from "./+types/feed";
 
 const STEP = 20;
@@ -92,7 +93,10 @@ export async function loader({ request }: Route.LoaderArgs) {
   }
 
   return {
-    jobs,
+    jobs: jobs.map((job) => ({
+      ...job,
+      eligibilityReason: reasonForDisplay(job.eligibilityReason),
+    })),
     total,
     shown,
     filter,
@@ -116,6 +120,12 @@ function feedHref(params: { v?: FeedFilter; q?: string; n?: number }) {
 
 export default function FeedPage({ loaderData }: Route.ComponentProps) {
   const { jobs, total, shown, filter, q, counts, labelled, labelTarget, now } = loaderData;
+  const hydrated = useHydrated();
+  // Without JS, "Load more" is a full page load that starts at the top; the hash
+  // brings the reader back to the last card they saw, new ones right below it.
+  // With JS, preventScrollReset already keeps the place.
+  const lastId = jobs.at(-1)?.id;
+  const moreHash = !hydrated && lastId ? `#job-${lastId}` : "";
 
   const segments: { v: FeedFilter; label: string; n: number }[] = [
     { v: "open", label: "Eligible + unclear", n: counts.eligible + counts.unclear },
@@ -205,7 +215,7 @@ export default function FeedPage({ loaderData }: Route.ComponentProps) {
           {jobs.length < total && shown < MAX_SHOWN ? (
             <Link
               className="jr-btn"
-              to={feedHref({ v: filter, q, n: shown + STEP })}
+              to={`${feedHref({ v: filter, q, n: shown + STEP })}${moreHash}`}
               preventScrollReset
             >
               Load more

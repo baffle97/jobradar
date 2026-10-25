@@ -7,7 +7,7 @@ import { requireUser } from "~/lib/auth.server";
 import { checkedInScopeJobs, LABEL_TARGET, saveLabel } from "~/lib/labels.server";
 import { formatAge, formatCount, jobDate } from "~/lib/ui/format";
 import { pickNext, stratifiedOrder } from "~/lib/ui/sampling";
-import { parseVerdict, verdictTone, verdictWord } from "~/lib/ui/verdict";
+import { parseVerdict, reasonForDisplay, verdictTone, verdictWord } from "~/lib/ui/verdict";
 import type { Route } from "./+types/label";
 
 export function meta() {
@@ -100,7 +100,14 @@ export async function loader({ request }: Route.LoaderArgs) {
     pool: order.length,
     labelled: labels.length,
     target: LABEL_TARGET,
-    done: done && doneLabel ? { ...done, userLabel: doneLabel.label } : null,
+    done:
+      done && doneLabel
+        ? {
+            ...done,
+            eligibilityReason: reasonForDisplay(done.eligibilityReason),
+            userLabel: doneLabel.label,
+          }
+        : null,
     now: new Date().toISOString(),
   };
 }
