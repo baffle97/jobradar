@@ -1,6 +1,6 @@
-// Title keyword groups for the feed's Role filter. One table, used both in JS
-// (rolesForTitle, tests) and in SQL (lib/feed.server.ts builds LIKE patterns
-// from the same terms on the same normalized title).
+// Title keyword groups for the feed's Role filter. Matched here, in JS, when a
+// job is written: the tags go into jobs.roles (" ai eng "), and the feed's SQL
+// only checks a tag (matching in SQL was too deep and too slow on Turso).
 //
 // Normalized title: " " + lowercase + " ", with punctuation turned into spaces
 // ("AI/ML Engineer (Remote)" -> " ai ml engineer  remote  "). A term with
@@ -105,10 +105,10 @@ export function parseRole(value: string | null): RoleKey | null {
   return (ROLE_KEYS as readonly string[]).includes(value ?? "") ? (value as RoleKey) : null;
 }
 
-// Characters that count as word breaks. The SQL side replaces the same ones.
-export const TITLE_PUNCTUATION = [..."()[]{},./\\-–—:;|&!?'\"+#*_@"];
+// Characters that count as word breaks.
+const TITLE_PUNCTUATION = [..."()[]{},./\\-–—:;|&!?'\"+#*_@"];
 
-// SQLite's lower() only lowercases ASCII; so does this, to match it exactly.
+// ASCII-only lowercasing, like SQLite's lower(): terms are ASCII anyway.
 export function normalizeTitle(title: string): string {
   let s = title.replace(/[A-Z]/g, (c) => c.toLowerCase());
   for (const ch of TITLE_PUNCTUATION) s = s.split(ch).join(" ");
@@ -116,7 +116,7 @@ export function normalizeTitle(title: string): string {
 }
 
 // Terms whose match puts a title in `key` (eng: every engineering term).
-export function roleTerms(key: TermGroup): RoleTerm[] {
+function roleTerms(key: TermGroup): RoleTerm[] {
   if (key !== "eng") return ROLE_GROUPS[key].terms;
   return Object.values(ROLE_GROUPS).flatMap((g) => g.terms);
 }
@@ -130,4 +130,10 @@ export function rolesForTitle(title: string): RoleKey[] {
   const hit = (key: TermGroup) => roleTerms(key).some(has);
   const groups = ROLE_KEYS.filter((k): k is TermGroup => k !== "nontech" && hit(k));
   return groups.length ? groups : ["nontech"];
+}
+
+// What jobs.roles stores: space-padded tags, " ai eng " or " nontech ", so the
+// feed can match one tag with LIKE '% ai %'.
+export function roleTags(title: string): string {
+  return ` ${rolesForTitle(title).join(" ")} `;
 }

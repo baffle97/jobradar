@@ -5,6 +5,7 @@ import { discoverFromYC, ingestBoards } from "./ats";
 import { cleanupStaleJobs } from "./cleanup";
 import { scrapeHN } from "./hn";
 import { scrapeRemotive } from "./remotive";
+import { fillMissingRoles } from "./roles";
 
 async function scrapeAll() {
   const results: Record<string, unknown> = {};
@@ -32,6 +33,7 @@ export function registerScraperTasks() {
   defineTask("ingest:ats", ingestBoards);
   defineTask("discover:yc", discoverFromYC);
   defineTask("cleanup:stale-jobs", cleanupStaleJobs);
+  defineTask("backfill:roles", fillMissingRoles);
   defineTask("eligibility:check", runEligibilityCheck);
 }
 
