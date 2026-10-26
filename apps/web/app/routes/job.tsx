@@ -7,9 +7,16 @@ import { VerdictBlock } from "~/components/verdict-block";
 import { db, schema } from "~/db";
 import { requireUser } from "~/lib/auth.server";
 import { saveLabel } from "~/lib/labels.server";
-import { type EvidencePlace, locateEvidence } from "~/lib/ui/evidence";
+import { type EvidencePlace, locateMarks, locateQuoteParts } from "~/lib/ui/evidence";
 import { formatAge, formatDay, jobDate } from "~/lib/ui/format";
-import { parseVerdict, reasonForDisplay, verdictTone, verdictWord } from "~/lib/ui/verdict";
+import { type Mark, markSegments } from "~/lib/ui/highlight";
+import {
+  groupHints,
+  parseVerdict,
+  reasonForDisplay,
+  verdictTone,
+  verdictWord,
+} from "~/lib/ui/verdict";
 import type { Route } from "./+types/job";
 
 export function meta({ data }: Route.MetaArgs) {
@@ -34,11 +41,13 @@ export async function loader({ params }: Route.LoaderArgs) {
     ...new Set(job.locations?.length ? job.locations : job.location ? [job.location] : []),
   ];
   const description = job.description ?? "";
-  const place = locateEvidence(job.eligibilityEvidence, {
-    title: job.title,
-    locations,
-    description,
-  });
+  const fields = { title: job.title, locations, description };
+  // A joined quote ("APJ | EMEA") cites where its first part is.
+  const place = locateQuoteParts(job.eligibilityEvidence, fields)[0] ?? null;
+  // Verified hints, strong first; every one is marked in the posting too.
+  const { yes, no } = groupHints(job.eligibilityHints);
+  const hints = [...yes, ...no];
+  const marks = locateMarks(job.eligibilityEvidence, hints, fields);
 
   return {
     job: {
@@ -59,11 +68,14 @@ export async function loader({ params }: Route.LoaderArgs) {
       eligibilityEvidence: job.eligibilityEvidence,
       eligibilityReason: reasonForDisplay(job.eligibilityReason),
       eligibilityMethod: job.eligibilityMethod,
+      eligibilityBasis: job.eligibilityBasis,
+      eligibilityHints: hints,
       eligibilityCheckedAt: job.eligibilityCheckedAt,
     },
     locations,
     description,
     place,
+    marks,
     label: label ? { label: label.label, note: label.note, labelledAt: label.labelledAt } : null,
     now: new Date().toISOString(),
   };
@@ -123,12 +135,34 @@ function HeroMark({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Marked({ text, range }: { text: string; range: { start: number; end: number } }) {
+// Text with the main evidence and the hint quotes marked. In the description the
+// main evidence is the hero mark (id "evidence", the "Jump to the line" target).
+function Marked({ text, marks, hero }: { text: string; marks: Mark[]; hero?: boolean }) {
+  if (!marks.length) return <>{text}</>;
+  const segments = markSegments(text, marks);
+  // Only one hero (one id="evidence"), even when a joined quote has several parts.
+  const heroAt = hero ? segments.findIndex((seg) => seg.kind === "main") : -1;
   return (
     <>
-      {text.slice(0, range.start)}
-      <mark className="jr-mark">{text.slice(range.start, range.end)}</mark>
-      {text.slice(range.end)}
+      {segments.map((seg, i) => {
+        const key = `${i}-${seg.kind}`;
+        if (i === heroAt) return <HeroMark key={key}>{seg.text}</HeroMark>;
+        if (seg.kind === "main") {
+          return (
+            <mark key={key} className="jr-mark">
+              {seg.text}
+            </mark>
+          );
+        }
+        if (seg.kind === "hint") {
+          return (
+            <mark key={key} className="jr-mark jr-mark--hint">
+              {seg.text}
+            </mark>
+          );
+        }
+        return seg.text;
+      })}
     </>
   );
 }
@@ -217,7 +251,7 @@ function VerdictWrong({
 }
 
 export default function JobPage({ loaderData, actionData }: Route.ComponentProps) {
-  const { job, locations, description, place, label, now } = loaderData;
+  const { job, locations, description, place, marks, label, now } = loaderData;
   const url = postingUrl(job);
   const date = jobDate(job);
   const cite = citeFor(place, Boolean(job.eligibilityEvidence));
@@ -236,7 +270,7 @@ export default function JobPage({ loaderData, actionData }: Route.ComponentProps
         </span>
       </div>
       <h1 className="jr-h1" style={{ marginTop: 6, overflowWrap: "anywhere" }}>
-        {place?.field === "title" ? <Marked text={job.title} range={place.range} /> : job.title}
+        <Marked text={job.title} marks={marks.title} />
       </h1>
       <div style={{ marginTop: 8 }}>
         <SalaryLine job={job} />
@@ -262,6 +296,8 @@ export default function JobPage({ loaderData, actionData }: Route.ComponentProps
               verdict={job.eligibility}
               evidence={job.eligibilityEvidence}
               reason={job.eligibilityReason}
+              basis={job.eligibilityBasis}
+              hints={job.eligibilityHints}
               cite={cite}
             />
             <dl className="jr-kv">
@@ -296,11 +332,7 @@ export default function JobPage({ loaderData, actionData }: Route.ComponentProps
                 ? "not listed"
                 : locations.map((loc, i) => (
                     <span key={loc} style={{ display: "block" }}>
-                      {place?.field === "location" && place.index === i ? (
-                        <Marked text={loc} range={place.range} />
-                      ) : (
-                        loc
-                      )}
+                      <Marked text={loc} marks={marks.locations[i] ?? []} />
                     </span>
                   ))}
             </dd>
@@ -309,15 +341,7 @@ export default function JobPage({ loaderData, actionData }: Route.ComponentProps
           </dl>
           {description ? (
             <div className="jr-posting">
-              {place?.field === "description" ? (
-                <>
-                  {description.slice(0, place.range.start)}
-                  <HeroMark>{description.slice(place.range.start, place.range.end)}</HeroMark>
-                  {description.slice(place.range.end)}
-                </>
-              ) : (
-                description
-              )}
+              <Marked text={description} marks={marks.description} hero />
             </div>
           ) : (
             <p className="jr-sub">No description was stored for this posting.</p>

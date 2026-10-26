@@ -75,6 +75,7 @@ export async function loader({ request }: Route.LoaderArgs) {
             eligibility: schema.jobs.eligibility,
             eligibilityEvidence: schema.jobs.eligibilityEvidence,
             eligibilityReason: schema.jobs.eligibilityReason,
+            eligibilityBasis: schema.jobs.eligibilityBasis,
           })
           .from(schema.jobs)
           .where(eq(schema.jobs.id, doneId))
@@ -149,6 +150,7 @@ function Reveal({ done }: { done: NonNullable<Route.ComponentProps["loaderData"]
         verdict={done.eligibility}
         evidence={done.eligibilityEvidence}
         reason={done.eligibilityReason}
+        basis={done.eligibilityBasis}
       />
       <div className="jr-actions">
         <Link className="jr-btn" to={`/jobs/${done.id}`}>

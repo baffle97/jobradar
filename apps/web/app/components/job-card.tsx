@@ -20,6 +20,7 @@ export interface FeedJob extends SalaryLike {
   eligibility: string | null;
   eligibilityEvidence: string | null;
   eligibilityReason: string | null;
+  eligibilityBasis: string | null;
 }
 
 export function postingUrl(job: { applyUrl: string | null; sourceUrl: string | null }) {
@@ -61,6 +62,7 @@ export function JobCard({ job, now }: { job: FeedJob; now: string }) {
         verdict={job.eligibility}
         evidence={job.eligibilityEvidence}
         reason={job.eligibilityReason}
+        basis={job.eligibilityBasis}
       />
       <div className="jr-actions">
         {url ? (

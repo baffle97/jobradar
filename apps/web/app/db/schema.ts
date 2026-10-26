@@ -1,5 +1,6 @@
 import { sql } from "drizzle-orm";
 import { index, integer, real, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
+import type { Hint } from "../lib/eligibility/types";
 
 export const users = sqliteTable("users", {
   id: integer("id").primaryKey({ autoIncrement: true }),
@@ -98,6 +99,9 @@ export const jobs = sqliteTable("jobs", {
   eligibilityEvidence: text("eligibility_evidence"),
   eligibilityReason: text("eligibility_reason"),
   eligibilityMethod: text("eligibility_method"), // rules | llm
+  eligibilityBasis: text("eligibility_basis"), // explicit | hints | null (unclear)
+  // Verified hints, JSON array; null on rows checked before elig-v0.4.
+  eligibilityHints: text("eligibility_hints", { mode: "json" }).$type<Hint[]>(),
   // PROMPT_VERSION of the latest result; null means "re-check on the next run".
   eligibilityVersion: text("eligibility_version"),
   // Hash of the posting text the latest result was computed from.
@@ -120,6 +124,8 @@ export const eligibilityChecks = sqliteTable(
     evidence: text("evidence"),
     reason: text("reason").notNull(),
     method: text("method").notNull(),
+    basis: text("basis"),
+    hints: text("hints", { mode: "json" }).$type<Hint[]>(),
     model: text("model"),
     promptVersion: text("prompt_version").notNull(),
     inputHash: text("input_hash").notNull(),
