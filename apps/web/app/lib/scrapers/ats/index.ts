@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { and, eq, inArray, lt, sql } from "drizzle-orm";
 import { db, schema } from "~/db";
+import { roleTags } from "~/lib/ui/roles";
 import { fetchAshbyBoard } from "./ashby";
 import { fetchGreenhouseBoard } from "./greenhouse";
 import { fetchLeverBoard } from "./lever";
@@ -75,6 +76,8 @@ async function upsertBoardJobs(board: Board, jobs: BoardJob[], seenAt: string) {
 
     const fields = {
       title: job.title,
+      // Re-tagged on every poll, so a renamed posting gets new tags.
+      roles: roleTags(job.title),
       company: job.company,
       location: job.locations.join("; ") || null,
       locations: job.locations,

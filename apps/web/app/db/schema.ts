@@ -90,6 +90,9 @@ export const jobs = sqliteTable("jobs", {
   isActive: integer("is_active", { mode: "boolean" }).default(true),
   dedupHash: text("dedup_hash").unique(),
   embedding: text("embedding", { mode: "json" }).$type<number[]>(),
+  // Role tags from the title, space-padded: " ai eng ", " nontech " (roleTags in
+  // lib/ui/roles.ts). Written with the title; null until backfill:roles runs.
+  roles: text("roles"),
   skills: text("skills", { mode: "json" }),
   matchScore: real("match_score"),
   scoreBreakdown: text("score_breakdown", { mode: "json" }),

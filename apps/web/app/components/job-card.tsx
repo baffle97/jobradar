@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router";
 import { formatAge, isNew, jobDate } from "~/lib/ui/format";
 import { formatSalary, type SalaryLike } from "~/lib/ui/salary";
-import { verdictTone } from "~/lib/ui/verdict";
+import { verdictStamp, verdictTone } from "~/lib/ui/verdict";
 import { VerdictBlock } from "./verdict-block";
 
 export interface FeedJob extends SalaryLike {
@@ -76,5 +76,35 @@ export function JobCard({ job, now }: { job: FeedJob; now: string }) {
         </Link>
       </div>
     </Card>
+  );
+}
+
+// One letter-ish label so the dot is not colour-only.
+function shortVerdict(verdict: string | null): string {
+  if (verdict === "eligible") return "Yes";
+  if (verdict === "not_eligible") return "No";
+  if (verdict === "unclear") return "?";
+  return "–";
+}
+
+// Compact list view (view=list): one ~60px row per job, the whole row a link.
+export function JobRow({ job, now }: { job: FeedJob; now: string }) {
+  const salary = formatSalary(job);
+  const tone = verdictTone(job.eligibility);
+  return (
+    <li id={`job-${job.id}`}>
+      <Link to={`/jobs/${job.id}`} className="jr-row" data-v={tone}>
+        <span className="jr-row__main">
+          <span className="jr-row__title">{job.title}</span>
+          <span className="jr-row__meta">
+            {[job.company, formatAge(jobDate(job), now), salary?.text].filter(Boolean).join(" · ")}
+          </span>
+        </span>
+        <span className="jr-row__v" data-v={tone}>
+          <span aria-hidden="true">{shortVerdict(job.eligibility)}</span>
+          <span className="sr-only-jr">{verdictStamp(job.eligibility)}</span>
+        </span>
+      </Link>
+    </li>
   );
 }

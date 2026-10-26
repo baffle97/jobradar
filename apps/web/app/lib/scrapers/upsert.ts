@@ -1,5 +1,5 @@
-import { sql } from "drizzle-orm";
 import { db, schema } from "~/db";
+import { roleTags } from "~/lib/ui/roles";
 
 type JobInsert = typeof schema.jobs.$inferInsert;
 
@@ -12,11 +12,12 @@ export async function upsertJobs(
 
   // Batched so a scrape costs a few round trips to Turso instead of one per row.
   for (let i = 0; i < jobRows.length; i += BATCH_SIZE) {
-    const [first, ...rest] = jobRows
-      .slice(i, i + BATCH_SIZE)
-      .map((row) =>
-        db.insert(schema.jobs).values(row).onConflictDoNothing({ target: schema.jobs.dedupHash }),
-      );
+    const [first, ...rest] = jobRows.slice(i, i + BATCH_SIZE).map((row) =>
+      db
+        .insert(schema.jobs)
+        .values({ ...row, roles: roleTags(row.title) })
+        .onConflictDoNothing({ target: schema.jobs.dedupHash }),
+    );
     const results = await db.batch([first, ...rest]);
     for (const result of results) {
       if (result.rowsAffected > 0) inserted++;
