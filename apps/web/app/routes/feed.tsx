@@ -1,16 +1,30 @@
 import { and, count, desc, eq, inArray, type SQL, sql } from "drizzle-orm";
-import { Search } from "lucide-react";
-import { Form, Link } from "react-router";
-import { JobCard } from "~/components/job-card";
+import { Search, X } from "lucide-react";
+import { Form, Link, redirect } from "react-router";
+import { JobCard, JobRow } from "~/components/job-card";
 import { useHydrated } from "~/components/use-hydrated";
 import { db, schema } from "~/db";
+import { narrowingConditions, notFromHints, postedAtSql } from "~/lib/feed.server";
 import { countLabels, inScopeJobs, LABEL_TARGET } from "~/lib/labels.server";
+import {
+  AGE_LABELS,
+  AGES,
+  activeFilters,
+  basisApplies,
+  cleanFeedHref,
+  clearFiltersHref,
+  type FeedParams,
+  feedHref,
+  feedStep,
+  MAX_SHOWN,
+  parseFeedParams,
+  SOURCE_LABELS,
+  SOURCES,
+} from "~/lib/ui/feed-params";
 import { formatCount, formatDay } from "~/lib/ui/format";
-import { type FeedFilter, parseFeedFilter, reasonForDisplay } from "~/lib/ui/verdict";
+import { ROLE_KEYS, roleLabel } from "~/lib/ui/roles";
+import { type FeedFilter, reasonForDisplay } from "~/lib/ui/verdict";
 import type { Route } from "./+types/feed";
-
-const STEP = 20;
-const MAX_SHOWN = 400;
 
 export function meta() {
   return [{ title: "Feed · jobradar" }];
@@ -31,24 +45,28 @@ function filterCondition(filter: FeedFilter): SQL | undefined {
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const url = new URL(request.url);
-  const filter = parseFeedFilter(url.searchParams.get("v"));
-  const q = (url.searchParams.get("q") ?? "").trim().slice(0, 100);
-  const shown = Math.min(MAX_SHOWN, Math.max(STEP, Number(url.searchParams.get("n")) || STEP));
-
+  const { searchParams } = new URL(request.url);
+  // One URL per view: drop empty/default params (the no-JS form sends them).
+  const clean = cleanFeedHref(searchParams);
+  if (clean) throw redirect(clean);
+  const params = parseFeedParams(searchParams);
   const j = schema.jobs;
-  const conditions: (SQL | undefined)[] = [inScopeJobs, filterCondition(filter)];
-  if (q) {
-    const like = `%${q}%`;
-    conditions.push(sql`(${j.title} LIKE ${like} OR ${j.company} LIKE ${like})`);
-  }
-  const where = and(...conditions);
+  const narrowing = [inScopeJobs, ...narrowingConditions(params)];
+  const where = and(
+    ...narrowing,
+    filterCondition(params.v),
+    params.basis ? notFromHints : undefined,
+  );
 
-  // Eligible first, then unclear, then no; newest posting first inside each group.
+  // best: eligible first, then unclear, then no; newest posting first inside
+  // each group. new: newest first.
   const verdictRank = sql`CASE ${j.eligibility} WHEN 'eligible' THEN 0 WHEN 'unclear' THEN 1 WHEN 'not_eligible' THEN 2 ELSE 3 END`;
-  const postedAt = sql`COALESCE(julianday(${j.postedAt}), julianday(${j.createdAt}))`;
+  const order =
+    params.sort === "new"
+      ? [desc(postedAtSql), desc(j.id)]
+      : [verdictRank, desc(postedAtSql), desc(j.id)];
 
-  const [jobs, [{ total }], byVerdict, labelled] = await Promise.all([
+  const [jobs, [{ total }], byVerdict, global, labelled] = await Promise.all([
     db
       .select({
         id: j.id,
@@ -72,10 +90,22 @@ export async function loader({ request }: Route.LoaderArgs) {
       })
       .from(j)
       .where(where)
-      .orderBy(verdictRank, desc(postedAt), desc(j.id))
-      .limit(shown)
+      .orderBy(...order)
+      .limit(params.n)
       .all(),
     db.select({ total: count() }).from(j).where(where).all(),
+    // Segment counts under the same role/age/src/pay/q, so they match the list.
+    db
+      .select({
+        verdict: j.eligibility,
+        n: count(),
+        fromHints: sql<number>`SUM(CASE WHEN ${j.eligibilityBasis} = 'hints' THEN 1 ELSE 0 END)`,
+      })
+      .from(j)
+      .where(and(...narrowing))
+      .groupBy(j.eligibility)
+      .all(),
+    // The funnel line stays global.
     db
       .select({ verdict: j.eligibility, n: count() })
       .from(j)
@@ -85,13 +115,22 @@ export async function loader({ request }: Route.LoaderArgs) {
     countLabels(),
   ]);
 
-  const counts = { eligible: 0, unclear: 0, not_eligible: 0, all: 0 };
-  for (const row of byVerdict) {
-    counts.all += row.n;
-    if (row.verdict === "eligible" || row.verdict === "unclear" || row.verdict === "not_eligible") {
-      counts[row.verdict] += row.n;
+  const tally = (rows: { verdict: string | null; n: number; fromHints?: number }[]) => {
+    const c = { eligible: 0, unclear: 0, not_eligible: 0, all: 0 };
+    for (const row of rows) {
+      c.all += row.n;
+      if (
+        row.verdict === "eligible" ||
+        row.verdict === "unclear" ||
+        row.verdict === "not_eligible"
+      ) {
+        // basis=explicit applies to the eligible and open segments only.
+        const hidden = params.basis && row.verdict === "eligible" ? Number(row.fromHints ?? 0) : 0;
+        c[row.verdict] += row.n - hidden;
+      }
     }
-  }
+    return c;
+  };
 
   return {
     jobs: jobs.map((job) => ({
@@ -99,10 +138,9 @@ export async function loader({ request }: Route.LoaderArgs) {
       eligibilityReason: reasonForDisplay(job.eligibilityReason),
     })),
     total,
-    shown,
-    filter,
-    q,
-    counts,
+    params,
+    counts: tally(byVerdict),
+    funnel: tally(global),
     labelled,
     labelTarget: LABEL_TARGET,
     // One "now" for server and browser, so ages render identically on both.
@@ -110,20 +148,109 @@ export async function loader({ request }: Route.LoaderArgs) {
   };
 }
 
-function feedHref(params: { v?: FeedFilter; q?: string; n?: number }) {
-  const sp = new URLSearchParams();
-  if (params.v && params.v !== "open") sp.set("v", params.v);
-  if (params.q) sp.set("q", params.q);
-  if (params.n && params.n > STEP) sp.set("n", String(params.n));
-  const s = sp.toString();
-  return s ? `/?${s}` : "/";
+// Hidden inputs that carry every param of `href` through a GET form.
+function HiddenParams({ href }: { href: string }) {
+  const sp = new URLSearchParams(href.split("?")[1] ?? "");
+  return (
+    <>
+      {[...sp].map(([name, value]) => (
+        <input key={name} type="hidden" name={name} value={value} />
+      ))}
+    </>
+  );
+}
+
+function FilterPanel({ params }: { params: FeedParams }) {
+  const active = activeFilters(params).length;
+  return (
+    <details className="jr-filters">
+      <summary className="jr-btn">Filters{active ? ` · ${active}` : ""}</summary>
+      <Form method="get" action="/" className="jr-filters__form">
+        {/* v, q and view ride along; the fields below replace the rest. */}
+        <HiddenParams
+          href={feedHref(params, {
+            role: null,
+            age: null,
+            src: null,
+            pay: false,
+            basis: null,
+            sort: "best",
+          })}
+        />
+        <div className="jr-filters__grid">
+          <label className="jr-field">
+            <span className="jr-label">Role</span>
+            <select className="jr-select" name="role" defaultValue={params.role ?? ""}>
+              <option value="">Any role</option>
+              {ROLE_KEYS.map((k) => (
+                <option key={k} value={k}>
+                  {roleLabel(k)}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="jr-field">
+            <span className="jr-label">Posted</span>
+            <select className="jr-select" name="age" defaultValue={params.age ?? ""}>
+              <option value="">Any time</option>
+              {AGES.map((a) => (
+                <option key={a} value={a}>
+                  {AGE_LABELS[a]}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="jr-field">
+            <span className="jr-label">Source</span>
+            <select className="jr-select" name="src" defaultValue={params.src ?? ""}>
+              <option value="">All sources</option>
+              {SOURCES.map((s) => (
+                <option key={s} value={s}>
+                  {SOURCE_LABELS[s]}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="jr-field">
+            <span className="jr-label">Sort</span>
+            <select className="jr-select" name="sort" defaultValue={params.sort}>
+              <option value="best">Eligible first</option>
+              <option value="new">Newest first</option>
+            </select>
+          </label>
+        </div>
+        <label className="jr-check">
+          <input type="checkbox" name="pay" value="1" defaultChecked={params.pay} />
+          Salary listed
+        </label>
+        {basisApplies(params.v) ? (
+          <label className="jr-check">
+            <input
+              type="checkbox"
+              name="basis"
+              value="explicit"
+              defaultChecked={params.basis === "explicit"}
+            />
+            Only verdicts on an explicit line (hide “from hints”)
+          </label>
+        ) : null}
+        <div className="jr-actions">
+          <button type="submit" className="jr-btn jr-btn--primary">
+            Apply
+          </button>
+        </div>
+      </Form>
+    </details>
+  );
 }
 
 export default function FeedPage({ loaderData }: Route.ComponentProps) {
-  const { jobs, total, shown, filter, q, counts, labelled, labelTarget, now } = loaderData;
+  const { jobs, total, params, counts, funnel, labelled, labelTarget, now } = loaderData;
   const hydrated = useHydrated();
+  const step = feedStep(params.view);
+  const chips = activeFilters(params);
   // Without JS, "Load more" is a full page load that starts at the top; the hash
-  // brings the reader back to the last card they saw, new ones right below it.
+  // brings the reader back to the last row they saw, new ones right below it.
   // With JS, preventScrollReset already keeps the place.
   const lastId = jobs.at(-1)?.id;
   const moreHash = !hydrated && lastId ? `#job-${lastId}` : "";
@@ -142,15 +269,15 @@ export default function FeedPage({ loaderData }: Route.ComponentProps) {
         <p className="jr-sub">Remote roles, sorted by whether you can take them from India.</p>
         <p className="jr-funnel">
           <span>
-            <b>{formatCount(counts.all)}</b> in-scope remote
+            <b>{formatCount(funnel.all)}</b> in-scope remote
           </span>
           <span aria-hidden="true">·</span>
           <span>
-            <b>{formatCount(counts.eligible)}</b> eligible
+            <b>{formatCount(funnel.eligible)}</b> eligible
           </span>
           <span aria-hidden="true">·</span>
           <span>
-            <b>{formatCount(counts.unclear)}</b> unclear
+            <b>{formatCount(funnel.unclear)}</b> unclear
           </span>
         </p>
 
@@ -158,8 +285,8 @@ export default function FeedPage({ loaderData }: Route.ComponentProps) {
           {segments.map((s) => (
             <Link
               key={s.v}
-              to={feedHref({ v: s.v, q })}
-              aria-current={filter === s.v ? "true" : undefined}
+              to={feedHref(params, { v: s.v })}
+              aria-current={params.v === s.v ? "true" : undefined}
               preventScrollReset
             >
               {s.label} <span className="jr-seg__n">{formatCount(s.n)}</span>
@@ -168,7 +295,7 @@ export default function FeedPage({ loaderData }: Route.ComponentProps) {
         </nav>
 
         <Form method="get" action="/" className="jr-search" role="search">
-          {filter !== "open" ? <input type="hidden" name="v" value={filter} /> : null}
+          <HiddenParams href={feedHref(params, { q: "" })} />
           <label htmlFor="feed-q" className="sr-only-jr">
             Search title or company
           </label>
@@ -177,8 +304,8 @@ export default function FeedPage({ loaderData }: Route.ComponentProps) {
             className="jr-input"
             type="search"
             name="q"
-            defaultValue={q}
-            key={q}
+            defaultValue={params.q}
+            key={params.q}
             placeholder="Search title or company"
             autoComplete="off"
             enterKeyHint="search"
@@ -188,17 +315,77 @@ export default function FeedPage({ loaderData }: Route.ComponentProps) {
           </button>
         </Form>
 
+        <FilterPanel key={feedHref(params)} params={params} />
+
+        {chips.length ? (
+          <ul className="jr-chips" aria-label="Active filters">
+            {chips.map((c) => (
+              <li key={c.key}>
+                <Link className="jr-chip" to={c.href} preventScrollReset>
+                  {c.label}
+                  <X aria-hidden="true" />
+                  <span className="sr-only-jr"> (remove filter)</span>
+                </Link>
+              </li>
+            ))}
+            {chips.length >= 2 ? (
+              <li>
+                <Link className="jr-chip jr-chip--clear" to={clearFiltersHref(params)}>
+                  Clear all
+                </Link>
+              </li>
+            ) : null}
+          </ul>
+        ) : null}
+
+        <div className="jr-resultbar">
+          <span className="mono">
+            {formatCount(total)} {total === 1 ? "job" : "jobs"}
+          </span>
+          <nav className="jr-toggle" aria-label="Layout">
+            <Link
+              to={feedHref(params, { view: "cards" })}
+              aria-current={params.view === "cards" ? "true" : undefined}
+              preventScrollReset
+            >
+              Cards
+            </Link>
+            <Link
+              to={feedHref(params, { view: "list" })}
+              aria-current={params.view === "list" ? "true" : undefined}
+              preventScrollReset
+            >
+              List
+            </Link>
+          </nav>
+        </div>
+
         {jobs.length === 0 ? (
           <div className="jr-panel jr-empty jr-cards">
-            <p>{q ? `Nothing matches “${q}” here.` : "No postings in this view yet."}</p>
-            {q ? (
-              <p style={{ marginTop: 12 }}>
-                <Link className="jr-btn" to={feedHref({ v: filter })}>
-                  Clear search
-                </Link>
+            <p>
+              {params.q ? `Nothing matches “${params.q}” here.` : "No postings in this view yet."}
+            </p>
+            {params.q || chips.length ? (
+              <p className="jr-actions" style={{ justifyContent: "center" }}>
+                {params.q ? (
+                  <Link className="jr-btn" to={feedHref(params, { q: "" })}>
+                    Clear search
+                  </Link>
+                ) : null}
+                {chips.length ? (
+                  <Link className="jr-btn" to={clearFiltersHref(params)}>
+                    Clear filters
+                  </Link>
+                ) : null}
               </p>
             ) : null}
           </div>
+        ) : params.view === "list" ? (
+          <ul className="jr-rows">
+            {jobs.map((job) => (
+              <JobRow key={job.id} job={job} now={now} />
+            ))}
+          </ul>
         ) : (
           <div className="jr-cards">
             {jobs.map((job) => (
@@ -213,17 +400,17 @@ export default function FeedPage({ loaderData }: Route.ComponentProps) {
               Showing {formatCount(jobs.length)} of {formatCount(total)}
             </span>
           ) : null}
-          {jobs.length < total && shown < MAX_SHOWN ? (
+          {jobs.length < total && params.n < MAX_SHOWN ? (
             <Link
               className="jr-btn"
-              to={`${feedHref({ v: filter, q, n: shown + STEP })}${moreHash}`}
+              to={`${feedHref(params, { n: params.n + step })}${moreHash}`}
               preventScrollReset
             >
               Load more
             </Link>
           ) : null}
-          {jobs.length < total && shown >= MAX_SHOWN ? (
-            <span>Narrow it down with search to see the rest.</span>
+          {jobs.length < total && params.n >= MAX_SHOWN ? (
+            <span>Narrow it down with search or filters to see the rest.</span>
           ) : null}
         </div>
       </div>
