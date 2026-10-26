@@ -5,7 +5,6 @@ import { db, schema } from "~/db";
 import {
   createSession,
   getSessionFromCookie,
-  hashPassword,
   sessionCookie,
   validateSession,
   verifyPassword,
@@ -28,27 +27,14 @@ export async function action({ request }: { request: Request }) {
     return { error: "Email and password are required." };
   }
 
+  // Sign-ups are closed: only accounts made with `pnpm user:create` can sign in.
+  // An unknown email gets the same answer as a wrong password.
   const existing = await db.select().from(schema.users).where(eq(schema.users.email, email)).get();
-
-  if (existing) {
-    if (!verifyPassword(password, existing.passwordHash)) {
-      return { error: "Invalid credentials." };
-    }
-    const sessionId = await createSession(existing.id);
-    return redirect("/", {
-      headers: { "Set-Cookie": sessionCookie(sessionId) },
-    });
+  if (!existing || !verifyPassword(password, existing.passwordHash)) {
+    return { error: "Invalid credentials." };
   }
 
-  const result = await db
-    .insert(schema.users)
-    .values({ email, passwordHash: hashPassword(password) })
-    .returning()
-    .get();
-
-  await db.insert(schema.profile).values({ userId: result.id }).run();
-
-  const sessionId = await createSession(result.id);
+  const sessionId = await createSession(existing.id);
   return redirect("/", {
     headers: { "Set-Cookie": sessionCookie(sessionId) },
   });
@@ -121,7 +107,7 @@ export default function LoginPage() {
               {isSubmitting ? "Signing in…" : "Sign in"}
             </button>
             <p className="jr-sub" style={{ margin: 0, fontSize: 13, textAlign: "center" }}>
-              First time? Your account is created when you sign in.
+              Invite only. There is no sign-up.
             </p>
           </Form>
         </div>

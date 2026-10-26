@@ -14,7 +14,8 @@
     "test": "vitest run",
     "eval:eligibility": "tsx scripts/eval-eligibility.ts",
     "labels:export": "tsx scripts/export-labels.ts",
-    "task": "tsx scripts/run-task.ts"
+    "task": "tsx scripts/run-task.ts",
+    "user:create": "tsx scripts/create-user.ts"
   },
   "dependencies": {
     "@ai-sdk/google": "4.0.105",
