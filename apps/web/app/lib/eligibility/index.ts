@@ -38,6 +38,7 @@ Hints that point to no (india_blocked), for example:
 - must live in, be a resident or citizen of, or be authorized to work in a country other than India; "U.S. person", ITAR or export-control rules; security clearance
 - regular in-person or onsite days, or required travel to an office outside India ("travel to headquarters twice a quarter"); "#LI-onsite" / "#LI-hybrid"
 - fixed working hours in a time zone that does not fit India ("9-5 EST", "GMT-2 to GMT+2")
+- required overlap with US or European business hours ("overlap with Pacific Time business hours"): weak
 - weak: benefits that only an employer in one other country offers: 401(k), commuter benefits, US medical/dental/vision, RRSP, UK pension
 - weak: pay ranges "for candidates in the U.S." or given per US state or US city (pay-transparency notes)
 - weak: visa sponsorship (it means relocating)
@@ -50,7 +51,7 @@ Hard requirements are always "strong" india_blocked and always win over any indi
 
 A location in India with nothing saying the role is remote is not a hint by itself (the job may be office-based). Remote, distributed-team or other hints still count.
 
-Not hints: where the company's users or customers are ("users in over 200 countries"), markets the role covers ("covering markets across Asia"), "other locations" or "other global locations" next to named office cities, equal-opportunity and privacy boilerplate, a salary in US dollars on its own, the company's headquarters on its own, generic "remote-first culture" text that names no place.
+Not hints: where the company's users or customers are ("users in over 200 countries"), markets the role covers ("covering markets across Asia"), "other locations" or "other global locations" next to named office cities, equal-opportunity and privacy boilerplate, a salary in US dollars on its own, the company's headquarters on its own, generic "remote-first culture" text that names no place, a bare "Remote" or "fully remote" that names no place (it says the job is remote, not from where).
 
 Step 2: decide.
 - "not_eligible": a strong india_blocked hint and no strong india_ok hint.
