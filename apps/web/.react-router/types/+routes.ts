@@ -26,6 +26,9 @@ type Pages = {
   "/jobs": {
     params: {};
   };
+  "/save": {
+    params: {};
+  };
   "/api/scrape": {
     params: {};
   };
@@ -53,7 +56,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/login" | "/logout" | "/theme" | "/jobs" | "/api/scrape" | "/api/cron/:task" | "/jobs/:id" | "/label" | "/pipeline" | "/settings/profile";
+    page: "/" | "/login" | "/logout" | "/theme" | "/jobs" | "/save" | "/api/scrape" | "/api/cron/:task" | "/jobs/:id" | "/label" | "/pipeline" | "/settings/profile";
   };
   "routes/login.tsx": {
     id: "routes/login";
@@ -70,6 +73,10 @@ type RouteFiles = {
   "routes/jobs.tsx": {
     id: "routes/jobs";
     page: "/jobs";
+  };
+  "routes/save.ts": {
+    id: "routes/save";
+    page: "/save";
   };
   "routes/api.scrape.ts": {
     id: "routes/api.scrape";
@@ -111,6 +118,7 @@ type RouteModules = {
   "routes/logout": typeof import("./app/routes/logout.tsx");
   "routes/theme": typeof import("./app/routes/theme.ts");
   "routes/jobs": typeof import("./app/routes/jobs.tsx");
+  "routes/save": typeof import("./app/routes/save.ts");
   "routes/api.scrape": typeof import("./app/routes/api.scrape.ts");
   "routes/api.cron": typeof import("./app/routes/api.cron.ts");
   "components/app-layout": typeof import("./app/components/app-layout.tsx");

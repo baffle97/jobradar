@@ -4,6 +4,7 @@ import { Form, Link, redirect } from "react-router";
 import { JobCard, JobRow } from "~/components/job-card";
 import { useHydrated } from "~/components/use-hydrated";
 import { db, schema } from "~/db";
+import { requireUser } from "~/lib/auth.server";
 import { narrowingConditions, notFromHints, postedAtSql } from "~/lib/feed.server";
 import { countLabels, inScopeJobs, LABEL_TARGET } from "~/lib/labels.server";
 import {
@@ -22,7 +23,9 @@ import {
   SOURCES,
 } from "~/lib/ui/feed-params";
 import { formatCount, formatDay } from "~/lib/ui/format";
+import { MIN_PAY, RATES_DATE } from "~/lib/ui/pay";
 import { ROLE_KEYS, roleLabel } from "~/lib/ui/roles";
+import type { SavedStatus } from "~/lib/ui/saved";
 import { type FeedFilter, reasonForDisplay } from "~/lib/ui/verdict";
 import type { Route } from "./+types/feed";
 
@@ -49,6 +52,7 @@ export async function loader({ request }: Route.LoaderArgs) {
   // One URL per view: drop empty/default params (the no-JS form sends them).
   const clean = cleanFeedHref(searchParams);
   if (clean) throw redirect(clean);
+  const user = await requireUser(request);
   const params = parseFeedParams(searchParams);
   const j = schema.jobs;
   const narrowing = [inScopeJobs, ...narrowingConditions(params)];
@@ -87,8 +91,13 @@ export async function loader({ request }: Route.LoaderArgs) {
         eligibilityEvidence: j.eligibilityEvidence,
         eligibilityReason: j.eligibilityReason,
         eligibilityBasis: j.eligibilityBasis,
+        saved: schema.savedJobs.status,
       })
       .from(j)
+      .leftJoin(
+        schema.savedJobs,
+        and(eq(schema.savedJobs.jobId, j.id), eq(schema.savedJobs.userId, user.id)),
+      )
       .where(where)
       .orderBy(...order)
       .limit(params.n)
@@ -136,6 +145,7 @@ export async function loader({ request }: Route.LoaderArgs) {
     jobs: jobs.map((job) => ({
       ...job,
       eligibilityReason: reasonForDisplay(job.eligibilityReason),
+      saved: job.saved as SavedStatus | null,
     })),
     total,
     params,
@@ -173,6 +183,7 @@ function FilterPanel({ params }: { params: FeedParams }) {
             age: null,
             src: null,
             pay: false,
+            min: null,
             basis: null,
             sort: "best",
           })}
@@ -212,6 +223,17 @@ function FilterPanel({ params }: { params: FeedParams }) {
             </select>
           </label>
           <label className="jr-field">
+            <span className="jr-label">Pay (top of range)</span>
+            <select className="jr-select" name="min" defaultValue={params.min ?? ""}>
+              <option value="">Any pay</option>
+              {MIN_PAY.map((m) => (
+                <option key={m} value={m}>
+                  ₹{m}L+ a month
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="jr-field">
             <span className="jr-label">Sort</span>
             <select className="jr-select" name="sort" defaultValue={params.sort}>
               <option value="best">Eligible first</option>
@@ -223,6 +245,14 @@ function FilterPanel({ params }: { params: FeedParams }) {
           <input type="checkbox" name="pay" value="1" defaultChecked={params.pay} />
           Salary listed
         </label>
+        <p className="jr-hint">
+          Pay is the top of the posted range in rupees, at{" "}
+          <a href="https://www.frankfurter.app/" target="_blank" rel="noopener noreferrer">
+            ECB rates
+          </a>{" "}
+          of {RATES_DATE}. Most ranges are written for the US or Europe; an India hire may be
+          offered less. Jobs with no figure are hidden by this filter.
+        </p>
         {basisApplies(params.v) ? (
           <label className="jr-check">
             <input

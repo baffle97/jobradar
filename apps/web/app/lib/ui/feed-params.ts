@@ -1,5 +1,6 @@
 // The feed's state lives in the URL only (works without JS, Back works). One
 // parser and one href builder, so every link and form carries every param.
+import { MIN_PAY, type MinPay, minPayLabel } from "./pay";
 import { parseRole, type RoleKey, roleLabel } from "./roles";
 import { type FeedFilter, parseFeedFilter } from "./verdict";
 
@@ -39,6 +40,8 @@ export interface FeedParams {
   age: AgeDays | null;
   src: SourceKey | null;
   pay: boolean;
+  // Top of the posted range is at least this many lakh rupees a month (lib/ui/pay.ts).
+  min: MinPay | null;
   // "explicit": hide verdicts that only rest on hints. Eligible/open views only.
   basis: "explicit" | null;
   sort: FeedSort;
@@ -69,6 +72,7 @@ export function parseFeedParams(sp: URLSearchParams): FeedParams {
     age: pick(AGES, sp.get("age")),
     src: pick(SOURCES, sp.get("src")),
     pay: sp.get("pay") === "1",
+    min: pick(MIN_PAY, sp.get("min")),
     basis: basisApplies(v) && sp.get("basis") === "explicit" ? "explicit" : null,
     sort: sp.get("sort") === "new" ? "new" : "best",
     view,
@@ -87,6 +91,7 @@ export function feedHref(p: FeedParams, changes: Partial<FeedParams> = {}): stri
   if (next.age) sp.set("age", String(next.age));
   if (next.src) sp.set("src", next.src);
   if (next.pay) sp.set("pay", "1");
+  if (next.min) sp.set("min", String(next.min));
   if (next.basis && basisApplies(next.v)) sp.set("basis", next.basis);
   if (next.sort !== "best") sp.set("sort", next.sort);
   if (next.view !== "cards") sp.set("view", next.view);
@@ -95,7 +100,7 @@ export function feedHref(p: FeedParams, changes: Partial<FeedParams> = {}): stri
 }
 
 export interface FilterChip {
-  key: "role" | "age" | "src" | "pay" | "basis";
+  key: "role" | "age" | "src" | "pay" | "min" | "basis";
   label: string;
   // The same view without this filter.
   href: string;
@@ -111,6 +116,8 @@ export function activeFilters(p: FeedParams): FilterChip[] {
     chips.push({ key: "src", label: SOURCE_LABELS[p.src], href: feedHref(p, { src: null }) });
   }
   if (p.pay) chips.push({ key: "pay", label: "Salary listed", href: feedHref(p, { pay: false }) });
+  if (p.min)
+    chips.push({ key: "min", label: minPayLabel(p.min), href: feedHref(p, { min: null }) });
   if (p.basis) {
     chips.push({ key: "basis", label: "Explicit lines only", href: feedHref(p, { basis: null }) });
   }
@@ -118,10 +125,10 @@ export function activeFilters(p: FeedParams): FilterChip[] {
 }
 
 export function clearFiltersHref(p: FeedParams): string {
-  return feedHref(p, { role: null, age: null, src: null, pay: false, basis: null });
+  return feedHref(p, { role: null, age: null, src: null, pay: false, min: null, basis: null });
 }
 
-const PARAM_KEYS = ["v", "q", "n", "role", "age", "src", "pay", "basis", "sort", "view"];
+const PARAM_KEYS = ["v", "q", "n", "role", "age", "src", "pay", "min", "basis", "sort", "view"];
 
 // Where to redirect a feed URL that carries empty, default or invalid params
 // (the no-JS filter form sends "age=&src=&sort=best"); null when it is clean.

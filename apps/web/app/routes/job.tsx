@@ -3,10 +3,12 @@ import { ArrowDown, ArrowLeft, ArrowUpRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { data, Link, useFetcher } from "react-router";
 import { postingUrl, SalaryLine } from "~/components/job-card";
+import { StatusControl } from "~/components/save-button";
 import { VerdictBlock } from "~/components/verdict-block";
 import { db, schema } from "~/db";
 import { requireUser } from "~/lib/auth.server";
 import { saveLabel } from "~/lib/labels.server";
+import { savedStatus } from "~/lib/saved.server";
 import { type EvidencePlace, locateMarks, locateQuoteParts } from "~/lib/ui/evidence";
 import { formatAge, formatDay, jobDate } from "~/lib/ui/format";
 import { type Mark, markSegments } from "~/lib/ui/highlight";
@@ -29,11 +31,13 @@ function parseId(raw: string | undefined): number {
   return id;
 }
 
-export async function loader({ params }: Route.LoaderArgs) {
+export async function loader({ request, params }: Route.LoaderArgs) {
   const id = parseId(params.id);
-  const [job, label] = await Promise.all([
+  const user = await requireUser(request);
+  const [job, label, saved] = await Promise.all([
     db.select().from(schema.jobs).where(eq(schema.jobs.id, id)).get(),
     db.select().from(schema.eligibilityLabels).where(eq(schema.eligibilityLabels.jobId, id)).get(),
+    savedStatus(user.id, id),
   ]);
   if (!job) throw data("Not found", { status: 404 });
 
@@ -76,6 +80,7 @@ export async function loader({ params }: Route.LoaderArgs) {
     description,
     place,
     marks,
+    saved,
     label: label ? { label: label.label, note: label.note, labelledAt: label.labelledAt } : null,
     now: new Date().toISOString(),
   };
@@ -251,7 +256,7 @@ function VerdictWrong({
 }
 
 export default function JobPage({ loaderData, actionData }: Route.ComponentProps) {
-  const { job, locations, description, place, marks, label, now } = loaderData;
+  const { job, locations, description, place, marks, label, saved, now } = loaderData;
   const url = postingUrl(job);
   const date = jobDate(job);
   const cite = citeFor(place, Boolean(job.eligibilityEvidence));
@@ -288,6 +293,9 @@ export default function JobPage({ loaderData, actionData }: Route.ComponentProps
           </a>
         </div>
       ) : null}
+      <div style={{ maxWidth: 420 }}>
+        <StatusControl jobId={job.id} status={saved} label="Your application" />
+      </div>
 
       <div className="jr-detail">
         <div className="jr-detail__side">

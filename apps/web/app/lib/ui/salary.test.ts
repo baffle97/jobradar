@@ -27,6 +27,11 @@ describe("formatSalary", () => {
       }),
     ).toEqual({ text: "$252k – $296k", context: "US range" });
   });
+  it("reads rupee ranges in lakh a year", () => {
+    expect(
+      formatSalary({ ...base, salaryMin: 6_622_000, salaryMax: 9_657_000, salaryCurrency: "INR" }),
+    ).toEqual({ text: "₹66L – ₹97L", context: "India range" });
+  });
   it("formats structured ranges with a residency context", () => {
     expect(
       formatSalary({ ...base, salaryMin: 70000, salaryMax: 90000, salaryCurrency: "EUR" }),

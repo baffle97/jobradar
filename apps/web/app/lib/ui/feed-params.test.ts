@@ -20,6 +20,7 @@ const DEFAULTS: FeedParams = {
   age: null,
   src: null,
   pay: false,
+  min: null,
   basis: null,
   sort: "best",
   view: "cards",
@@ -32,7 +33,9 @@ describe("parseFeedParams", () => {
 
   it("reads every known value", () => {
     expect(
-      parse("v=eligible&q=rust&n=60&role=ai&age=7&src=ats&pay=1&basis=explicit&sort=new&view=list"),
+      parse(
+        "v=eligible&q=rust&n=60&role=ai&age=7&src=ats&pay=1&min=3&basis=explicit&sort=new&view=list",
+      ),
     ).toEqual({
       v: "eligible",
       q: "rust",
@@ -41,6 +44,7 @@ describe("parseFeedParams", () => {
       age: 7,
       src: "ats",
       pay: true,
+      min: 3,
       basis: "explicit",
       sort: "new",
       view: "list",
@@ -49,7 +53,9 @@ describe("parseFeedParams", () => {
 
   it("unknown values fall back to the defaults", () => {
     expect(
-      parse("v=maybe&n=abc&role=chef&age=5&src=linkedin&pay=yes&basis=hints&sort=old&view=grid"),
+      parse(
+        "v=maybe&n=abc&role=chef&age=5&src=linkedin&pay=yes&min=3.5&basis=hints&sort=old&view=grid",
+      ),
     ).toEqual(DEFAULTS);
   });
 
@@ -82,7 +88,7 @@ describe("feedHref", () => {
 
   it("round-trips every param", () => {
     const p = parse(
-      "v=eligible&q=rust%20%26%20go&n=150&role=infra&age=30&src=hn&pay=1&basis=explicit&sort=new&view=list",
+      "v=eligible&q=rust%20%26%20go&n=150&role=infra&age=30&src=hn&pay=1&min=4&basis=explicit&sort=new&view=list",
     );
     expect(parseHref(feedHref(p, { n: p.n }))).toEqual(p);
     for (const qs of ["", "v=all", "role=nontech&view=list", "age=1&pay=1", "src=remotive"]) {
@@ -110,6 +116,13 @@ describe("activeFilters", () => {
     expect(chips.map((c) => c.label)).toEqual(["AI / ML / Agents", "Last 7 days", "Salary listed"]);
     expect(chips[0].href).toBe("/?v=eligible&q=go&age=7&pay=1&sort=new&view=list");
     expect(chips[1].href).toBe("/?v=eligible&q=go&role=ai&pay=1&sort=new&view=list");
+  });
+
+  it("labels the pay chip in lakh rupees a month", () => {
+    const p = parse("min=3&role=ai");
+    expect(activeFilters(p).map((c) => c.label)).toEqual(["AI / ML / Agents", "Pays ₹3L+/month"]);
+    expect(activeFilters(p)[1].href).toBe("/?role=ai");
+    expect(clearFiltersHref(p)).toBe("/");
   });
 
   it("labels source and basis chips; sort and view are not filters", () => {
