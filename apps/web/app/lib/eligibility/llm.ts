@@ -9,13 +9,36 @@ import type { EligibilityLlm } from "./types";
 export const DEFAULT_ELIGIBILITY_MODEL = "anthropic/claude-haiku-5.5";
 export const DEFAULT_GOOGLE_ELIGIBILITY_MODEL = "gemini-3.5-flash-lite";
 
+// No length limits in the schema: one over-long quote would fail the whole
+// answer. Code keeps 8 verified hints and cuts reasons to 50 words instead.
+const hintSchema = z.object({
+  quote: z
+    .string()
+    .describe(
+      "Copied character for character from ONE place in the posting, under 150 characters, no field label.",
+    ),
+  section: z
+    .string()
+    .describe(
+      'Short name of the part of the posting: "locations", "benefits", "perks", "pay", "requirements", "time zone", "about us", "title", ...',
+    ),
+  points: z.enum(["india_ok", "india_blocked"]),
+  strength: z.enum(["strong", "weak"]),
+});
+
+// hints come first so the model collects them before it decides.
 const answerSchema = z.object({
+  hints: z.array(hintSchema).describe("Up to 8, strongest first."),
   verdict: z.enum(["eligible", "not_eligible", "unclear"]),
   evidence: z
     .string()
     .nullable()
-    .describe("Verbatim quote from one field of the posting; null when unclear."),
-  reason: z.string().describe("One short sentence."),
+    .describe("The quote of the hint that most supports the verdict; null when unclear."),
+  reason: z
+    .string()
+    .describe(
+      "eligible / not_eligible: one short sentence. unclear: one or two sentences, under 50 words.",
+    ),
 });
 
 // Thrown by the LLM function; `fatal` means stop calling the LLM for this run
@@ -139,7 +162,7 @@ export function createEligibilityLlm(
         output: Output.object({ schema: answerSchema }),
         prompt,
         temperature: 0,
-        maxOutputTokens: 400,
+        maxOutputTokens: 1200,
         maxRetries: 2,
         // Overloaded providers can hold a request for minutes; give up on this
         // posting (it is retried next run) instead of stalling the task.
@@ -148,6 +171,7 @@ export function createEligibilityLlm(
       });
       const { output } = result;
       return {
+        hints: output.hints,
         verdict: output.verdict,
         evidence: output.evidence,
         reason: output.reason,

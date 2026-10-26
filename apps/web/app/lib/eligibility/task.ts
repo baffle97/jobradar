@@ -69,6 +69,8 @@ async function saveResult(jobId: number, r: EligibilityResult, inputHash: string
       evidence: r.evidence,
       reason: r.reason,
       method: r.method,
+      basis: r.basis,
+      hints: r.hints,
       model: r.model ?? null,
       promptVersion: r.promptVersion,
       inputHash,
@@ -84,6 +86,8 @@ async function saveResult(jobId: number, r: EligibilityResult, inputHash: string
         eligibilityEvidence: r.evidence,
         eligibilityReason: r.reason,
         eligibilityMethod: r.method,
+        eligibilityBasis: r.basis,
+        eligibilityHints: r.hints,
         // A failed LLM call is recorded but not stamped, so the next run retries it.
         eligibilityVersion: r.error ? null : r.promptVersion,
         eligibilityInputHash: inputHash,

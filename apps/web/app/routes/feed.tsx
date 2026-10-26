@@ -68,6 +68,7 @@ export async function loader({ request }: Route.LoaderArgs) {
         eligibility: j.eligibility,
         eligibilityEvidence: j.eligibilityEvidence,
         eligibilityReason: j.eligibilityReason,
+        eligibilityBasis: j.eligibilityBasis,
       })
       .from(j)
       .where(where)

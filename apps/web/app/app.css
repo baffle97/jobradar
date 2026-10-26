@@ -639,6 +639,53 @@
   .jr-stamp[data-v="unclear"] {
     color: var(--unc);
   }
+  /* "· from hints": part of the stamp, quieter than the verdict word. */
+  .jr-stamp__basis {
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 500;
+  }
+  /* Job page: the hints behind the verdict, two groups. */
+  .jr-hints {
+    display: grid;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .jr-hints__h {
+    margin: 0;
+    font-family: var(--f-mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-2);
+  }
+  .jr-hints__list {
+    list-style: none;
+    margin: 4px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 6px;
+  }
+  .jr-hints__list li {
+    font-size: 13.5px;
+    line-height: 1.45;
+    padding-left: 10px;
+    border-left: 2px solid var(--ink-2);
+    overflow-wrap: anywhere;
+  }
+  .jr-hints__list[data-v="yes"] li {
+    border-left-color: var(--yes);
+  }
+  .jr-hints__list[data-v="no"] li {
+    border-left-color: var(--no);
+  }
+  .jr-hints__sec {
+    font-family: var(--f-mono);
+    font-size: 11.5px;
+    color: var(--ink-2);
+    white-space: nowrap;
+  }
   .jr-quote {
     margin: 0;
     font-size: 14px;
@@ -670,6 +717,15 @@
     border-radius: 2px;
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
+  }
+
+  /* Other hint quotes in the posting: a lighter mark than the main evidence. */
+  mark.jr-mark--hint {
+    background: color-mix(in srgb, var(--mark) 40%, transparent);
+    color: inherit;
+    padding: 0;
+    border-radius: 0;
+    border-bottom: 2px solid var(--mark);
   }
 
   /* Hero motion (DESIGN §6): the evidence sweeps in on the detail page. */

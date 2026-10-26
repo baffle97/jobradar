@@ -434,12 +434,30 @@ function firstWorldwide(description: string): string | null {
   return null;
 }
 
+// Rules only decide on explicit text, so the evidence is one strong hint from
+// the field it was found in.
 function result(
   verdict: "eligible" | "not_eligible",
   evidence: string,
   reason: string,
+  section: "locations" | "title" | "description",
 ): EligibilityResult {
-  return { verdict, evidence, reason, method: "rules", promptVersion: PROMPT_VERSION };
+  return {
+    verdict,
+    evidence,
+    reason,
+    basis: "explicit",
+    hints: [
+      {
+        quote: evidence,
+        section,
+        points: verdict === "eligible" ? "india_ok" : "india_blocked",
+        strength: "strong",
+      },
+    ],
+    method: "rules",
+    promptVersion: PROMPT_VERSION,
+  };
 }
 
 export function applyRules(posting: Posting): EligibilityResult | null {
@@ -461,6 +479,7 @@ export function applyRules(posting: Posting): EligibilityResult | null {
       "eligible",
       india.loc,
       `Lists an Indian location for a remote role: "${india.loc}".`,
+      "locations",
     );
   }
 
@@ -494,23 +513,35 @@ export function applyRules(posting: Posting): EligibilityResult | null {
   // The body names an Indian location the location fields leave out.
   if (notEligibleQuote && descIndiaLocation) return null;
   if (eligibleQuote) {
-    return result("eligible", eligibleQuote, `Open worldwide: "${eligibleQuote}".`);
+    return result(
+      "eligible",
+      eligibleQuote,
+      `Open worldwide: "${eligibleQuote}".`,
+      worldwideLoc ? "locations" : "description",
+    );
   }
   if (allNonIndia) {
     return result(
       "not_eligible",
       allNonIndia,
       `Every location is outside India (e.g. "${allNonIndia}").`,
+      "locations",
     );
   }
   if (restriction) {
-    return result("not_eligible", restriction, `Restricted to a non-India location.`);
+    return result(
+      "not_eligible",
+      restriction,
+      `Restricted to a non-India location.`,
+      "description",
+    );
   }
   if (usAuth) {
     return result(
       "not_eligible",
       usAuth,
       "Requires US work authorization and never mentions India or worldwide hiring.",
+      "description",
     );
   }
   return null;

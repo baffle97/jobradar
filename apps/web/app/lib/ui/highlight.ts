@@ -66,3 +66,35 @@ export function splitAtRange(text: string, range: Range | null): [string, string
   if (!range) return null;
   return [text.slice(0, range.start), text.slice(range.start, range.end), text.slice(range.end)];
 }
+
+// A marked run in one field: the main evidence, or one of the other hints.
+export interface Mark extends Range {
+  kind: "main" | "hint";
+}
+
+export interface Segment {
+  text: string;
+  kind: Mark["kind"] | null;
+}
+
+// Cuts `text` into plain and marked runs. Marks come in priority order: one that
+// overlaps an earlier mark is dropped, so the main evidence keeps its mark.
+export function markSegments(text: string, marks: Mark[]): Segment[] {
+  const kept: Mark[] = [];
+  for (const m of marks) {
+    if (m.start >= m.end || m.start < 0 || m.end > text.length) continue;
+    if (kept.some((k) => m.start < k.end && k.start < m.end)) continue;
+    kept.push(m);
+  }
+  kept.sort((a, b) => a.start - b.start);
+
+  const out: Segment[] = [];
+  let at = 0;
+  for (const m of kept) {
+    if (m.start > at) out.push({ text: text.slice(at, m.start), kind: null });
+    out.push({ text: text.slice(m.start, m.end), kind: m.kind });
+    at = m.end;
+  }
+  if (at < text.length || out.length === 0) out.push({ text: text.slice(at), kind: null });
+  return out;
+}

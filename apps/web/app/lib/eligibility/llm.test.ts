@@ -53,6 +53,18 @@ describe("createEligibilityLlm: calls", () => {
     expect(answer?.usage).toMatchObject({ inputTokens: 10, outputTokens: 5 });
   });
 
+  it("asks for hints with room for them, and passes them through", async () => {
+    const hints = [{ quote: "Remote", section: "locations", points: "india_ok", strength: "weak" }];
+    generateText.mockResolvedValue({
+      output: { hints, verdict: "unclear", evidence: null, reason: "r" },
+      usage: {},
+    });
+    const answer = await createEligibilityLlm(GOOGLE)?.llm("prompt");
+    const call = generateText.mock.calls[0][0];
+    expect(call.maxOutputTokens).toBe(1200);
+    expect(answer?.hints).toEqual(hints);
+  });
+
   it("gateway path passes the plain model string", async () => {
     generateText.mockResolvedValue({
       output: { verdict: "unclear", evidence: null, reason: "r" },

@@ -5,10 +5,11 @@
 //   It returns null for postings OUT OF SCOPE (workMode is anything other than
 //   "remote" or null, e.g. "hybrid" / "onsite"), including onsite India jobs.
 //   Out-of-scope postings never reach the rules' verdict or the LLM.
-// - opts.llm(prompt) -> { verdict, evidence, reason }. Its answer is checked in
-//   code: eligible/not_eligible need evidence that quoteIsInPosting() accepts,
-//   otherwise the result is "unclear" with evidence null and a reason saying the
-//   quote could not be found.
+// - opts.llm(prompt) -> { hints, verdict, evidence, reason }. Its answer is
+//   checked in code: eligible/not_eligible need a hint pointing their way whose
+//   quote quoteIsInPosting() accepts, otherwise the result is "unclear" with
+//   evidence null and a reason saying the hints could not be found. (v0.4 hint
+//   details: hints.test.ts.)
 // - opts.model is copied to result.model when method === "llm".
 // - No llm configured + rules undecided -> "unclear", method "rules", evidence null.
 // - buildPrompt wraps the posting in <posting> ... </posting>, exactly once, and
@@ -17,14 +18,24 @@
 import { describe, expect, it, vi } from "vitest";
 import { buildPrompt, checkEligibility } from "./index";
 import { posting, realFixtures } from "./test-helpers";
-import type { EligibilityResult, Posting, Verdict } from "./types";
+import type { EligibilityResult, Hint, Posting, Verdict } from "./types";
 import { PROMPT_VERSION } from "./types";
 import { quoteIsInPosting } from "./verify";
 
-type LlmAnswer = { verdict: Verdict; evidence: string | null; reason: string };
+type LlmAnswer = { hints?: Hint[]; verdict: Verdict; evidence: string | null; reason: string };
+
+// Without explicit hints, a decisive stub answer carries its evidence as its one
+// strong hint, the way the model is asked to answer.
+function withHints(a: LlmAnswer): LlmAnswer & { hints: Hint[] } {
+  if (a.hints || a.verdict === "unclear" || !a.evidence) return { hints: [], ...a };
+  const points = a.verdict === "eligible" ? "india_ok" : "india_blocked";
+  return { ...a, hints: [{ quote: a.evidence, section: "locations", points, strength: "strong" }] };
+}
 
 function stubLlm(answer: LlmAnswer | ((prompt: string) => LlmAnswer)) {
-  return vi.fn(async (prompt: string) => (typeof answer === "function" ? answer(prompt) : answer));
+  return vi.fn(async (prompt: string) =>
+    withHints(typeof answer === "function" ? answer(prompt) : answer),
+  );
 }
 
 const undecided = posting({
@@ -134,7 +145,7 @@ describe("checkEligibility: llm answers are verified in code", () => {
     expect(r?.verdict).toBe("unclear");
     expect(r?.evidence).toBeNull();
     expect(r?.method).toBe("llm");
-    expect(r?.reason).toMatch(/quote|evidence/i);
+    expect(r?.reason).toMatch(/quote|evidence|hints/i);
     expect(r?.reason).toMatch(/not (be )?found|could not|couldn't|not in the posting/i);
     expect(r?.promptVersion).toBe(PROMPT_VERSION);
   });
