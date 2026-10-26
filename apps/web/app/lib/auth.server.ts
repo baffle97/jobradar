@@ -47,6 +47,20 @@ export async function validateSession(sessionId: string) {
   return user ?? null;
 }
 
+// The only way to make an account (the login page has no sign-up), used by
+// `pnpm user:create`. Refuses an email that already has one.
+export async function createUser(email: string, password: string): Promise<number> {
+  const existing = await db.select().from(schema.users).where(eq(schema.users.email, email)).get();
+  if (existing) throw new Error(`An account for ${email} already exists.`);
+  const user = await db
+    .insert(schema.users)
+    .values({ email, passwordHash: hashPassword(password) })
+    .returning()
+    .get();
+  await db.insert(schema.profile).values({ userId: user.id }).run();
+  return user.id;
+}
+
 export async function deleteSession(sessionId: string) {
   await db.delete(schema.sessions).where(eq(schema.sessions.id, sessionId)).run();
 }
