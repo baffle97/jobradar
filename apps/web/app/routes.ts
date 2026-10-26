@@ -5,6 +5,7 @@ export default [
   route("logout", "routes/logout.tsx"),
   route("theme", "routes/theme.ts"),
   route("jobs", "routes/jobs.tsx"),
+  route("save", "routes/save.ts"),
   route("api/scrape", "routes/api.scrape.ts"),
   route("api/cron/:task", "routes/api.cron.ts"),
   layout("components/app-layout.tsx", [

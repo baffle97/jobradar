@@ -1,9 +1,12 @@
 import { Card } from "@heroui/react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, BookmarkCheck } from "lucide-react";
 import { Link } from "react-router";
 import { formatAge, isNew, jobDate } from "~/lib/ui/format";
+import { formatInrPerMonth, inrPerMonth } from "~/lib/ui/pay";
 import { formatSalary, type SalaryLike } from "~/lib/ui/salary";
+import { type SavedStatus, STATUS_LABELS } from "~/lib/ui/saved";
 import { verdictStamp, verdictTone } from "~/lib/ui/verdict";
+import { SaveButton } from "./save-button";
 import { VerdictBlock } from "./verdict-block";
 
 export interface FeedJob extends SalaryLike {
@@ -21,6 +24,8 @@ export interface FeedJob extends SalaryLike {
   eligibilityEvidence: string | null;
   eligibilityReason: string | null;
   eligibilityBasis: string | null;
+  // This user's saved status; null when not saved.
+  saved: SavedStatus | null;
 }
 
 export function postingUrl(job: { applyUrl: string | null; sourceUrl: string | null }) {
@@ -30,9 +35,15 @@ export function postingUrl(job: { applyUrl: string | null; sourceUrl: string | n
 export function SalaryLine({ job }: { job: SalaryLike }) {
   const salary = formatSalary(job);
   if (!salary) return <div className="jr-salary jr-salary--none">Salary not listed</div>;
+  const inr = inrPerMonth(job);
   return (
     <div className="jr-salary">
       {salary.text} <span className="jr-tag">{salary.context}</span>
+      {inr ? (
+        <span className="jr-tag" title="Top of the range in rupees a month">
+          {formatInrPerMonth(inr)}
+        </span>
+      ) : null}
     </div>
   );
 }
@@ -74,6 +85,7 @@ export function JobCard({ job, now }: { job: FeedJob; now: string }) {
         <Link className="jr-btn" to={`/jobs/${job.id}`}>
           Details
         </Link>
+        <SaveButton jobId={job.id} status={job.saved} />
       </div>
     </Card>
   );
@@ -90,6 +102,7 @@ function shortVerdict(verdict: string | null): string {
 // Compact list view (view=list): one ~60px row per job, the whole row a link.
 export function JobRow({ job, now }: { job: FeedJob; now: string }) {
   const salary = formatSalary(job);
+  const inr = inrPerMonth(job);
   const tone = verdictTone(job.eligibility);
   return (
     <li id={`job-${job.id}`}>
@@ -97,8 +110,20 @@ export function JobRow({ job, now }: { job: FeedJob; now: string }) {
         <span className="jr-row__main">
           <span className="jr-row__title">{job.title}</span>
           <span className="jr-row__meta">
-            {[job.company, formatAge(jobDate(job), now), salary?.text].filter(Boolean).join(" · ")}
+            {[
+              job.company,
+              formatAge(jobDate(job), now),
+              salary?.text,
+              inr && formatInrPerMonth(inr),
+            ]
+              .filter(Boolean)
+              .join(" · ")}
           </span>
+          {job.saved ? (
+            <span className="jr-row__saved">
+              <BookmarkCheck aria-hidden="true" /> {STATUS_LABELS[job.saved]}
+            </span>
+          ) : null}
         </span>
         <span className="jr-row__v" data-v={tone}>
           <span aria-hidden="true">{shortVerdict(job.eligibility)}</span>

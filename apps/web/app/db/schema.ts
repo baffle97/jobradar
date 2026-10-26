@@ -156,6 +156,28 @@ export const eligibilityLabels = sqliteTable("eligibility_labels", {
     .$defaultFn(() => new Date().toISOString()),
 });
 
+// Jobs a user saved, and how far their application got (lib/ui/saved.ts).
+export const savedJobs = sqliteTable(
+  "saved_jobs",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    userId: integer("user_id")
+      .notNull()
+      .references(() => users.id),
+    jobId: integer("job_id")
+      .notNull()
+      .references(() => jobs.id),
+    status: text("status").notNull().default("saved"), // saved | applied | interviewing | offer | rejected
+    createdAt: text("created_at")
+      .notNull()
+      .$defaultFn(() => new Date().toISOString()),
+    updatedAt: text("updated_at")
+      .notNull()
+      .$defaultFn(() => new Date().toISOString()),
+  },
+  (t) => [uniqueIndex("saved_jobs_user_job").on(t.userId, t.jobId)],
+);
+
 export const savedSearches = sqliteTable("saved_searches", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   userId: integer("user_id")

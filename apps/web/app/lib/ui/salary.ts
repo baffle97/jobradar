@@ -30,6 +30,8 @@ function amount(value: number, currency: string | null): string {
   const prefix = currency ? (SYMBOLS[currency] ?? `${currency} `) : "";
   // Small numbers on these boards are hourly rates.
   if (value < 1000) return `${prefix}${value}/hr`;
+  // Rupee figures read in lakh: ₹66L, not ₹6622k.
+  if (currency === "INR" && value >= 100_000) return `${prefix}${Math.round(value / 100_000)}L`;
   return `${prefix}${Math.round(value / 1000)}k`;
 }
 

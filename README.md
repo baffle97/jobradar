@@ -8,7 +8,8 @@ line of the posting the answer rests on.
 Built for myself, while job hunting. Which turned out to be the useful part:
 every feature exists because the manual version of it annoyed me first.
 
-**Status:** scraping, dedup, the eligibility agent and the phone-first feed are
+**Status:** scraping, dedup, the eligibility agent, the phone-first feed (with a
+pay filter in rupees a month) and a Saved page that tracks each application are
 live at <https://jobradar-rust.vercel.app>. Hand-labelling 200 postings for the
 eval is next; scoring and alerts are not built.
 
